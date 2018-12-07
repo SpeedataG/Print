@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.printer.demo.global.GlobalContants;
 import com.printer.demo.utils.XTUtils;
 import com.printer.sdk.Barcode;
+import com.printer.sdk.CanvasPrint;
 import com.printer.sdk.PrinterConstants;
 import com.printer.sdk.PrinterInstance;
 
@@ -93,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         dialog.setCancelable(false);
 
         try {
-            deviceControl = new DeviceControl(DeviceControl.POWER_NEWMAIN, 8);
+            deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
             deviceControl.PowerOnDevice();
         } catch (IOException e) {
             e.printStackTrace();
@@ -267,16 +268,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //				mPrinter.setFont(0, 3, 3, 1, 1);
 //				byte[] srcData = XTUtils.string2bytes("床前明月光");
 //				mPrinter.sendBytesData(srcData);
-                Barcode barcode1 = new Barcode(PrinterConstants.BarcodeType.CODE128, 2, 150, 2,
-                        "123456");
-                mPrinter.printBarCode(barcode1);
-                Barcode barcode2 = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6,
-                        "123456");
-                mPrinter.printBarCode(barcode2);
 
+//                Barcode barcode1 = new Barcode(PrinterConstants.BarcodeType.CODE128, 2, 150, 2,
+//                        "123456");
+//                mPrinter.printBarCode(barcode1);
+//                Barcode barcode2 = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6,
+//                        "123456");
+//                mPrinter.printBarCode(barcode2);
                 XTUtils.printTest(getResources(), mPrinter);
+
             }
-        }, 0, 7000);
+        }, 0, 10000);
     }
 
     public static String jsonToStringFromAssetFolder(String fileName,
