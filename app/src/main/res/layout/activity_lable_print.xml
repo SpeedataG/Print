@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LablePrintActivity" >
+
+    <include
+        android:id="@+id/ll_headerview_LablePrintactivity"
+        layout="@layout/heardview_layout" />
+
+    <Button
+        android:id="@+id/btn_80mm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/lable_of_anneng_physical_distribution_80mm" />
+
+    <Button
+        android:id="@+id/btn_58mm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_80mm"
+        android:text="@string/lable_of_library_58mm" />
+
+    <Button
+        android:id="@+id/btn_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_80mm"
+        android:text="@string/lable_of_material_transport_80mm" />
+
+    <Button
+        android:id="@+id/btn_100mm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lable"
+        android:text="@string/lable_of_physical_distribution_100mm" />
+
+</RelativeLayout>
