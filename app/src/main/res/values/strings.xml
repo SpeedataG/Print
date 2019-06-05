@@ -13,6 +13,7 @@
     <string name="pdf_print">Print PDF</string>
     <string name="picture_print">Print Picture</string>
     <string name="barcode_print">Print BarCode</string>
+    <string name="no_connected">打印机未连接!</string>
     <string name="about_us">About Us</string>
     <!-- LablePrintActivity -->
     <string name="lable_of_library_58mm">Library Lable 58mm</string>
