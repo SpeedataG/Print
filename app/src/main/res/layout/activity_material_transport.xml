@@ -478,7 +478,8 @@
                             android:text="打印"
                             android:textColor="#000000"
                             android:textStyle="bold" />
-                        <Button
+
+                        <Button
                             android:id="@+id/btn_save_data"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -498,7 +499,8 @@
                             android:layout_marginRight="20dp"
                             android:text="国家图书馆标签50mm"
                             android:textColor="#000000"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
 
                         <Button
                             android:id="@+id/btn_print"
@@ -509,7 +511,8 @@
                             android:layout_marginRight="20dp"
                             android:text="安能物流标签80mm"
                             android:textColor="#000000"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
 
                         <Button
                             android:id="@+id/btn_print"
@@ -520,7 +523,8 @@
                             android:layout_marginRight="20dp"
                             android:text="物流标签80mm"
                             android:textColor="#000000"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
