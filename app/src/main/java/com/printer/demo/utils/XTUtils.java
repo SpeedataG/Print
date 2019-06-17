@@ -50,21 +50,22 @@ public class XTUtils {
 
     private static int char2Int(char data) {
         if (data >= 48 && data <= 57)//0~9
+        {
             data -= 48;
-        else if (data >= 65 && data <= 70)//A~F
+        } else if (data >= 65 && data <= 70)//A~F
+        {
             data -= 55;
-        else if (data >= 97 && data <= 102)//a~f
+        } else if (data >= 97 && data <= 102)//a~f
+        {
             data -= 87;
+        }
         return Integer.valueOf(data);
     }
 
     private static boolean is58mm = false;
 
     public static void printNote(Resources resources, PrinterInstance mPrinter) {
-        if (PrinterConstants.paperWidth == 384)
-            is58mm = true;
-        else
-            is58mm = false;
+        is58mm = PrinterConstants.paperWidth == 384;
         mPrinter.initPrinter();
 
         mPrinter.setFont(0, 0, 0, 0, 0);
@@ -190,7 +191,8 @@ public class XTUtils {
         mPrinter.printText(resources.getString(R.string.str_text_strong));
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2); // ��2��
 
-        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+//        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText(resources.getString(R.string.str_text_print));
 
         mPrinter.setFont(0, 0, 0, 0, 1);
         mPrinter.sendBytesData(new byte[]{(byte) 0x1C, (byte) 0x21, (byte) 0x80});
@@ -214,13 +216,23 @@ public class XTUtils {
             mPrinter.setFont(0, i, i, 0, 0);
             mPrinter.printText(resources.getString(R.string.bigger) + (i + 1) + resources.getString(R.string.bigger1));
             mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-            mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
-
+//            mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+            mPrinter.printText(resources.getString(R.string.str_text_print));
         }
 
         mPrinter.setFont(0, 0, 0, 0, 0);
         mPrinter.setPrinter(Command.ALIGN, 0);
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+    }
+
+    public static void printForTest(Resources resources, PrinterInstance mPrinter) {
+
+        mPrinter.initPrinter();
+
+        mPrinter.printText(resources.getString(R.string.str_text));
+        mPrinter.setFont(0, 0, 0, 0, 0);
+        mPrinter.setPrinter(Command.ALIGN, 0);
+        mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
     }
 
     public static int update(Resources resources, PrinterInstance mPrinter, InputStream in) {
@@ -431,10 +443,11 @@ public class XTUtils {
 
         for (int n = 0; n < b.length; n++) {
             stmp = (Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1)
+            if (stmp.length() == 1) {
                 hs = hs + "0" + stmp;
-            else
+            } else {
                 hs = hs + stmp;
+            }
         }
         return hs.toUpperCase();
     }

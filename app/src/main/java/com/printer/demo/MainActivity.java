@@ -93,12 +93,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dialog.setCancelable(false);
 
-        try {
-            deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
-            deviceControl.PowerOnDevice();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         //checkUpdate();
         // TODO
         // fu = new FileUtils();
@@ -106,6 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
 
         @Override
@@ -123,18 +118,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 case GlobalContants.URL_ERROR:// URL错误
                     //enterHome();
-                    Toast.makeText(getApplicationContext(), "URL错误", 1).show();
+                    Toast.makeText(getApplicationContext(), "URL错误", Toast.LENGTH_LONG).show();
 
                     break;
 
                 case GlobalContants.NETWORK_ERROR:// 网络异常
                     //enterHome();
-                    Toast.makeText(MainActivity.this, "网络异常", 1).show();
+                    Toast.makeText(MainActivity.this, "网络异常", Toast.LENGTH_LONG).show();
                     break;
 
                 case GlobalContants.JSON_ERROR:// JSON解析出错
                     //enterHome();
-                    Toast.makeText(MainActivity.this, "JSON解析出错", 1).show();
+                    Toast.makeText(MainActivity.this, "JSON解析出错", Toast.LENGTH_LONG).show();
                     break;
                 case GlobalContants.PROGRESS_UPDATE://更新进度
                     dialog.setMax(msg.arg1 / 1024);
@@ -239,7 +234,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //			// }
 //			Log.e("PrinterInstance", "执行完发送指令了");
 //
-//			break;
+                break;
             case R.id.ll_test:
                 if (isStart) {
                     timer.cancel();
@@ -308,15 +303,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private static BroadcastReceiver mUsbAttachReceiver = new BroadcastReceiver() {
+        @Override
         @SuppressLint("NewApi")
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.w("fdh", "receiver action: " + action);
 
             if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
-                Toast.makeText(mContext, "USB设备已接入", 0).show();
+                Toast.makeText(mContext, "USB设备已接入", Toast.LENGTH_SHORT).show();
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-                Toast.makeText(mContext, "USB设备已拔出", 0).show();
+                Toast.makeText(mContext, "USB设备已拔出", Toast.LENGTH_SHORT).show();
                 if (PrinterInstance.mPrinter != null
                         && SettingActivity.isConnected) {
                     PrinterInstance.mPrinter.closeConnection();
@@ -330,10 +326,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onDestroy() {
         super.onDestroy();
         mContext.unregisterReceiver(mUsbAttachReceiver);
-        try {
-            deviceControl.PowerOffDevice();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (deviceControl != null) {
+            try {
+                deviceControl.PowerOffDevice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -350,6 +348,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void checkUpdate() {
 
         new Thread() {
+            @Override
             public void run() {
                 // URLhttp://192.168.1.254:8080/updateinfo.html
 
@@ -486,7 +485,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                                           String strMsg) {
                                         super.onFailure(t, errorNo, strMsg);
                                         t.printStackTrace();
-                                        Toast.makeText(getApplicationContext(), "下载失败", 1).show();
+                                        Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
                                         handler.obtainMessage(GlobalContants.FINISH_UPDATE).sendToTarget();
                                     }
 
@@ -533,7 +532,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 });
                     } else {
                         Toast.makeText(getApplicationContext(), "没有sdcard，请安装上在试",
-                                0).show();
+                                Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } catch (Exception e) {

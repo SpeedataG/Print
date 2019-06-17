@@ -12,8 +12,8 @@
     <string name="text_print">print Text</string>
     <string name="pdf_print">Print PDF</string>
     <string name="picture_print">Print Picture</string>
+    <string name="no_connected">Printer disconnected!</string>
     <string name="barcode_print">Print BarCode</string>
-    <string name="no_connected">打印机未连接!</string>
     <string name="about_us">About Us</string>
     <!-- LablePrintActivity -->
     <string name="lable_of_library_58mm">Library Lable 58mm</string>
@@ -47,6 +47,9 @@
     <string name="copies_number">Number Oof Copies</string>
     <string name="check_status">Check Status</string>
     <string name="print_test">Print TestPage</string>
+    <string name="repeat_print_test">Repeat Print</string>
+    <string name="repeat_print_note">Repeat Print Receipt</string>
+    <string name="repeat_print_stop">Stop</string>
     <string name="button_scan">Scan New Devices</string>
     <string name="back">Back</string>
     <string name="str_message">Tips：</string>
@@ -63,6 +66,7 @@
     <string name="str_text_center">文字居中效果演示abc123：</string>
     <string name="str_text_strong">文字加粗效果演示abc123：</string>
     <string name="str_text_underline">文字下划线效果演示abc123：</string>
+    <string name="str_text_print">效果演示abc123</string>
     <string name="str_text_height">同行不同高效果演示：：</string>
     <string name="times">倍</string>
     <string name="bigger">放大</string>

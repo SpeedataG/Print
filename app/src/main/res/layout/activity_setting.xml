@@ -144,6 +144,27 @@
         android:layout_marginTop="10dp"
         android:text="@string/print_test"
         android:textSize="18sp" />
+    <Button
+        android:id="@+id/btn_for_print"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_selfprint_test"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:text="@string/repeat_print_test"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btn_for_print_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_for_print"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:text="@string/repeat_print_note"
+        android:textSize="18sp"/>
     <!--
     <Button
         android:id="@+id/btn_Update"
