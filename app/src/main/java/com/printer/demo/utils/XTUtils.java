@@ -64,6 +64,16 @@ public class XTUtils {
 
     private static boolean is58mm = false;
 
+    /**
+     * 设置打印浓度
+     * @param mPrinter 先连接再设置，设置完成会断开连接，需要重新连接
+     * @param n 0-低 1-中 2-高
+     */
+    public static void setConcentration(PrinterInstance mPrinter, byte n) {
+        byte[] bytes = new byte[]{31, 17, 31, 22, n, 31, 31};
+        mPrinter.sendBytesData(bytes);
+    }
+
     public static void printNote(Resources resources, PrinterInstance mPrinter) {
         is58mm = PrinterConstants.paperWidth == 384;
         mPrinter.initPrinter();

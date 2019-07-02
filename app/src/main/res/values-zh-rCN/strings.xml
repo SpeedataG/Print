@@ -27,6 +27,11 @@
         <item>Wifi</item>
         <item>Serial port</item>
     </string-array>
+    <string-array name="set_concentration">
+        <item>低</item>
+        <item>中</item>
+        <item>高</item>
+    </string-array>
     <string-array name="printertype">
         <item>L31</item>
         <item>L51</item>
@@ -43,6 +48,7 @@
     <string name="interface_type">打印机接口类型</string>
     <string name="openConnection">打开连接</string>
     <string name="scan_connect">扫一扫连接</string>
+    <string name="set_concentration">设置浓度</string>
     <string name="check_status">状态检测</string>
     <string name="paper_width">纸张宽度</string>
     <string name="copies_number">打印份数</string>

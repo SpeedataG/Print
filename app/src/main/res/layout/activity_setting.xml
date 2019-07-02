@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/ll_headerview_settingactivity"
@@ -17,12 +17,12 @@
         android:text="@string/printerName"
         android:textSize="18sp" />
 
-<!--     <Spinner
-        android:id="@+id/spinner_printer_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_printtype"
-        android:layout_marginLeft="5dp" /> -->
+    <!--     <Spinner
+            android:id="@+id/spinner_printer_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_printtype"
+            android:layout_marginLeft="5dp" /> -->
 
     <TextView
         android:id="@+id/tv_printer_address"
@@ -38,16 +38,16 @@
         android:id="@+id/spinner_interface_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_below="@+id/tv_printer_address"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
 
     <Button
         android:id="@+id/btn_search_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/spinner_interface_type"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:text="@string/openConnection"
@@ -57,18 +57,26 @@
         android:id="@+id/btn_scan_and_connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/btn_search_devices"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:text="@string/scan_connect"
         android:textSize="16sp" />
 
+    <Spinner
+        android:id="@+id/spinner_set_concentration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_scan_and_connect"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
+
     <TextView
         android:id="@+id/tv_paper_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_scan_and_connect"
+        android:layout_below="@+id/spinner_set_concentration"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="@string/paper_width"
@@ -78,9 +86,9 @@
         android:id="@+id/rg__select_paper_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_paper_size"
         android:layout_below="@+id/tv_paper_size"
-        android:orientation="horizontal" >
+        android:layout_alignLeft="@+id/tv_paper_size"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rb_58mm"
@@ -144,27 +152,28 @@
         android:layout_marginTop="10dp"
         android:text="@string/print_test"
         android:textSize="18sp" />
+
     <Button
         android:id="@+id/btn_for_print"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_selfprint_test"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:layout_centerVertical="true"
         android:text="@string/repeat_print_test"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_for_print_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_for_print"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:layout_centerVertical="true"
         android:text="@string/repeat_print_note"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
     <!--
     <Button
         android:id="@+id/btn_Update"

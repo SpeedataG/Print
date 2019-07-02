@@ -27,6 +27,11 @@
         <item>Wifi</item>
         <item>Serial port</item>
     </string-array>
+    <string-array name="set_concentration">
+        <item>low</item>
+        <item>middle</item>
+        <item>high</item>
+    </string-array>
     <string-array name="printertype">
         <item>L31</item>
         <item>L51</item>
@@ -43,6 +48,7 @@
     <string name="interface_type">Printer Interface Type</string>
     <string name="openConnection">OPEN CONNECTION</string>
     <string name="scan_connect">Scan And Connection</string>
+    <string name="set_concentration">set concentration</string>
     <string name="paper_width">Paper Width</string>
     <string name="copies_number">Number Oof Copies</string>
     <string name="check_status">Check Status</string>

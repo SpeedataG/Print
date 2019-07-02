@@ -68,15 +68,16 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     private TextView tvShowPrinterType;
     private TextView tvShowPrinterPortType;
     private Spinner spinner_printer_type;
-    private Spinner spinner_interface_type;
+    private Spinner spinner_interface_type, spinnerSetConcentration;
     private List<String> data_list;
     private ArrayAdapter<CharSequence> arr_adapter;
     private ArrayAdapter<CharSequence> printType_adapter;
+    private ArrayAdapter<CharSequence> printConcentrationAdapter;
     private final static int SCANNIN_GREQUEST_CODE = 2;
     public static final int CONNECT_DEVICE = 1;
     protected static final String TAG = "SettingActivity";
-    private static Button btn_search_devices, btn_scan_and_connect,
-            btn_selfprint_test, btn_update, btn_getstate, btnForPrint, btnForPrintNote;
+    private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
+            btn_update, btn_getstate, btnForPrint, btnForPrintNote;
     public static boolean isConnected = false;// 蓝牙连接状态
     public static String devicesName = "未知设备";
     private static String devicesAddress;
@@ -228,6 +229,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         btnForPrintNote = findViewById(R.id.btn_for_print_note);
         btnForPrintNote.setOnClickListener(this);
 
+        //设置浓度
+        spinnerSetConcentration = findViewById(R.id.spinner_set_concentration);
+        printConcentrationAdapter = ArrayAdapter.createFromResource(this,
+                R.array.set_concentration, android.R.layout.simple_spinner_item);
+        printConcentrationAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSetConcentration.setAdapter(printConcentrationAdapter);
+        spinnerSetConcentration.setOnItemSelectedListener(this);
         //btn_update.setOnClickListener(this);
         //btn_getstate.setOnClickListener(this);
         //展示设备名和设备地址
@@ -571,6 +580,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     btnForPrintNote.setEnabled(false);
                     btn_selfprint_test.setEnabled(false);
                 }
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
         if (v == btnForPrintNote) {
@@ -589,6 +600,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     btnForPrint.setEnabled(false);
                     btn_selfprint_test.setEnabled(false);
                 }
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -1033,6 +1046,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             PrefUtils.setInt(mContext, GlobalContants.INTERFACETYPE, position);
             interfaceType = position;
             Log.i(TAG, "position:" + position);
+        }
+        if (parent == spinnerSetConcentration) {
+            if (isConnected) {
+                byte n = (byte) position;
+                XTUtils.setConcentration(myPrinter, n);
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
