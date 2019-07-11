@@ -48,12 +48,14 @@
     <string name="interface_type">Printer Interface Type</string>
     <string name="openConnection">OPEN CONNECTION</string>
     <string name="scan_connect">Scan And Connection</string>
+    <string name="open_black_model">Open BlackMaskModel</string>
+    <string name="close_black_model">Close BlackMaskModel</string>
     <string name="set_concentration">set concentration</string>
     <string name="paper_width">Paper Width</string>
     <string name="copies_number">Number Oof Copies</string>
     <string name="check_status">Check Status</string>
     <string name="print_test">Print TestPage</string>
-    <string name="repeat_print_test">Repeat Print</string>
+    <string name="repeat_print_test">Print Self-checking page</string>
     <string name="repeat_print_note">Repeat Print Receipt</string>
     <string name="repeat_print_stop">Stop</string>
     <string name="button_scan">Scan New Devices</string>

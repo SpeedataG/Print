@@ -65,13 +65,47 @@ public class XTUtils {
     private static boolean is58mm = false;
 
     /**
-     * 设置打印浓度
+     * 设置打印浓度,开启黑标打印模式
+     *
      * @param mPrinter 先连接再设置，设置完成会断开连接，需要重新连接
-     * @param n 0-低 1-中 2-高
+     * @param n        0-低 1-中 2-高
      */
     public static void setConcentration(PrinterInstance mPrinter, byte n) {
-        byte[] bytes = new byte[]{31, 17, 31, 22, n, 31, 31};
-        mPrinter.sendBytesData(bytes);
+        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, n, 0x1F, 0x1F};
+        mPrinter.sendBytesData(blackModel);
+    }
+
+    /**
+     * 开启黑标打印模式
+     * <p>
+     * 1F 11进入设置模式     1F 1F退出设置模式
+     * 1F 16 02这个是设置浓度的
+     * 1F 44 01 这个是开黑标
+     *
+     * @param mPrinter
+     */
+    public static void openBlackMaskModel(PrinterInstance mPrinter) {
+        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
+        mPrinter.sendBytesData(blackModel);
+    }
+
+    /**
+     * 关闭黑标打印模式
+     * 1F 44 00  关闭黑标
+     *
+     * @param mPrinter
+     */
+    public static void closeBlackMaskModel(PrinterInstance mPrinter) {
+        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x44, 0x00, 0x1F, 0x1F};
+        mPrinter.sendBytesData(blackModel);
+    }
+
+    /**
+     * 打印自检页
+     */
+    public static void printSelfCheck(PrinterInstance mPrinter) {
+        byte[] selfCheck = new byte[]{0x1d, 0x28, 0x41, 0x02, 0x00, 0x00, 0x02};
+        mPrinter.sendBytesData(selfCheck);
     }
 
     public static void printNote(Resources resources, PrinterInstance mPrinter) {
@@ -243,6 +277,8 @@ public class XTUtils {
         mPrinter.setFont(0, 0, 0, 0, 0);
         mPrinter.setPrinter(Command.ALIGN, 0);
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
+        byte[] bytes = new byte[]{0x0C};
+        mPrinter.sendBytesData(bytes);
     }
 
     public static int update(Resources resources, PrinterInstance mPrinter, InputStream in) {

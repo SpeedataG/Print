@@ -77,7 +77,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     public static final int CONNECT_DEVICE = 1;
     protected static final String TAG = "SettingActivity";
     private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
-            btn_update, btn_getstate, btnForPrint, btnForPrintNote;
+            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnOpenBlackModel, btnCloseBlackModel;
     public static boolean isConnected = false;// 蓝牙连接状态
     public static String devicesName = "未知设备";
     private static String devicesAddress;
@@ -228,6 +228,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         //循环打印小票示例
         btnForPrintNote = findViewById(R.id.btn_for_print_note);
         btnForPrintNote.setOnClickListener(this);
+
+        //开启黑标模式
+        btnOpenBlackModel = findViewById(R.id.btn_open_black);
+        //关闭黑标模式
+        btnCloseBlackModel = findViewById(R.id.btn_close_black);
+        btnOpenBlackModel.setOnClickListener(this);
+        btnCloseBlackModel.setOnClickListener(this);
 
         //设置浓度
         spinnerSetConcentration = findViewById(R.id.spinner_set_concentration);
@@ -555,7 +562,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XTUtils.printTest(getResources(), myPrinter);
+//                        XTUtils.printTest(getResources(), myPrinter);
+                        XTUtils.printForTest(getResources(), myPrinter);
                     }
                 }).start();
 
@@ -566,20 +574,27 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
         if (v == btnForPrint) {
             if (isConnected) {
-                if (isStart && timer != null) {
-                    timer.cancel();
-                    timer = null;
-                    isStart = false;
-                    btnForPrint.setText(getResources().getString(R.string.repeat_print_test));
-                    btnForPrintNote.setEnabled(true);
-                    btn_selfprint_test.setEnabled(true);
-                } else {
-                    start(1);
-                    isStart = true;
-                    btnForPrint.setText(getResources().getString(R.string.repeat_print_stop));
-                    btnForPrintNote.setEnabled(false);
-                    btn_selfprint_test.setEnabled(false);
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XTUtils.printSelfCheck(myPrinter);
+                    }
+                }).start();
+
+//                if (isStart && timer != null) {
+//                    timer.cancel();
+//                    timer = null;
+//                    isStart = false;
+//                    btnForPrint.setText(getResources().getString(R.string.repeat_print_test));
+//                    btnForPrintNote.setEnabled(true);
+//                    btn_selfprint_test.setEnabled(true);
+//                } else {
+//                    start(1);
+//                    isStart = true;
+//                    btnForPrint.setText(getResources().getString(R.string.repeat_print_stop));
+//                    btnForPrintNote.setEnabled(false);
+//                    btn_selfprint_test.setEnabled(false);
+//                }
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
@@ -600,6 +615,30 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     btnForPrint.setEnabled(false);
                     btn_selfprint_test.setEnabled(false);
                 }
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v == btnOpenBlackModel) {
+            if (isConnected) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XTUtils.openBlackMaskModel(myPrinter);
+                    }
+                }).start();
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v == btnCloseBlackModel) {
+            if (isConnected) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XTUtils.closeBlackMaskModel(myPrinter);
+                    }
+                }).start();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
