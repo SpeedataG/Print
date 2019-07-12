@@ -68,16 +68,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     private TextView tvShowPrinterType;
     private TextView tvShowPrinterPortType;
     private Spinner spinner_printer_type;
-    private Spinner spinner_interface_type, spinnerSetConcentration;
+    private Spinner spinner_interface_type, spinnerSetConcentration, spinnerPaperType;
     private List<String> data_list;
     private ArrayAdapter<CharSequence> arr_adapter;
     private ArrayAdapter<CharSequence> printType_adapter;
-    private ArrayAdapter<CharSequence> printConcentrationAdapter;
+    private ArrayAdapter<CharSequence> printConcentrationAdapter, paperTypeAdapter;
     private final static int SCANNIN_GREQUEST_CODE = 2;
     public static final int CONNECT_DEVICE = 1;
     protected static final String TAG = "SettingActivity";
     private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
-            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnOpenBlackModel, btnCloseBlackModel;
+            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnOpenBlackModel, btnCloseBlackModel,
+            btnPaperOut, btnPaperBack;
     public static boolean isConnected = false;// 蓝牙连接状态
     public static String devicesName = "未知设备";
     private static String devicesAddress;
@@ -215,12 +216,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         btn_search_devices = (Button) findViewById(R.id.btn_search_devices);
         btn_scan_and_connect = (Button) findViewById(R.id.btn_scan_and_connect);
         btn_selfprint_test = (Button) findViewById(R.id.btn_selfprint_test);
-        //btn_update = (Button) findViewById(R.id.btn_Update);
-        //btn_getstate = (Button) findViewById(R.id.btn_getstate);
+        btn_update = (Button) findViewById(R.id.btn_Update);
+        btn_getstate = (Button) findViewById(R.id.btn_getstate);
         // 设置按钮的监听事件
         btn_search_devices.setOnClickListener(this);
         btn_scan_and_connect.setOnClickListener(this);
         btn_selfprint_test.setOnClickListener(this);
+        btn_update.setOnClickListener(this);
+        btn_getstate.setOnClickListener(this);
 
         //循环打印
         btnForPrint = findViewById(R.id.btn_for_print);
@@ -236,6 +239,19 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         btnOpenBlackModel.setOnClickListener(this);
         btnCloseBlackModel.setOnClickListener(this);
 
+        //走纸 退纸
+        btnPaperOut = findViewById(R.id.btn_paper_out);
+        btnPaperBack = findViewById(R.id.btn_paper_back);
+        btnPaperOut.setOnClickListener(this);
+        btnPaperBack.setOnClickListener(this);
+
+        //设置纸类型
+        spinnerPaperType = findViewById(R.id.spinner_paper_type);
+        paperTypeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.paper_type, android.R.layout.simple_spinner_item);
+        paperTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPaperType.setAdapter(paperTypeAdapter);
+        spinnerPaperType.setOnItemSelectedListener(this);
         //设置浓度
         spinnerSetConcentration = findViewById(R.id.spinner_set_concentration);
         printConcentrationAdapter = ArrayAdapter.createFromResource(this,
@@ -244,8 +260,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSetConcentration.setAdapter(printConcentrationAdapter);
         spinnerSetConcentration.setOnItemSelectedListener(this);
-        //btn_update.setOnClickListener(this);
-        //btn_getstate.setOnClickListener(this);
+
         //展示设备名和设备地址
         tv_device_name = (TextView) findViewById(R.id.tv_device_name);
         tv_printer_address = (TextView) findViewById(R.id.tv_printer_address);
@@ -621,12 +636,16 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
         if (v == btnOpenBlackModel) {
             if (isConnected) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        XTUtils.openBlackMaskModel(myPrinter);
-                    }
-                }).start();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        String result = XTUtils.openBlackMaskModel(myPrinter);
+//
+//                    }
+//                }).start();
+                assert myPrinter != null;
+                String result = XTUtils.openBlackMaskModel(myPrinter);
+                Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
@@ -644,34 +663,68 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             }
         }
 
-//		if (v == btn_update){
-//			showConnectingDialog();
-//			new updateThread().start();
-//		}
-//		if (v == btn_getstate){
-//			myPrinter.setPrinter(PrinterConstants.Command.ALIGN,PrinterConstants.Command.ALIGN_RIGHT );
-//			Barcode barcode = new Barcode(PrinterConstants.BarcodeType.QRCODE,2,3,6,"http://weixin.qq.com/r/mDu7o9DEGo1lrZTA926K");
-//			myPrinter.printBarCode(barcode);
-//			int state;
-//				state = myPrinter.getCurrentStatus();
-//				switch (state){
-//					case 0:
-//						Toast.makeText(SettingActivity.this, "正常", Toast.LENGTH_SHORT).show();
-//						break;
-//					case -1:
-//						Toast.makeText(SettingActivity.this, "通讯异常", Toast.LENGTH_SHORT).show();
-//						break;
-//					case -2:
-//						Toast.makeText(SettingActivity.this, "缺纸", Toast.LENGTH_SHORT).show();
-//						break;
-//					case -3:
-//						Toast.makeText(SettingActivity.this, "纸将尽", Toast.LENGTH_SHORT).show();
-//						break;
-//					case -4:
-//						Toast.makeText(SettingActivity.this, "打印机开盖", Toast.LENGTH_SHORT).show();
-//						break;
-//			}
-//		}
+        if (v==btnPaperOut){
+            if (isConnected) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XTUtils.setOutPaper(myPrinter,1);
+                    }
+                }).start();
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v==btnPaperBack){
+            if (isConnected) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XTUtils.setBackPaper(myPrinter,1);
+                    }
+                }).start();
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (v == btn_update) {
+            if (isConnected) {
+                showConnectingDialog();
+                new updateThread().start();
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v == btn_getstate) {
+            if (isConnected) {
+                myPrinter.setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_RIGHT);
+                Barcode barcode = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6, "http://weixin.qq.com/r/mDu7o9DEGo1lrZTA926K");
+                myPrinter.printBarCode(barcode);
+                int state;
+                state = myPrinter.getCurrentStatus();
+                //没有相应传感器 只能检测缺纸状态和正常状态
+                switch (state) {
+                    case 0:
+                        Toast.makeText(SettingActivity.this, "正常", Toast.LENGTH_SHORT).show();
+                        break;
+                    case -1:
+                        Toast.makeText(SettingActivity.this, "通讯异常", Toast.LENGTH_SHORT).show();
+                        break;
+                    case -2:
+                        Toast.makeText(SettingActivity.this, "缺纸", Toast.LENGTH_SHORT).show();
+                        break;
+                    case -3:
+                        Toast.makeText(SettingActivity.this, "纸将尽", Toast.LENGTH_SHORT).show();
+                        break;
+                    case -4:
+                        Toast.makeText(SettingActivity.this, "打印机开盖", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private ProgressDialog connectingDialog;
@@ -714,9 +767,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 f.mkdir();
             }
             //复制升级文件到指定目录
-            copyFilesFromassets(SettingActivity.this, "UL1101CA01V1.1.bin", "/sdcard/Android/data/updata/UL1101CA01V1.1.bin");
+            copyFilesFromassets(SettingActivity.this, "T581U0.73-V0.16-sbtV02.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV02.bin");
             //获取升级文件
-            File fileParent = new File("/sdcard/Android/data/updata/UL1101CA01V1.1.bin");
+            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV02.bin");
             try {
                 in = new FileInputStream(fileParent);
 
@@ -744,6 +797,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             Looper.loop();
         }
     }
+
 
     TimerTask timerTask = new TimerTask() {
         @Override
@@ -1090,6 +1144,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             if (isConnected) {
                 byte n = (byte) position;
                 XTUtils.setConcentration(myPrinter, n);
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (parent == spinnerPaperType) {
+            if (isConnected) {
+                byte n = (byte) position;
+                XTUtils.setPaperType(myPrinter, n);
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }

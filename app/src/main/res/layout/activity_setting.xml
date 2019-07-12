@@ -96,33 +96,62 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:text="@string/close_black_model"
+                    android:text="灵敏度"
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_concentration"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_paper_type"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_set_black_model"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/set_concentration"
-                android:textSize="16sp" />
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spinner_set_concentration"
+                <TextView
+                    android:id="@+id/tv_paper_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="纸类型"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_paper_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_set_concentration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_concentration"
+                android:layout_below="@+id/ll_paper_type"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_concentration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_concentration"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_set_concentration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_paper_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/spinner_set_concentration"
+                android:layout_below="@+id/ll_set_concentration"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/paper_width"
@@ -220,24 +249,58 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/repeat_print_note"
                 android:textSize="18sp" />
-            <!--
+
+            <LinearLayout
+                android:id="@+id/btn_paper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_for_print_note"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_paper_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_paper"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="走纸"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_paper_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_paper"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="退纸"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btn_Update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_selfprint_test"
+                android:layout_below="@id/btn_paper"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:text="升级"
                 android:textSize="18sp" />
+
             <Button
                 android:id="@+id/btn_getstate"
-                android:layout_below="@+id/btn_Update"
-                android:text="查询状态"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-                -->
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_Update"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="查询状态" />
+
         </RelativeLayout>
 
     </ScrollView>

@@ -28,9 +28,16 @@
         <item>Serial port</item>
     </string-array>
     <string-array name="set_concentration">
-        <item>浓度低</item>
-        <item>浓度中</item>
-        <item>浓度高</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="paper_type">
+        <item>普通纸</item>
+        <item>标签纸</item>
+        <item>黑标纸</item>
     </string-array>
     <string-array name="printertype">
         <item>L31</item>

@@ -2,6 +2,7 @@ package com.printer.demo.utils;
 
 import android.content.res.Resources;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.printer.demo.R;
 import com.printer.demo.ymode.CRC;
@@ -24,6 +25,7 @@ public class XTUtils {
     private static final String TAG = "XUtils";
     public YModem mo;
     public boolean aaa;
+    private byte[] bytes;
 
     public static byte[] string2bytes(String content) {
 
@@ -84,9 +86,12 @@ public class XTUtils {
      *
      * @param mPrinter
      */
-    public static void openBlackMaskModel(PrinterInstance mPrinter) {
+    public static String openBlackMaskModel(PrinterInstance mPrinter) {
         byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
         mPrinter.sendBytesData(blackModel);
+        byte[] result = new byte[6];
+        mPrinter.read(result);
+        return byte2HexStr(result);
     }
 
     /**
@@ -96,7 +101,7 @@ public class XTUtils {
      * @param mPrinter
      */
     public static void closeBlackMaskModel(PrinterInstance mPrinter) {
-        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x44, 0x00, 0x1F, 0x1F};
+        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, 0x18, 0x1F, 0x1F};
         mPrinter.sendBytesData(blackModel);
     }
 
@@ -106,6 +111,43 @@ public class XTUtils {
     public static void printSelfCheck(PrinterInstance mPrinter) {
         byte[] selfCheck = new byte[]{0x1d, 0x28, 0x41, 0x02, 0x00, 0x00, 0x02};
         mPrinter.sendBytesData(selfCheck);
+    }
+
+    /**
+     * 走纸 出纸
+     *
+     * @param mPrinter
+     * @param n        单位(mm)
+     *                 8点行=1mm
+     */
+    public static void setOutPaper(PrinterInstance mPrinter, int n) {
+        n = n * 8;
+        byte[] bytes = new byte[]{0x1B, 0x4A, (byte) n};
+        mPrinter.sendBytesData(bytes);
+    }
+
+    /**
+     * 退纸
+     *
+     * @param mPrinter
+     * @param n        单位(mm)
+     *                 8点行=1mm
+     */
+    public static void setBackPaper(PrinterInstance mPrinter, int n) {
+        n = n * 8;
+        byte[] bytes = new byte[]{0x1B, 0x4B, (byte) n};
+        mPrinter.sendBytesData(bytes);
+    }
+
+    /**
+     * 选择打印纸类型
+     *
+     * @param mPrinter
+     * @param n        0-普通纸 1-标签纸 2-黑标纸
+     */
+    public static void setPaperType(PrinterInstance mPrinter, int n) {
+        byte[] bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) n, 0x1F, 0x1F};
+        mPrinter.sendBytesData(bytes);
     }
 
     public static void printNote(Resources resources, PrinterInstance mPrinter) {
@@ -283,16 +325,15 @@ public class XTUtils {
 
     public static int update(Resources resources, PrinterInstance mPrinter, InputStream in) {
         DataInputStream dataStream = new DataInputStream(in);
-        byte[] stream = hexStringToByte(resources.getString(R.string.file_e).replaceAll(" ", ""));
-        byte[] stream1 = hexStringToByte(resources.getString(R.string.file_f).replaceAll(" ", ""));
         CRC16 crc = new CRC16();
-        byte[] comein = new byte[]{(byte) 27, (byte) 9, (byte) 27, (byte) 250, (byte) 117, (byte) 112, (byte) 103, (byte) 114, (byte) 97, (byte) 100, (byte) 101};
+        byte[] comein = new byte[]{(byte) 31, (byte) 17, (byte) 31, (byte) 66, (byte) 117, (byte) 112, (byte) 103, (byte) 114, (byte) 97, (byte) 100, (byte) 101};
         byte[] send = new byte[]{(byte) 85};
         byte[] ready = new byte[]{(byte) 49};
         byte[] block = new byte[]{(byte) 1, (byte) 0, (byte) 255, (byte) 84, (byte) 54, (byte) 95, (byte) 80, (byte) 82, (byte) 74, (byte) 46, (byte) 98, (byte) 105, (byte) 110, (byte) 00, (byte) 49, (byte) 51, (byte) 52, (byte) 50, (byte) 50, (byte) 52};
         byte[] filename = hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 31 33 34 32 32 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 89 DF".replaceAll(" ", ""));
         mPrinter.sendBytesData(comein);
         Log.d("update", "进入升级模式");
+
         try {
             Thread.sleep(3000L);
         } catch (InterruptedException e) {
@@ -329,7 +370,7 @@ public class XTUtils {
         //发送文件
         byte[] files = new byte[1024];
         try {
-            sendDataBlocks(stream, stream1, dataStream, 1, crc, files, mPrinter);
+            sendDataBlocks(dataStream, 1, crc, files, mPrinter);
             Log.d(TAG, "update: 文件发送over");
         } catch (IOException e) {
             e.printStackTrace();
@@ -339,36 +380,35 @@ public class XTUtils {
         return -2;
     }
 
-    public static void sendDataBlocks(byte[] stream, byte[] stream1, DataInputStream dataStream, int blockNumber, CRC crc, byte[] block, PrinterInstance mPrinter) throws IOException {
+    public static void sendDataBlocks(DataInputStream dataStream, int blockNumber, CRC crc, byte[] block, PrinterInstance mPrinter) throws IOException {
         int dataLength;
-        int star = 0;
-        int star1 = 0;
-        int end = 1024;
-        int end1 = 1024;
-        int j = stream.length / 1024;
-        int k = stream1.length / 1024 + 1;
-        Log.d(TAG, "sendDataBlocks: length" + j);
-        Log.d(TAG, "sendDataBlocks: length" + k);
-        //循环发送数据
-        for (int i = 0; i < j; i++) {
-            block = Arrays.copyOfRange(stream, star, end);
-            star = star + 1024;
-            end = end + 1024;
-            dataLength = block.length;
+//		int star=0;
+//		int star1 = 0;
+//		int end = 1024;
+//		int end1 = 1024;
+//		int j = stream.length/1024;
+//		int k = stream1.length/1024+1;
+//		Log.d(TAG, "sendDataBlocks: length"+j);
+//		Log.d(TAG, "sendDataBlocks: length"+k);
+//		//循环发送数据
+//			for (int i=0;i<j;i++){
+//				block = Arrays.copyOfRange(stream,star,end);
+//				star = star+1024;
+//				end = end+1024;
+//				dataLength = block.length;
+//				sendBlock(blockNumber++,block, dataLength, crc,mPrinter);
+//			}
+//		for (int i=0;i<k;i++){
+//			block = Arrays.copyOfRange(stream1,star1,end1);
+//			star1 = star1+1024;
+//			end1 = end1+1024;
+//			dataLength = block.length;
+//			sendBlock(blockNumber++,block, dataLength, crc,mPrinter);
+//		}
+        while ((dataLength = dataStream.read(block)) != -1) {
             sendBlock(blockNumber++, block, dataLength, crc, mPrinter);
+            Log.d("updata", "第" + (blockNumber - 1) + "数据");
         }
-        for (int i = 0; i < k; i++) {
-            block = Arrays.copyOfRange(stream1, star1, end1);
-            star1 = star1 + 1024;
-            end1 = end1 + 1024;
-            dataLength = block.length;
-            sendBlock(blockNumber++, block, dataLength, crc, mPrinter);
-        }
-//		while ((dataLength = dataStream.read(block)) != -1) {
-//			//String[] data = bytesToHexStrings(block);
-//            sendBlock(blockNumber++,block, dataLength, crc,mPrinter);
-//            Log.d("updata", "第" + (blockNumber-1) + "数据");
-//        }
     }
 
     public static void sendBlock(int blockNumber, byte[] block, int dataLength, CRC crc, PrinterInstance mPrinter) throws IOException {
