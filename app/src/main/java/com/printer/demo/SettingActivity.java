@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -79,6 +80,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
             btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnOpenBlackModel, btnCloseBlackModel,
             btnPaperOut, btnPaperBack;
+    private EditText etV;
     public static boolean isConnected = false;// 蓝牙连接状态
     public static String devicesName = "未知设备";
     private static String devicesAddress;
@@ -281,6 +283,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         // 下拉列表框的监听事件
 //		spinner_printer_type.setOnItemSelectedListener(this);
         spinner_interface_type.setOnItemSelectedListener(this);
+
+        //灵敏度值（电压）
+        etV = findViewById(R.id.et_v);
 
         rg__select_paper_size = (RadioGroup) findViewById(R.id.rg__select_paper_size);
         rg__select_paper_size.setOnCheckedChangeListener(this);
@@ -636,15 +641,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
         if (v == btnOpenBlackModel) {
             if (isConnected) {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        String result = XTUtils.openBlackMaskModel(myPrinter);
-//
-//                    }
-//                }).start();
+                String n = etV.getText().toString();
                 assert myPrinter != null;
-                String result = XTUtils.openBlackMaskModel(myPrinter);
+                String result = XTUtils.openBlackMaskModel(myPrinter, n);
                 Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
@@ -652,35 +651,32 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
         if (v == btnCloseBlackModel) {
             if (isConnected) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        XTUtils.closeBlackMaskModel(myPrinter);
-                    }
-                }).start();
+                assert myPrinter != null;
+                String result = XTUtils.closeBlackMaskModel(myPrinter);
+                Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
 
-        if (v==btnPaperOut){
+        if (v == btnPaperOut) {
             if (isConnected) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XTUtils.setOutPaper(myPrinter,1);
+                        XTUtils.setOutPaper(myPrinter, 1);
                     }
                 }).start();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
-        if (v==btnPaperBack){
+        if (v == btnPaperBack) {
             if (isConnected) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XTUtils.setBackPaper(myPrinter,1);
+                        XTUtils.setBackPaper(myPrinter, 1);
                     }
                 }).start();
             } else {
@@ -767,9 +763,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 f.mkdir();
             }
             //复制升级文件到指定目录
-            copyFilesFromassets(SettingActivity.this, "T581U0.73-V0.16-sbtV02.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV02.bin");
+            copyFilesFromassets(SettingActivity.this, "T581U0.73-V0.16-sbtV03.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV03.bin");
             //获取升级文件
-            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV02.bin");
+            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV03.bin");
             try {
                 in = new FileInputStream(fileParent);
 

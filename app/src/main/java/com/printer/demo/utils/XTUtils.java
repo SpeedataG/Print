@@ -67,7 +67,7 @@ public class XTUtils {
     private static boolean is58mm = false;
 
     /**
-     * 设置打印浓度,开启黑标打印模式
+     * 设置打印浓度
      *
      * @param mPrinter 先连接再设置，设置完成会断开连接，需要重新连接
      * @param n        0-低 1-中 2-高
@@ -86,8 +86,10 @@ public class XTUtils {
      *
      * @param mPrinter
      */
-    public static String openBlackMaskModel(PrinterInstance mPrinter) {
-        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
+    public static String openBlackMaskModel(PrinterInstance mPrinter, String n) {
+//        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
+        int v = Integer.parseInt(n);
+        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) v, 0x1F, 0x1F};
         mPrinter.sendBytesData(blackModel);
         byte[] result = new byte[6];
         mPrinter.read(result);
@@ -100,9 +102,13 @@ public class XTUtils {
      *
      * @param mPrinter
      */
-    public static void closeBlackMaskModel(PrinterInstance mPrinter) {
-        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, 0x18, 0x1F, 0x1F};
-        mPrinter.sendBytesData(blackModel);
+    public static String closeBlackMaskModel(PrinterInstance mPrinter) {
+//        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, 0x18, 0x1F, 0x1F};
+        byte[] comein = new byte[]{(byte) 31, (byte) 17, (byte) 31, (byte) 66, (byte) 117, (byte) 112, (byte) 103, (byte) 114, (byte) 97, (byte) 100, (byte) 101};
+        mPrinter.sendBytesData(comein);
+        byte[] result = new byte[6];
+        mPrinter.read(result);
+        return byte2HexStr(result);
     }
 
     /**
@@ -313,6 +319,8 @@ public class XTUtils {
 
     public static void printForTest(Resources resources, PrinterInstance mPrinter) {
 
+//        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8)};
+//        mPrinter.sendBytesData(backBytes);
         mPrinter.initPrinter();
 
         mPrinter.printText(resources.getString(R.string.str_text));

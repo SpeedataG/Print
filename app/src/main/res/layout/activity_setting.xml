@@ -82,12 +82,21 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/et_v"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:text="18"/>
+
                 <Button
                     android:id="@+id/btn_open_black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/open_black_model"
+                    android:text="设置灵敏度"
                     android:textSize="16sp" />
 
                 <Button
@@ -97,7 +106,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:text="灵敏度"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -299,7 +309,8 @@
                 android:layout_below="@id/btn_Update"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="查询状态" />
+                android:text="查询状态"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
