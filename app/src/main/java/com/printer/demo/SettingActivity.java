@@ -420,6 +420,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 try {
                     deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
                     deviceControl.PowerOnDevice();
+                    deviceControl.newSetDir(46, 0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -763,9 +764,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 f.mkdir();
             }
             //复制升级文件到指定目录
-            copyFilesFromassets(SettingActivity.this, "T581U0.73-V0.16-sbtV03.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV03.bin");
+            copyFilesFromassets(SettingActivity.this, "T581U0.73-V0.16-sbtV05.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
             //获取升级文件
-            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV03.bin");
+            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
             try {
                 in = new FileInputStream(fileParent);
 

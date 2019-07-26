@@ -86,6 +86,14 @@ public class XTUtils {
      *
      * @param mPrinter
      */
+
+    /**
+     * 设置灵敏度
+     *
+     * @param mPrinter
+     * @param n
+     * @return
+     */
     public static String openBlackMaskModel(PrinterInstance mPrinter, String n) {
 //        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
         int v = Integer.parseInt(n);
@@ -103,8 +111,7 @@ public class XTUtils {
      * @param mPrinter
      */
     public static String closeBlackMaskModel(PrinterInstance mPrinter) {
-//        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, 0x18, 0x1F, 0x1F};
-        byte[] comein = new byte[]{(byte) 31, (byte) 17, (byte) 31, (byte) 66, (byte) 117, (byte) 112, (byte) 103, (byte) 114, (byte) 97, (byte) 100, (byte) 101};
+        byte[] comein = new byte[]{0x1F, 0x11, 0x1F, (byte) 192, (byte) 130, 0x1F, 0x1F};
         mPrinter.sendBytesData(comein);
         byte[] result = new byte[6];
         mPrinter.read(result);
@@ -319,8 +326,8 @@ public class XTUtils {
 
     public static void printForTest(Resources resources, PrinterInstance mPrinter) {
 
-//        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8)};
-//        mPrinter.sendBytesData(backBytes);
+        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
+        mPrinter.sendBytesData(backBytes);
         mPrinter.initPrinter();
 
         mPrinter.printText(resources.getString(R.string.str_text));
@@ -338,7 +345,10 @@ public class XTUtils {
         byte[] send = new byte[]{(byte) 85};
         byte[] ready = new byte[]{(byte) 49};
         byte[] block = new byte[]{(byte) 1, (byte) 0, (byte) 255, (byte) 84, (byte) 54, (byte) 95, (byte) 80, (byte) 82, (byte) 74, (byte) 46, (byte) 98, (byte) 105, (byte) 110, (byte) 00, (byte) 49, (byte) 51, (byte) 52, (byte) 50, (byte) 50, (byte) 52};
-        byte[] filename = hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 31 33 34 32 32 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 89 DF".replaceAll(" ", ""));
+        // byte[] filename = hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 31 33 34 32 32 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 89 DF".replaceAll(" ", ""));
+
+        // 35 31 34 31 32 bin文件的大小
+        byte[] filename = hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 35 31 34 30 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A9 25".replaceAll(" ", ""));
         mPrinter.sendBytesData(comein);
         Log.d("update", "进入升级模式");
 
