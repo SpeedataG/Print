@@ -146,7 +146,7 @@ public class CodePageUtils
   				            .getSuperclass().getDeclaredField(
   				                     "mShowing" );
   				    field.setAccessible( true );
-  				     //   将mShowing变量设为false，表示对话框已关�?
+  				     //   将mShowing变量设为false，表示对话框已关
   				    field.set(dialog, false );
 
            }catch(Exception e)

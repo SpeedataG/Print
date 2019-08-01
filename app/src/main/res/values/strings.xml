@@ -301,7 +301,6 @@
     <string name="on_line">device online</string>
     <string name="off_line">device offline</string>
     <!-- AboutUsActivity -->
-    <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="version_update">Version Update</string>
     <string name="user_guide">User Guide</string>
     <string name="website">Website</string>

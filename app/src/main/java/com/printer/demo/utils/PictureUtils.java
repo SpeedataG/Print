@@ -94,7 +94,8 @@ public class PictureUtils {
         }
         int n = bmp.length / 1024;
         Log.d("zzc", "====bmp.length====" + n + "====" + bmp.length);
-        for (int i = 0; i < n; i++) {
+        int i;
+        for (i = 0; i < n; i++) {
             try {
                 String statusFileStr;
                 String[] str;
@@ -104,7 +105,6 @@ public class PictureUtils {
                     str = statusFileStr.split("46: ");
                     str[1] = str[1].substring(3, 4);
                     Log.d("zzc", "====statusFileStr:====" + i + "====" + str[1]);
-//                    SystemClock.sleep(500);
                 } while ("1".equals(str[1]));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -113,7 +113,20 @@ public class PictureUtils {
             System.arraycopy(bmp, i * 1024, subBmp, 0, 1024);
             mPrinter.sendBytesData(subBmp);
         }
-        byte[] endBmp = new byte[bmp.length - n * 1024];
+        try {
+            String statusFileStr;
+            String[] str;
+            do {
+                statusFile = new FileInputStream("/sys/bus/platform/drivers/mediatek-pinctrl/10005000.pinctrl/mt_gpio");
+                statusFileStr = convertStreamToString(statusFile);
+                str = statusFileStr.split("46: ");
+                str[1] = str[1].substring(3, 4);
+                Log.d("zzc", "====statusFileStr:====" + i + "====" + str[1]);
+            } while ("1".equals(str[1]));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        byte[] endBmp = new byte[1024];
         System.arraycopy(bmp, n * 1024, endBmp, 0, bmp.length - n * 1024);
         mPrinter.sendBytesData(endBmp);
         return 0;

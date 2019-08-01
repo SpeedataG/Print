@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.printer.demo"
-    android:versionCode="1"
-    android:versionName="5.0" >
-
+    package="com.printer.demo">
 
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -28,18 +25,17 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar" >
+        android:theme="@android:style/Theme.NoTitleBar">
         <activity
             android:name="com.printer.demo.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.printer.demo.SettingActivity"/>
+        <activity android:name="com.printer.demo.SettingActivity" />
         <activity
             android:name="com.printer.demo.PicturePrintActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
@@ -59,36 +55,23 @@
             android:name="com.printer.demo.MipcaActivityCapture"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
-        <activity
-            android:name="com.printer.demo.PdfPrintActivity"
-            android:label="@string/title_activity_pdf_print" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name="com.printer.demo.LablePrintActivity"
-            android:label="@string/title_activity_lable_print" >
-        </activity>
+            android:label="@string/title_activity_lable_print"></activity>
         <activity
             android:name="com.printer.demo.SerialsDeviceList"
-            android:label="@string/title_activity_lable_print" >
-        </activity>
+            android:label="@string/title_activity_lable_print"></activity>
         <activity
             android:name="com.printer.demo.IpEditActivity"
             android:theme="@style/MyDialogStyle" />
         <activity
-            android:name="com.printer.demo.AboutUsActivity"
-            android:label="@string/title_activity_about_us" >
-        </activity>
-        <activity
             android:name="com.printer.demo.SplashActivity"
-            android:label="@string/title_activity_splash" >
-        </activity>
+            android:label="@string/title_activity_splash"></activity>
         <activity
             android:name="com.printer.demo.MaterialTransportActivity"
             android:label="@string/title_activity_material_transport"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

@@ -86,7 +86,7 @@
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/btn_open_black"
+                    android:id="@+id/btn_set_vol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -126,14 +126,14 @@
 
                     <Spinner
                         android:id="@+id/spinner_paper_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1" />
 
                     <Button
                         android:id="@+id/btn_set_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
@@ -164,14 +164,14 @@
 
                     <Spinner
                         android:id="@+id/spinner_set_concentration"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1" />
 
                     <Button
                         android:id="@+id/btn_set_concentration"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"

@@ -78,10 +78,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     public static final int CONNECT_DEVICE = 1;
     protected static final String TAG = "SettingActivity";
     private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
-            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnOpenBlackModel, btnCloseBlackModel,
-            btnPaperOut, btnPaperBack;
+            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnSetVol, btnSetConcentration,
+            btnSetType, btnPaperOut, btnPaperBack;
     private EditText etV;
-    public static boolean isConnected = false;// 蓝牙连接状态
+    // 蓝牙连接状态
+    public static boolean isConnected = false;
     public static String devicesName = "未知设备";
     private static String devicesAddress;
     private ProgressDialog dialog;
@@ -110,6 +111,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         init();
+        try {
+            deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Log.i(TAG, "" + SettingActivity.this);
         isFirst = false;
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -187,15 +193,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         count++;
         PrefUtils.setInt(mContext, "count3", count);
         Log.e(TAG, "" + count);
-        // Vibrator vib = (Vibrator) SettingActivity.this
-        // .getSystemService(Service.VIBRATOR_SERVICE);
-        // vib.vibrate(1000);
-        // try {
-        // Thread.sleep(500);
-        // } catch (InterruptedException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
         MediaPlayer player = new MediaPlayer().create(mContext, R.raw.test);
         MediaPlayer player2 = new MediaPlayer().create(mContext, R.raw.beep);
 
@@ -212,7 +209,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         // 初始化标题
         initHeader();
         // 初始化下拉列表框
-//		spinner_printer_type = (Spinner) findViewById(R.id.spinner_printer_type);
         spinner_interface_type = (Spinner) findViewById(R.id.spinner_interface_type);
         // 初始化按钮的点击事件
         btn_search_devices = (Button) findViewById(R.id.btn_search_devices);
@@ -234,12 +230,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         btnForPrintNote = findViewById(R.id.btn_for_print_note);
         btnForPrintNote.setOnClickListener(this);
 
-        //开启黑标模式
-        btnOpenBlackModel = findViewById(R.id.btn_open_black);
-        //关闭黑标模式
-        btnCloseBlackModel = findViewById(R.id.btn_close_black);
-        btnOpenBlackModel.setOnClickListener(this);
-        btnCloseBlackModel.setOnClickListener(this);
+        //灵敏度值（电压）
+        etV = findViewById(R.id.et_v);
+        //设置灵敏度
+        btnSetVol = findViewById(R.id.btn_set_vol);
+        btnSetVol.setOnClickListener(this);
 
         //走纸 退纸
         btnPaperOut = findViewById(R.id.btn_paper_out);
@@ -254,6 +249,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         paperTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPaperType.setAdapter(paperTypeAdapter);
         spinnerPaperType.setOnItemSelectedListener(this);
+        btnSetType = findViewById(R.id.btn_set_type);
+        btnSetType.setOnClickListener(this);
         //设置浓度
         spinnerSetConcentration = findViewById(R.id.spinner_set_concentration);
         printConcentrationAdapter = ArrayAdapter.createFromResource(this,
@@ -262,30 +259,23 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSetConcentration.setAdapter(printConcentrationAdapter);
         spinnerSetConcentration.setOnItemSelectedListener(this);
+        btnSetConcentration = findViewById(R.id.btn_set_concentration);
+        btnSetConcentration.setOnClickListener(this);
 
         //展示设备名和设备地址
         tv_device_name = (TextView) findViewById(R.id.tv_device_name);
         tv_printer_address = (TextView) findViewById(R.id.tv_printer_address);
-//		// 适配器
-//		arr_adapter = ArrayAdapter.createFromResource(this,
-//				R.array.printertype, android.R.layout.simple_spinner_item);
+        // 适配器
         printType_adapter = ArrayAdapter.createFromResource(this,
                 R.array.interface_type, android.R.layout.simple_spinner_item);
 
-//		// 设置样式
-//		arr_adapter
-//				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 设置样式
         printType_adapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // 加载适配器
-//		spinner_printer_type.setAdapter(arr_adapter);
         spinner_interface_type.setAdapter(printType_adapter);
         // 下拉列表框的监听事件
-//		spinner_printer_type.setOnItemSelectedListener(this);
         spinner_interface_type.setOnItemSelectedListener(this);
-
-        //灵敏度值（电压）
-        etV = findViewById(R.id.et_v);
 
         rg__select_paper_size = (RadioGroup) findViewById(R.id.rg__select_paper_size);
         rg__select_paper_size.setOnCheckedChangeListener(this);
@@ -301,22 +291,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         getSaveState();
         updateButtonState(isConnected);
 
+        PrinterConstants.paperWidth = 384;
+        PrefUtils.setInt(mContext, GlobalContants.PAPERWIDTH, 384);
 
-        PrinterConstants.paperWidth = PrefUtils.getInt(mContext, GlobalContants.PAPERWIDTH, 576);
-        switch (PrinterConstants.paperWidth) {
-            case 384:
-                rg__select_paper_size.check(R.id.rb_58mm);
-                break;
-            case 576:
-                rg__select_paper_size.check(R.id.rb_80mm);
-                break;
-            case 724:
-                rg__select_paper_size.check(R.id.rb_100mm);
-                break;
-            default:
-                rg__select_paper_size.check(R.id.rb_80mm);
-                break;
-        }
     }
 
     private void getSaveState() {
@@ -409,9 +386,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             if (!isConnected) {
                 //上电
                 try {
-                    deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
-                    deviceControl.PowerOnDevice();
-                    deviceControl.newSetDir(46, 0);
+                    if (deviceControl != null) {
+                        deviceControl.PowerOnDevice();
+                        deviceControl.newSetDir(46, 0);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -553,6 +531,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         e.printStackTrace();
                     }
                 }
+                BaseActivity.stopCheckStatus();
             }
 
         }
@@ -616,21 +595,30 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
-        if (v == btnOpenBlackModel) {
+        if (v == btnSetVol) {
             if (isConnected) {
                 String n = etV.getText().toString();
                 assert myPrinter != null;
-                String result = XTUtils.openBlackMaskModel(myPrinter, n);
+                String result = XTUtils.setVoltage(myPrinter, n);
                 Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
-        if (v == btnCloseBlackModel) {
+        if (v == btnSetType) {
             if (isConnected) {
-                assert myPrinter != null;
-                String result = XTUtils.closeBlackMaskModel(myPrinter);
-                Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
+                int position = spinnerPaperType.getSelectedItemPosition();
+                byte n = (byte) position;
+                XTUtils.setPaperType(myPrinter, n);
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v == btnSetConcentration) {
+            if (isConnected) {
+                int position = spinnerSetConcentration.getSelectedItemPosition();
+                byte n = (byte) position;
+                XTUtils.setConcentration(myPrinter, n);
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
@@ -798,38 +786,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         return new String(data, "gbk");
     }
 
-    // private Runnable runnable = new Runnable() {
-    //
-    // int count = 0;
-    //
-    // @Override
-    // public void run() {
-    // int ret = myPrinter.getPrinterStatus();
-    // mHandler.obtainMessage(ret).sendToTarget();
-    // Log.i("fdh", "第" + (++count) + "次检测状态     " + ret);
-    // mHandler.postDelayed(this, 3000);
-    // }
-    // };
-//	private Timer timer = new Timer();
-//	private TimerTask task = new TimerTask() {
-//		int count = 0;
-//
-//		@Override
-//		public void run() {
-//			new Thread(new Runnable() {
-//
-//				@Override
-//				public void run() {
-//					int ret = myPrinter.getCurrentStatus();
-//					mHandler.obtainMessage(ret).sendToTarget();
-//					Log.i("fdh", "第" + (++count) + "次检测状态     " + ret);
-//					mHandler.postDelayed(this, 3000);
-//
-//				}
-//			}).start();
-//		}
-//	};
-
     // 安卓3.1以后才有权限操作USB
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     @Override
@@ -873,11 +829,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
                     filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
                     mContext.registerReceiver(mUsbReceiver, filter);
-                    mUsbManager.requestPermission(mUSBDevice, pendingIntent); // 该代码执行后，系统弹出一个对话框
+                    // 该代码执行后，系统弹出一个对话框
+                    mUsbManager.requestPermission(mUSBDevice, pendingIntent);
                 }
 
-            } else if (interfaceType == 2)// wifi
-            {
+            } else if (interfaceType == 2) {
+                // wifi
                 devicesName = "Net device";
                 devicesAddress = data.getStringExtra("ip_address");
                 myPrinter = PrinterInstance.getPrinterInstance(devicesAddress,
@@ -886,13 +843,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     @Override
                     public void run() {
                         // TODO
-                        myPrinter.openConnection();
                         // myPrinter.printText("测试WiFi连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭/n");
-                        // myPrinter.closeConnection();
+                        myPrinter.openConnection();
                     }
                 }).start();
-            } else if (interfaceType == 3) {// 串口
-
+            } else if (interfaceType == 3) {
+                // 串口
                 int baudrate = 9600;
                 String path = data.getStringExtra("path");
                 devicesName = "Serial device";
@@ -905,11 +861,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 myPrinter = PrinterInstance.getPrinterInstance(new File(path),
                         baudrate, 0, mHandler);
                 myPrinter.openConnection();
-                // TODO
-                // myPrinter
-                // .printText("测试串口连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭/n");
-                // myPrinter.closeConnection();
                 Log.i(TAG, "波特率:" + baudrate + "路径:" + path);
+                BaseActivity.startCheckStatus(myPrinter);
             }
 
         }
@@ -1088,18 +1041,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             Log.i(TAG, "position:" + position);
         }
         if (parent == spinnerSetConcentration) {
-            if (isConnected) {
-                byte n = (byte) position;
-                XTUtils.setConcentration(myPrinter, n);
-            } else {
+            if (!isConnected) {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
         if (parent == spinnerPaperType) {
-            if (isConnected) {
-                byte n = (byte) position;
-                XTUtils.setPaperType(myPrinter, n);
-            } else {
+            if (!isConnected) {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
@@ -1118,27 +1065,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             case R.id.rb_58mm:
                 PrinterConstants.paperWidth = 384;
                 break;
-            case R.id.rb_80mm:
-                PrinterConstants.paperWidth = 576;
-                break;
-            case R.id.rb_100mm:
-                PrinterConstants.paperWidth = 724;
-                break;
             default:
-                PrinterConstants.paperWidth = 576;
+                PrinterConstants.paperWidth = 384;
                 break;
         }
         PrefUtils.setInt(mContext, GlobalContants.PAPERWIDTH, PrinterConstants.paperWidth);
     }
-
-    /*
-     * @Override public void onConfigurationChanged(Configuration newConfig) {
-     * super.onConfigurationChanged(newConfig); if
-     * (this.getResources().getConfiguration().orientation ==
-     * Configuration.ORIENTATION_LANDSCAPE) { // land } else if
-     * (this.getResources().getConfiguration().orientation ==
-     * Configuration.ORIENTATION_PORTRAIT) { // port } }
-     */
 
     public void usbAutoConn(UsbManager manager) {
         doDiscovery(manager);

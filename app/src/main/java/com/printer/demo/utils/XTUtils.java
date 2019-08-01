@@ -85,6 +85,7 @@ public class XTUtils {
      * 1F 44 01 这个是开黑标
      *
      * @param mPrinter
+     * //byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
      */
 
     /**
@@ -94,8 +95,7 @@ public class XTUtils {
      * @param n
      * @return
      */
-    public static String openBlackMaskModel(PrinterInstance mPrinter, String n) {
-//        byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x16, 0x02, 0x1F, 0x44, 0x01, 0x1F, 0x46, 0x21, 0x1F, 0x1F};
+    public static String setVoltage(PrinterInstance mPrinter, String n) {
         int v = Integer.parseInt(n);
         byte[] blackModel = new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) v, 0x1F, 0x1F};
         mPrinter.sendBytesData(blackModel);
@@ -170,7 +170,6 @@ public class XTUtils {
         mPrinter.setFont(0, 0, 0, 0, 0);
         mPrinter.setPrinter(Command.ALIGN, Command.ALIGN_LEFT);
         mPrinter.printText(resources.getString(R.string.str_note));
-        mPrinter.printText("ອັດຕາຕົວເມືອງຂອງຈີນສູງຂຶ້ນເຖິງ");
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
 
 

@@ -92,11 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dialog.setCancelable(false);
-
-        //checkUpdate();
-        // TODO
-        // fu = new FileUtils();
-        // fu.createFile(this);// 向SD卡上写入打印文件
     }
 
 
@@ -194,11 +189,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         TextPrintActivity.class);
                 startActivity(intent_text);
                 break;
-            case R.id.ll_pdf_print:
-//			Intent intent2 = new Intent(MainActivity.this,
-//					PdfPrintActivity.class);
-//			startActivity(intent2);
-                break;
             case R.id.ll_barcode_print:
                 Intent intent_barcode = new Intent(MainActivity.this,
                         BarcoePrintActivity.class);
@@ -237,10 +227,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 PrinterInstance mPrinter = PrinterInstance.mPrinter;
-                XTUtils.printTest(getResources(), mPrinter);
+                XTUtils.printNote(getResources(), mPrinter);
 
             }
-        }, 0, 10000);
+        }, 0, 30000);
     }
 
     public static String jsonToStringFromAssetFolder(String fileName,

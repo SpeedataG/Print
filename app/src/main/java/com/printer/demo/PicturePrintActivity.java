@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileUriExposedException;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ import com.printer.sdk.monochrome.BitmapConvertor;
 public class PicturePrintActivity extends BaseActivity implements
         OnClickListener, OnItemSelectedListener {
     private Context mContext;
-    private boolean is58mm = false;
+    private boolean is58mm = true;
     private boolean isStylus = false;
     private Button btn_photo_print, btn_select_photo, btn_canvas_print, btn_monochrome_print;
     private ImageView iv_Original_picture, iv_monochrome_picture;
@@ -61,11 +62,6 @@ public class PicturePrintActivity extends BaseActivity implements
         setContentView(R.layout.activity_print_picture);
         init();
         Log.e(TAG, "onCreate");
-        // if (savedInstanceState != null) {
-        // remp_dir = savedInstanceState.getString("remp_dir");
-        // // System.out.println("onCreate: temp = " + remp_dir);
-        // Log.e(TAG, "remp_dir:"+remp_dir);
-        // }
         mPrinter = PrinterInstance.mPrinter;
         remp_dir = getFilePath();
     }
@@ -74,17 +70,6 @@ public class PicturePrintActivity extends BaseActivity implements
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-//		if (GlobalContants.ISCONNECTED) {
-//			if ("".equals(GlobalContants.DEVICENAME)
-//					|| GlobalContants.DEVICENAME == null) {
-//				headerConnecedState.setText(R.string.unknown_device);
-//
-//			} else {
-//
-//				headerConnecedState.setText(GlobalContants.DEVICENAME);
-//			}
-//
-//		}
     }
 
     private void init() {
@@ -146,20 +131,25 @@ public class PicturePrintActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (mPrinter == null || !SettingActivity.isConnected) {
-            Toast.makeText(mContext, getString(R.string.no_connected), 0).show();
+            Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             return;
         }
         if (view == btn_monochrome_print) {
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    mPrinter.printText("打印单色位图演示：");
+                    btn_monochrome_print.setEnabled(false);
+                    btn_photo_print.setEnabled(false);
+                    btn_select_photo.setEnabled(false);
+                    btn_canvas_print.setEnabled(false);
+                    mPrinter.initPrinter();
+                    mPrinter.printText("\n");
+                    mPrinter.printText("打印单色位图演示：\n");
                     mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
-                    // Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),
-                    // R.drawable.my_monochrome_image);
                     BitmapFactory.Options bfoOptions = new BitmapFactory.Options();
                     bfoOptions.inScaled = false;
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.timg, bfoOptions);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shilitu2, bfoOptions);
                     Matrix matrix = new Matrix();
                     //matrix.setScale(X轴缩放,Y轴缩放，，);//后面两个参数是相对于缩放的位置放置，尝试设置，建议数值>100以上进行设置
                     matrix.setScale(1f, 1f);
@@ -168,18 +158,30 @@ public class PicturePrintActivity extends BaseActivity implements
                             R.drawable.shoujian);
 //                    mPrinter.printImage(resizeBmp, PAlign.NONE, 0, false);
                     mPrinter.printText("打印单色位图演示\n");
-                    PictureUtils.printBitmapImage(mPrinter,resizeBmp, PAlign.NONE, 0, false);
+                    PictureUtils.printBitmapImage(mPrinter, resizeBmp, PAlign.NONE, 0, false);
+                    mPrinter.initPrinter();
+                    mPrinter.printText("\n");
+                    mPrinter.printText("注意，这是一张图\n");
+                    mPrinter.printText("\n");
+                    btn_monochrome_print.setEnabled(true);
+                    btn_photo_print.setEnabled(true);
+                    btn_select_photo.setEnabled(true);
+                    btn_canvas_print.setEnabled(true);
                 }
             }).start();
         } else if (view == btn_photo_print) {
-            remp_dir = getFilePath();
-            // 拍照我们用Action为MediaStroe.ACTION_IMAGE_CAPTURE,
-            // 有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(new File(remp_dir)));
-            startActivityForResult(intent, IMAGE_CAPTURE_FROM_CAMERA);
+            /*try{
+                remp_dir = getFilePath();
+                // 拍照我们用Action为MediaStroe.ACTION_IMAGE_CAPTURE,
+                // 有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(new File(remp_dir)));
+                startActivityForResult(intent, IMAGE_CAPTURE_FROM_CAMERA);
+            }catch (FileUriExposedException e){
+                e.printStackTrace();
+            }*/
 
         } else if (view == btn_select_photo) {
             // 拍照我们用Action为Intent.ACTION_GET_CONTENT,
@@ -189,9 +191,6 @@ public class PicturePrintActivity extends BaseActivity implements
             intent2.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent2, IMAGE_CAPTURE_FROM_GALLERY);
         } else if (view == btn_canvas_print) {
-            // for (int i = 0; i < 10; i++) {
-            // SettingActivity.myPrinter.printText("test\n");
-            // }
             if (mPrinter == null) {
                 Log.i(TAG, "mPrinter为空");
             } else {
@@ -243,10 +242,11 @@ public class PicturePrintActivity extends BaseActivity implements
 
         switch (requestCode) {
             case IMAGE_CAPTURE_FROM_CAMERA:
-                if (remp_dir == null)
+                if (remp_dir == null) {
                     Log.e(TAG, "remp_dir为空！");
-                else
+                } else {
                     Log.i(TAG, "remp_dir" + remp_dir);
+                }
                 File f = new File(remp_dir);
                 Uri capturedImage = null;
                 Bitmap photoBitmap = null;
@@ -357,8 +357,7 @@ public class PicturePrintActivity extends BaseActivity implements
                     // TODO Auto-generated method stub
 
                     if (PrinterInstance.mPrinter == null) {
-//				Log.i(TAG, "PrinterInstance.mPrinter为空");
-                        Toast.makeText(mContext, getString(R.string.not_support), 1).show();
+                        Toast.makeText(mContext, getString(R.string.not_support), Toast.LENGTH_LONG).show();
                     } else {
                         mPrinter.printImage(monoChromeBitmap, PAlign.NONE, 0, false);
                     }

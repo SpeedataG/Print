@@ -5,15 +5,22 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.printer.sdk.PrinterInstance;
 
 public class BaseActivity extends Activity {
     private static boolean isFirst = true;
     protected static String titleConnectState = "";
+    private static PrinterInstance mPrinter;
+    private static int status;
     /**
      * ��������textview
      */
@@ -98,5 +105,41 @@ public class BaseActivity extends Activity {
             }
         }
         return false;
+    }
+    private static Handler handler = new Handler();
+    private static Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mPrinter != null) {
+                status = mPrinter.getPrinterStatus();
+                switch (status) {
+                    case 0:
+                        Log.d("zzc:", "====正常====");
+                        break;
+                    case 1:
+                        Log.d("zzc:", "====缺纸====");
+                        break;
+                    default:
+                        Log.d("zzc:", "====status====" + status);
+                        break;
+                }
+            } else {
+                mPrinter = PrinterInstance.mPrinter;
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    public static void startCheckStatus(PrinterInstance myPrinter) {
+        mPrinter = myPrinter;
+        if (handler != null) {
+            handler.postDelayed(runnable, 500);
+        }
+    }
+
+    public static void stopCheckStatus() {
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
     }
 }
