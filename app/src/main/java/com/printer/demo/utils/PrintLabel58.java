@@ -36,11 +36,11 @@ public class PrintLabel58 {
 		int end_x = 75 * MULTIPLE,end_y = 75 * MULTIPLE;
 		iPrinter.pageSetup(LablePaperType.Size_58mm,page_width, page_height);
 		String mac = "00:02:5B:EC:B8:6E";
-//		iPrinter.drawQrCode(start_x, start_y,mac, PRotate.Rotate_0, 6, 2);
-//		iPrinter.drawText(start_x-10, 180, "扫一扫  连接我", LableFontSize.Size_24, PRotate.Rotate_0, 1, 0, 0);
-//		iPrinter.drawText(start_x, start_y, end_x, 15*MULTIPLE, PAlign.CENTER, PAlign.CENTER, "中国国家图书馆",
-//				LableFontSize.Size_32, 1, 0, 0, 0, PRotate.Rotate_0);
-//
+		iPrinter.drawQrCode(start_x, start_y,mac, PRotate.Rotate_0, 6, 2);
+		iPrinter.drawText(start_x-10, 180, "扫一扫  连接我", LableFontSize.Size_24, PRotate.Rotate_0, 1, 0, 0);
+		iPrinter.drawText(start_x, start_y, end_x, 15*MULTIPLE, PAlign.CENTER, PAlign.CENTER, "中国国家图书馆",
+				LableFontSize.Size_32, 1, 0, 0, 0, PRotate.Rotate_0);
+
 		iPrinter.drawBarCode(start_x, 70, end_x, 160, PAlign.CENTER, PAlign.START, 0, 0,
 				"20160531110", PBarcodeType.CODE128, 1, 60, PRotate.Rotate_0);
 

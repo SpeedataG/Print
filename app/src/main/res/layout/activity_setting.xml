@@ -17,13 +17,6 @@
         android:text="@string/printerName"
         android:textSize="18sp" />
 
-    <!--     <Spinner
-            android:id="@+id/spinner_printer_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_printtype"
-            android:layout_marginLeft="5dp" /> -->
-
     <TextView
         android:id="@+id/tv_printer_address"
         android:layout_width="match_parent"
@@ -70,7 +63,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/scan_connect"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_set_black_model"
@@ -88,8 +82,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:textSize="16sp"
-                    android:text="18"/>
+                    android:text="23"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btn_open_black"
@@ -107,7 +101,7 @@
                     android:layout_weight="1"
                     android:text="设置纸缝距离"
                     android:textSize="16sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -126,11 +120,26 @@
                     android:text="纸类型"
                     android:textSize="16sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_paper_type"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/spinner_paper_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/btn_set_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:text="设置"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -149,11 +158,27 @@
                     android:text="@string/set_concentration"
                     android:textSize="16sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_set_concentration"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/spinner_set_concentration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/btn_set_concentration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:text="设置"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -165,7 +190,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/paper_width"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <RadioGroup
                 android:id="@+id/rg__select_paper_size"
@@ -173,7 +199,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_paper_size"
                 android:layout_alignLeft="@+id/tv_paper_size"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <RadioButton
                     android:id="@+id/rb_58mm"
@@ -197,35 +224,6 @@
                     android:layout_weight="1"
                     android:text="100mm" />
             </RadioGroup>
-
-            <!--
-                 <TextView
-                android:id="@+id/tv_print_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/tv_paper_size"
-                android:layout_below="@+id/rg__select_paper_size"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/copies_number"
-                android:visibility="gone"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/et_print_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/tv_print_amount"
-                android:layout_alignBottom="@id/tv_print_amount"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="1dp"
-                android:layout_toRightOf="@id/tv_print_amount"
-                android:hint="1"
-                android:visibility="gone"
-                android:inputType="number" >
-            </EditText>
-            -->
 
             <Button
                 android:id="@+id/btn_selfprint_test"

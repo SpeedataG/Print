@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <include
         android:id="@+id/ll_header_mainactivity"
@@ -13,22 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_setting"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_setting"
@@ -52,17 +52,19 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#cccccc" />
+                android:background="#cccccc"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_lable_print"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_lable_print"
@@ -92,11 +94,11 @@
                 android:id="@+id/ll_text_print"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_text_print"
@@ -120,17 +122,19 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#cccccc" />
+                android:background="#cccccc"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_pdf_print"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_pdf_print"
@@ -160,11 +164,11 @@
                 android:id="@+id/ll_barcode_print"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_barcode_print"
@@ -194,11 +198,11 @@
                 android:id="@+id/ll_image_print"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_image_print"
@@ -228,8 +232,8 @@
                 android:id="@+id/ll_test"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">

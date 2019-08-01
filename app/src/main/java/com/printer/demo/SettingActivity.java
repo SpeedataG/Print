@@ -334,17 +334,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
      * 初始化标题上的信息
      */
     private void initHeader() {
-//		setHeaderLeftText(header, getString(R.string.back),
-//				new OnClickListener() {
-//
-//					@Override
-//					public void onClick(View v) {
-//						finish();
-//
-//					}
-//				});
-        setHeaderLeftImage(header, new OnClickListener() {// 初始化了
-            // headerConnecedState
+        // 初始化了
+        setHeaderLeftImage(header, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -601,21 +592,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         XTUtils.printSelfCheck(myPrinter);
                     }
                 }).start();
-
-//                if (isStart && timer != null) {
-//                    timer.cancel();
-//                    timer = null;
-//                    isStart = false;
-//                    btnForPrint.setText(getResources().getString(R.string.repeat_print_test));
-//                    btnForPrintNote.setEnabled(true);
-//                    btn_selfprint_test.setEnabled(true);
-//                } else {
-//                    start(1);
-//                    isStart = true;
-//                    btnForPrint.setText(getResources().getString(R.string.repeat_print_stop));
-//                    btnForPrintNote.setEnabled(false);
-//                    btn_selfprint_test.setEnabled(false);
-//                }
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
@@ -863,7 +839,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        if (requestCode == CONNECT_DEVICE) {// 连接设备
+        if (requestCode == CONNECT_DEVICE) {
+            // 连接设备
 
             if (interfaceType == 0) {
 
@@ -1020,16 +997,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             setTitleState(mContext.getResources().getString(R.string.off_line));
             tv_device_name.setText(getString(R.string.printerName));
             tv_printer_address.setText(getString(R.string.printerAddress));
-            // mHandler.removeCallbacks(runnable);
-//			if (isFirst) {
-//
-//			} else {
-//				timer.cancel();
-//			}
-//			Log.i(TAG, "定时器取消了");
-
         }
-
+        //  存储连接状态
         PrefUtils.setBoolean(SettingActivity.this, GlobalContants.CONNECTSTATE,
                 isConnected);
 
@@ -1113,25 +1082,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
-
-//		if (parent == spinner_printer_type) {
-//			PrefUtils.setInt(mContext, GlobalContants.PRINTERID, position);
-//			String printerName = getResources().getStringArray(
-//					R.array.printertype)[position];
-//			if (printerName.contains("T10") || printerName.contains("POS58")
-//					|| printerName.contains("T7")) {
-//				rg__select_paper_size.check(R.id.rb_58mm);
-//			} else if (printerName.contains("L31")
-//					|| printerName.contains("T9")
-//					|| printerName.contains("POS885")
-//					|| printerName.contains("EU80")) {
-//				rg__select_paper_size.check(R.id.rb_80mm);
-//			} else if (printerName.contains("L51")) {
-//				rg__select_paper_size.check(R.id.rb_100mm);
-//			}
-//		} else if (parent == spinner_interface_type) {
-//		}
-
         if (parent == spinner_interface_type) {
             PrefUtils.setInt(mContext, GlobalContants.INTERFACETYPE, position);
             interfaceType = position;
@@ -1155,14 +1105,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
     }
 
-    // @Override
-    // protected void onNewIntent(Intent intent) {
-    // super.onNewIntent(intent);
-    // }
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -159,7 +159,7 @@ public class PicturePrintActivity extends BaseActivity implements
                     // R.drawable.my_monochrome_image);
                     BitmapFactory.Options bfoOptions = new BitmapFactory.Options();
                     bfoOptions.inScaled = false;
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.originalbmp, bfoOptions);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.timg, bfoOptions);
                     Matrix matrix = new Matrix();
                     //matrix.setScale(X轴缩放,Y轴缩放，，);//后面两个参数是相对于缩放的位置放置，尝试设置，建议数值>100以上进行设置
                     matrix.setScale(1f, 1f);

@@ -208,43 +208,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Intent intent_image = new Intent(MainActivity.this,
                         PicturePrintActivity.class);
                 startActivity(intent_image);
-//			String json = null;
-//			try {
-//				json = jsonToStringFromAssetFolder("ok.json",
-//						getApplicationContext());
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			Log.i("PrinterInstance", "json的值第一部分----" + json.substring(0, 5000));
-//			Log.i("PrinterInstance",
-//					"json的值第二部分----" + json.substring(5001, 10000));
-//			Log.i("PrinterInstance",
-//					"json的值第三部分----" + json.substring(10001, 15000));
-//			Log.i("PrinterInstance",
-//					"json的值第四部分----" + json.substring(15001, 20000));
-//			Log.i("PrinterInstance",
-//					"json的值第五部分----" + json.substring(20001, 25000));
-//			Log.i("PrinterInstance",
-//					"json的值第六部分----" + json.substring(25001, json.length()));
-//
-//			List<byte[]> data = new ArrayList<byte[]>();
-//			data = parserFromJson(json);
-//			// for (int i = 0; i < data.size(); i++) {
-//			// myPrinter.sendBytesData(data.get(i));
-//			// }
-//			Log.e("PrinterInstance", "执行完发送指令了");
-//
                 break;
             case R.id.ll_test:
-                if (isStart) {
-                    timer.cancel();
-                    timer = null;
-                    isStart = false;
+                if (SettingActivity.isConnected) {
+                    if (isStart) {
+                        timer.cancel();
+                        timer = null;
+                        isStart = false;
+                    } else {
+                        start();
+                        isStart = true;
+                    }
                 } else {
-                    start();
-                    isStart = true;
+                    Toast.makeText(this, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             default:
                 break;
@@ -260,16 +237,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 PrinterInstance mPrinter = PrinterInstance.mPrinter;
-//				mPrinter.setFont(0, 3, 3, 1, 1);
-//				byte[] srcData = XTUtils.string2bytes("床前明月光");
-//				mPrinter.sendBytesData(srcData);
-
-//                Barcode barcode1 = new Barcode(PrinterConstants.BarcodeType.CODE128, 2, 150, 2,
-//                        "123456");
-//                mPrinter.printBarCode(barcode1);
-//                Barcode barcode2 = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6,
-//                        "123456");
-//                mPrinter.printBarCode(barcode2);
                 XTUtils.printTest(getResources(), mPrinter);
 
             }

@@ -57,7 +57,8 @@ public class  BarcoePrintActivity extends BaseActivity implements OnItemSelected
 	private LinearLayout header;
 	private String TAG = "com.printer.demo.ui";
 
-	protected void onCreate(android.os.Bundle savedInstanceState) {
+	@Override
+    protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_print_barcode);
 		init();
