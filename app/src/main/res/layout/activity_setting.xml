@@ -226,7 +226,7 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/btn_selfprint_test"
+                android:id="@+id/btn_for_print"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rg__select_paper_size"
@@ -237,10 +237,10 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btn_for_print"
+                android:id="@+id/btn_selfprint_test"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_selfprint_test"
+                android:layout_below="@id/btn_for_print"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
@@ -251,7 +251,7 @@
                 android:id="@+id/btn_for_print_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_for_print"
+                android:layout_below="@id/btn_selfprint_test"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"

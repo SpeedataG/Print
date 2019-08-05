@@ -119,6 +119,20 @@ public class XTUtils {
     }
 
     /**
+     * 设置纸缝走纸距离
+     *
+     * @param mPrinter
+     * @return
+     */
+    public static String setPaperGap(PrinterInstance mPrinter) {
+        byte[] comein = new byte[]{0x1F, 0x11, 0x1F, (byte) 192, (byte) 130, 0x1F, 0x1F};
+        mPrinter.sendBytesData(comein);
+        byte[] result = new byte[6];
+        mPrinter.read(result);
+        return byte2HexStr(result);
+    }
+
+    /**
      * 打印自检页
      */
     public static void printSelfCheck(PrinterInstance mPrinter) {
@@ -323,6 +337,11 @@ public class XTUtils {
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
     }
 
+    public static void setAdjusting(PrinterInstance mPrinter) {
+        byte[] bytes = new byte[]{0x0C};
+        mPrinter.sendBytesData(bytes);
+    }
+
     public static void printForTest(Resources resources, PrinterInstance mPrinter) {
 
         byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
@@ -333,8 +352,7 @@ public class XTUtils {
         mPrinter.setFont(0, 0, 0, 0, 0);
         mPrinter.setPrinter(Command.ALIGN, 0);
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
-        byte[] bytes = new byte[]{0x0C};
-        mPrinter.sendBytesData(bytes);
+        setAdjusting(mPrinter);
     }
 
     public static int update(Resources resources, PrinterInstance mPrinter, InputStream in) {

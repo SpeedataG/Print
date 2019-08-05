@@ -1,14 +1,21 @@
 package com.printer.demo;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,11 +23,18 @@ import android.widget.Toast;
 
 import com.printer.sdk.PrinterInstance;
 
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class BaseActivity extends Activity {
     private static boolean isFirst = true;
     protected static String titleConnectState = "";
     private static PrinterInstance mPrinter;
     private static int status;
+    public static Context context;
+    private static SoundPool soundPool;
+    private static int soundId;
     /**
      * ��������textview
      */
@@ -41,6 +55,8 @@ public class BaseActivity extends Activity {
             setTitleState(getResources().getString(R.string.off_line));
             isFirst = false;
         }
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        soundId = soundPool.load(this, R.raw.beep, 0);
     }
 
     /**
@@ -106,40 +122,61 @@ public class BaseActivity extends Activity {
         }
         return false;
     }
-    private static Handler handler = new Handler();
-    private static Runnable runnable = new Runnable() {
+
+
+    private static Timer timer;
+    private static TimerTask timerTask;
+    @SuppressLint("HandlerLeak")
+    private static Handler handler = new Handler() {
         @Override
-        public void run() {
-            if (mPrinter != null) {
-                status = mPrinter.getPrinterStatus();
-                switch (status) {
-                    case 0:
-                        Log.d("zzc:", "====正常====");
-                        break;
-                    case 1:
-                        Log.d("zzc:", "====缺纸====");
-                        break;
-                    default:
-                        Log.d("zzc:", "====status====" + status);
-                        break;
-                }
-            } else {
-                mPrinter = PrinterInstance.mPrinter;
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                soundPool.play(soundId, 1, 1, 0, 0, 1);
+                Toast.makeText(context, "==缺纸==", Toast.LENGTH_SHORT).show();
             }
-            handler.postDelayed(this, 1000);
         }
     };
 
-    public static void startCheckStatus(PrinterInstance myPrinter) {
+    public static void startCheckStatus(final Context context, PrinterInstance myPrinter) {
         mPrinter = myPrinter;
-        if (handler != null) {
-            handler.postDelayed(runnable, 500);
+        BaseActivity.context = context;
+        if (timer == null) {
+            timer = new Timer();
+            if (timerTask != null) {
+                timerTask.cancel();
+            }
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    if (mPrinter != null) {
+                        status = mPrinter.getPrinterStatus();
+                        Log.d("zzc:", "====status====" + status);
+                        switch (status) {
+                            case 0:
+                                Log.d("zzc:", "====正常====");
+                                break;
+                            case 1:
+                                Log.d("zzc:", "====缺纸====");
+                                handler.sendEmptyMessage(1);
+                                break;
+                            default:
+                                Log.d("zzc:", "====status====" + status);
+                                break;
+                        }
+                    } else {
+                        mPrinter = PrinterInstance.mPrinter;
+                    }
+                }
+            };
         }
+        timer.schedule(timerTask, 0, 500);
     }
 
     public static void stopCheckStatus() {
-        if (handler != null) {
-            handler.removeCallbacks(runnable);
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
         }
     }
 }

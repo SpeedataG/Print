@@ -546,14 +546,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 Toast.makeText(mContext, "当前已经连接到" + devicesName, Toast.LENGTH_SHORT).show();
             }
         }
-        if (v == btn_selfprint_test) {
+        if (v == btnForPrint) {
 
             if (isConnected) {
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-//                        XTUtils.printTest(getResources(), myPrinter);
                         XTUtils.printForTest(getResources(), myPrinter);
                     }
                 }).start();
@@ -563,7 +562,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             }
 
         }
-        if (v == btnForPrint) {
+        if (v == btn_selfprint_test) {
             if (isConnected) {
                 new Thread(new Runnable() {
                     @Override
@@ -862,7 +861,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         baudrate, 0, mHandler);
                 myPrinter.openConnection();
                 Log.i(TAG, "波特率:" + baudrate + "路径:" + path);
-                BaseActivity.startCheckStatus(myPrinter);
+                BaseActivity.startCheckStatus(mContext, myPrinter);
             }
 
         }
