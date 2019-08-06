@@ -650,6 +650,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 
         if (v == btn_update) {
             if (isConnected) {
+                BaseActivity.stopCheckStatus();
                 showConnectingDialog();
                 new updateThread().start();
             } else {

@@ -178,5 +178,8 @@ public class BaseActivity extends Activity {
             timer.cancel();
             timer = null;
         }
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
     }
 }
