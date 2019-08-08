@@ -2,7 +2,7 @@
 <resources>
     <string name="title_activity_pdf_print">PdfPrintActivity</string>
     <string name="title_activity_lable_print">LablePrintActivity</string>
-    <string name="app_name">AndroidPrintDemo</string>
+    <string name="app_name">JXPrintDemo</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_setting">SettingActivity</string>
@@ -20,12 +20,6 @@
     <string name="lable_of_anneng_physical_distribution_80mm">物流標籤80mm</string>
     <string name="lable_of_material_transport_80mm">材料運單80mm</string>
     <!-- SettingActivity -->
-    <string-array name="interface_type">
-        <item>Bluetooth</item>
-        <item>USB</item>
-        <item>Wifi</item>
-        <item>Serial port</item>
-    </string-array>
     <string-array name="printertype">
         <item>L31</item>
         <item>L51</item>

@@ -197,8 +197,16 @@ public class PicturePrintActivity extends BaseActivity implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        btn_monochrome_print.setEnabled(false);
+                        btn_photo_print.setEnabled(false);
+                        btn_select_photo.setEnabled(false);
+                        btn_canvas_print.setEnabled(false);
                         new CanvasUtils().printCustomImage2(mContext.getResources(),
                                 PrinterInstance.mPrinter, isStylus, is58mm);
+                        btn_monochrome_print.setEnabled(true);
+                        btn_photo_print.setEnabled(true);
+                        btn_select_photo.setEnabled(true);
+                        btn_canvas_print.setEnabled(true);
                     }
                 }).start();
             }

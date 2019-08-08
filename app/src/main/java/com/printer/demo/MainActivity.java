@@ -43,6 +43,7 @@ import android.serialport.DeviceControl;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.printer.demo.global.GlobalContants;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String description;
     private ProgressDialog dialog;
     private DeviceControl deviceControl;
+    private TextView tvAboutUs;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -167,6 +169,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         llPDFPrint.setOnClickListener(this);
         llBarcodePrint.setOnClickListener(this);
         llImagePrint.setOnClickListener(this);
+        tvAboutUs = findViewById(R.id.tv_about_us);
         initHeader();
     }
 
@@ -202,12 +205,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.ll_test:
                 if (SettingActivity.isConnected) {
                     if (isStart) {
+                        tvAboutUs.setText(getResources().getString(R.string.fatigue_test));
                         timer.cancel();
                         timer = null;
                         isStart = false;
                     } else {
                         start();
                         isStart = true;
+                        tvAboutUs.setText(getResources().getString(R.string.repeat_print_stop));
                     }
                 } else {
                     Toast.makeText(this, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();

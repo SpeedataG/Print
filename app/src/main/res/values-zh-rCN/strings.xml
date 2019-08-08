@@ -2,7 +2,7 @@
 <resources>
     <string name="title_activity_pdf_print">PdfPrintActivity</string>
     <string name="title_activity_lable_print">LablePrintActivity</string>
-    <string name="app_name">AndroidPrintDemo</string>
+    <string name="app_name">JXPrintDemo</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_setting">SettingActivity</string>
@@ -21,12 +21,6 @@
     <string name="lable_of_anneng_physical_distribution_80mm">物流标签80mm</string>
     <string name="lable_of_material_transport_80mm">材料运单80mm</string>
     <!-- SettingActivity -->
-    <string-array name="interface_type">
-        <item>Bluetooth</item>
-        <item>USB</item>
-        <item>Wifi</item>
-        <item>Serial port</item>
-    </string-array>
     <string-array name="set_concentration">
         <item>0</item>
         <item>1</item>
@@ -62,6 +56,7 @@
     <string name="paper_width">纸张宽度</string>
     <string name="copies_number">打印份数</string>
     <string name="print_test">标签纸测试</string>
+    <string name="print_normal_test">普通热敏纸测试</string>
     <string name="repeat_print_test">打印自检页</string>
     <string name="repeat_print_note">重复打印小票</string>
     <string name="repeat_print_stop">停止</string>
@@ -307,4 +302,11 @@
     <string name="about">关于</string>
     <string name="notroot">该设备很可能没有root权限，操作串口需要root权限</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_material_transport">MaterialTransportActivity</string>
+    <string name="fatigue_test">疲劳测试</string>
+
+    <string name="paper_type">纸类型</string>
+    <string name="update">升级</string>
+    <string name="out_paper">走纸</string>
+    <string name="into_paper">退纸</string>
 </resources>

@@ -124,8 +124,9 @@ public class XTUtils {
      * @param mPrinter
      * @return
      */
-    public static String setPaperGap(PrinterInstance mPrinter) {
-        byte[] comein = new byte[]{0x1F, 0x11, 0x1F, (byte) 192, (byte) 130, 0x1F, 0x1F};
+    public static String setPaperGap(PrinterInstance mPrinter, int n) {
+        n = n * 8;
+        byte[] comein = new byte[]{0x1F, 0x11, 0x1F, (byte) 192, (byte) n, 0x1F, 0x1F};
         mPrinter.sendBytesData(comein);
         byte[] result = new byte[6];
         mPrinter.read(result);
@@ -173,7 +174,21 @@ public class XTUtils {
      * @param n        0-普通纸 1-标签纸 2-黑标纸
      */
     public static void setPaperType(PrinterInstance mPrinter, int n) {
-        byte[] bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) n, 0x1F, 0x1F};
+        byte[] bytes;
+        switch (n) {
+            case 0:
+                bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 0, 0x1F, 0x1F};
+                break;
+            case 1:
+                bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 1, 0x1F, (byte) 192, (byte) 120, 0x1F, 0x46, (byte) 23, 0x1F, 0x1F};
+                break;
+            case 2:
+                bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 2, 0x1F, 0x1F};
+                break;
+            default:
+                bytes = new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 0, 0x1F, 0x1F};
+                break;
+        }
         mPrinter.sendBytesData(bytes);
     }
 
@@ -342,17 +357,23 @@ public class XTUtils {
         mPrinter.sendBytesData(bytes);
     }
 
-    public static void printForTest(Resources resources, PrinterInstance mPrinter) {
-
+    public static void printLabelTest(Resources resources, PrinterInstance mPrinter) {
+        mPrinter.initPrinter();
         byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
         mPrinter.sendBytesData(backBytes);
         mPrinter.initPrinter();
-
         mPrinter.printText(resources.getString(R.string.str_text));
         mPrinter.setFont(0, 0, 0, 0, 0);
         mPrinter.setPrinter(Command.ALIGN, 0);
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
         setAdjusting(mPrinter);
+    }
+    public static void printNormalTest(Resources resources, PrinterInstance mPrinter) {
+        mPrinter.initPrinter();
+        mPrinter.printText(resources.getString(R.string.str_text));
+        mPrinter.setFont(0, 0, 0, 0, 0);
+        mPrinter.setPrinter(Command.ALIGN, 0);
+        mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
     }
 
     public static int update(Resources resources, PrinterInstance mPrinter, InputStream in) {

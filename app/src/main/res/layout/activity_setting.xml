@@ -36,79 +36,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/spinner_interface_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp" />
-
             <Button
                 android:id="@+id/btn_search_devices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/spinner_interface_type"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/openConnection"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_scan_and_connect"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_search_devices"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/scan_connect"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/ll_set_black_model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_scan_and_connect"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_v"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="23"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/btn_set_vol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="设置灵敏度"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/btn_close_black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:text="设置纸缝距离"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
-            </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/ll_paper_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_set_black_model"
+                android:layout_below="@+id/btn_search_devices"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
@@ -117,7 +59,7 @@
                     android:id="@+id/tv_paper_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="纸类型"
+                    android:text="@string/paper_type"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -137,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
-                        android:text="设置"
+                        android:text="@string/setting"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -175,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
-                        android:text="设置"
+                        android:text="@string/setting"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -226,7 +168,7 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/btn_for_print"
+                android:id="@+id/btn_label_print"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rg__select_paper_size"
@@ -234,35 +176,36 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/print_test"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_normal_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_label_print"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/print_normal_test"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_selfprint_test"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_for_print"
+                android:layout_below="@id/btn_normal_print"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/repeat_print_test"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_for_print_note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_selfprint_test"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/repeat_print_note"
-                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/btn_paper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_for_print_note"
+                android:layout_below="@id/btn_selfprint_test"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
@@ -274,8 +217,8 @@
                     android:layout_below="@id/btn_paper"
                     android:layout_centerVertical="true"
                     android:layout_weight="1"
-                    android:text="走纸"
-                    android:textSize="18sp" />
+                    android:text="@string/out_paper"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btn_paper_back"
@@ -284,8 +227,8 @@
                     android:layout_below="@id/btn_paper"
                     android:layout_centerVertical="true"
                     android:layout_weight="1"
-                    android:text="退纸"
-                    android:textSize="18sp" />
+                    android:text="@string/into_paper"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -297,18 +240,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="升级"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btn_getstate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_Update"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="查询状态"
-                android:visibility="gone" />
+                android:text="@string/update"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 

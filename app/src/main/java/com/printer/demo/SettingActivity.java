@@ -48,6 +48,7 @@ import com.printer.sdk.PrinterConstants;
 import com.printer.sdk.PrinterConstants.Connect;
 import com.printer.sdk.PrinterInstance;
 import com.printer.sdk.usb.USBPort;
+import com.speedata.libutils.SharedXmlUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,41 +67,20 @@ import java.util.TimerTask;
 public class SettingActivity extends BaseActivity implements OnClickListener,
         OnItemSelectedListener, OnCheckedChangeListener {
     private LinearLayout header;
-    private TextView tvShowPrinterType;
-    private TextView tvShowPrinterPortType;
-    private Spinner spinner_printer_type;
-    private Spinner spinner_interface_type, spinnerSetConcentration, spinnerPaperType;
-    private List<String> data_list;
-    private ArrayAdapter<CharSequence> arr_adapter;
-    private ArrayAdapter<CharSequence> printType_adapter;
+    private Spinner spinnerSetConcentration, spinnerPaperType;
     private ArrayAdapter<CharSequence> printConcentrationAdapter, paperTypeAdapter;
-    private final static int SCANNIN_GREQUEST_CODE = 2;
-    public static final int CONNECT_DEVICE = 1;
     protected static final String TAG = "SettingActivity";
-    private static Button btn_search_devices, btn_scan_and_connect, btn_selfprint_test,
-            btn_update, btn_getstate, btnForPrint, btnForPrintNote, btnSetVol, btnSetConcentration,
-            btnSetType, btnPaperOut, btnPaperBack;
-    private EditText etV;
-    // 蓝牙连接状态
+    private static Button btn_search_devices, btn_selfprint_test,
+            btn_update, btnLabelPrint, btnSetConcentration,
+            btnSetType, btnPaperOut, btnPaperBack, btnNormalPrint;
+    // 连接状态
     public static boolean isConnected = false;
     public static String devicesName = "未知设备";
     private static String devicesAddress;
-    private ProgressDialog dialog;
     public static PrinterInstance myPrinter;
-    private static BluetoothDevice mDevice;
-    private static UsbDevice mUSBDevice;
     private Context mContext;
-    private int printerId = 0;
-    private int interfaceType = 0;
-    private List<UsbDevice> deviceList;
-    private static final String ACTION_USB_PERMISSION = "com.android.usb.USB_PERMISSION";
     private RadioGroup rg__select_paper_size;
-    private static boolean isFirst = true;
-    boolean isError;
-    private BluetoothAdapter mBtAdapter;
     private TextView tv_device_name, tv_printer_address;
-    private IntentFilter bluDisconnectFilter;
-    private static boolean hasRegDisconnectReceiver = false;
     private DeviceControl deviceControl;
 
     /**
@@ -117,12 +97,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             e.printStackTrace();
         }
         Log.i(TAG, "" + SettingActivity.this);
-        isFirst = false;
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-        Toast.makeText(SettingActivity.this, "SettingActivity start.", Toast.LENGTH_SHORT).show();
     }
 
     // 用于接受连接状态消息的 Handler
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -131,15 +109,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     isConnected = true;
                     GlobalContants.ISCONNECTED = isConnected;
                     GlobalContants.DEVICENAME = devicesName;
-                    if (interfaceType == 0) {
-                        PrefUtils.setString(mContext, GlobalContants.DEVICEADDRESS,
-                                devicesAddress);
-                        bluDisconnectFilter = new IntentFilter();
-                        bluDisconnectFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-                        mContext.registerReceiver(myReceiver, bluDisconnectFilter);
-                        hasRegDisconnectReceiver = true;
-                    }
-
                     break;
                 case Connect.FAILED:
                     isConnected = false;
@@ -178,12 +147,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 default:
                     break;
             }
-
             updateButtonState(isConnected);
-
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
         }
 
     };
@@ -208,33 +172,22 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         header = (LinearLayout) findViewById(R.id.ll_headerview_settingactivity);
         // 初始化标题
         initHeader();
-        // 初始化下拉列表框
-        spinner_interface_type = (Spinner) findViewById(R.id.spinner_interface_type);
+
         // 初始化按钮的点击事件
         btn_search_devices = (Button) findViewById(R.id.btn_search_devices);
-        btn_scan_and_connect = (Button) findViewById(R.id.btn_scan_and_connect);
         btn_selfprint_test = (Button) findViewById(R.id.btn_selfprint_test);
         btn_update = (Button) findViewById(R.id.btn_Update);
-        btn_getstate = (Button) findViewById(R.id.btn_getstate);
         // 设置按钮的监听事件
         btn_search_devices.setOnClickListener(this);
-        btn_scan_and_connect.setOnClickListener(this);
         btn_selfprint_test.setOnClickListener(this);
         btn_update.setOnClickListener(this);
-        btn_getstate.setOnClickListener(this);
 
-        //循环打印
-        btnForPrint = findViewById(R.id.btn_for_print);
-        btnForPrint.setOnClickListener(this);
-        //循环打印小票示例
-        btnForPrintNote = findViewById(R.id.btn_for_print_note);
-        btnForPrintNote.setOnClickListener(this);
-
-        //灵敏度值（电压）
-        etV = findViewById(R.id.et_v);
-        //设置灵敏度
-        btnSetVol = findViewById(R.id.btn_set_vol);
-        btnSetVol.setOnClickListener(this);
+        //标签纸打印测试
+        btnLabelPrint = findViewById(R.id.btn_label_print);
+        btnLabelPrint.setOnClickListener(this);
+        //普通纸测试
+        btnNormalPrint = findViewById(R.id.btn_normal_print);
+        btnNormalPrint.setOnClickListener(this);
 
         //走纸 退纸
         btnPaperOut = findViewById(R.id.btn_paper_out);
@@ -265,45 +218,35 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         //展示设备名和设备地址
         tv_device_name = (TextView) findViewById(R.id.tv_device_name);
         tv_printer_address = (TextView) findViewById(R.id.tv_printer_address);
-        // 适配器
-        printType_adapter = ArrayAdapter.createFromResource(this,
-                R.array.interface_type, android.R.layout.simple_spinner_item);
-
-        // 设置样式
-        printType_adapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // 加载适配器
-        spinner_interface_type.setAdapter(printType_adapter);
-        // 下拉列表框的监听事件
-        spinner_interface_type.setOnItemSelectedListener(this);
 
         rg__select_paper_size = (RadioGroup) findViewById(R.id.rg__select_paper_size);
         rg__select_paper_size.setOnCheckedChangeListener(this);
-
-        // 初始化对话框
-        dialog = new ProgressDialog(mContext);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setTitle(getString(R.string.connecting));
-        dialog.setMessage(getString(R.string.please_wait));
-        dialog.setIndeterminate(true);
-        dialog.setCancelable(false);
 
         getSaveState();
         updateButtonState(isConnected);
 
         PrinterConstants.paperWidth = 384;
         PrefUtils.setInt(mContext, GlobalContants.PAPERWIDTH, 384);
-
+        int pos = SharedXmlUtil.getInstance(this, "print_type").read("type", 0);
+        spinnerPaperType.setSelection(pos);
+        switch (pos) {
+            case 0:
+                btnLabelPrint.setEnabled(false);
+                btnNormalPrint.setEnabled(true);
+                break;
+            case 1:
+                btnLabelPrint.setEnabled(true);
+                btnNormalPrint.setEnabled(false);
+                break;
+            default:
+                break;
+        }
     }
 
     private void getSaveState() {
+        PrefUtils.setInt(mContext, GlobalContants.INTERFACETYPE, 3);
         isConnected = PrefUtils.getBoolean(SettingActivity.this,
                 GlobalContants.CONNECTSTATE, false);
-        printerId = PrefUtils.getInt(mContext, GlobalContants.PRINTERID, 0);
-        interfaceType = PrefUtils.getInt(mContext,
-                GlobalContants.INTERFACETYPE, 0);
-//		spinner_printer_type.setSelection(printerId);
-        spinner_interface_type.setSelection(interfaceType);
         Log.i(TAG, "isConnected:" + isConnected);
     }
 
@@ -338,16 +281,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     @Override
     protected void onDestroy() {
         Log.e(TAG, "onDestory()>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        super.onDestroy();
-        if (interfaceType == 0 && hasRegDisconnectReceiver) {
-            mContext.unregisterReceiver(myReceiver);
-            hasRegDisconnectReceiver = false;
-//			 Log.i(TAG, "关闭了广播！");
-        }
         if (timer != null) {
             timer.cancel();
         }
-
+        super.onDestroy();
     }
 
 
@@ -357,15 +294,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     private void start(int way) {
         if (timer == null) {
             timer = new Timer();
-            if (way == 1) {
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        PrinterInstance mPrinter = PrinterInstance.mPrinter;
-                        XTUtils.printForTest(getResources(), mPrinter);
-                    }
-                }, 0, 300);
-            } else if (way == 2) {
+            if (way == 2) {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -376,7 +305,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             }
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -393,135 +321,22 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                switch (interfaceType) {
-                    case 0:// bluetooth
-                        new AlertDialog.Builder(this)
-                                .setTitle(R.string.str_message)
-                                .setMessage(R.string.str_connlast)
-                                .setPositiveButton(R.string.yesconn,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface arg0, int arg1) {
-                                                // 重新连接
-                                                if (!(mBtAdapter == null)) {
-                                                    // 判断设备蓝牙功能是否打开
-                                                    if (!mBtAdapter.isEnabled()) {
-                                                        // 打开蓝牙功能
-                                                        Intent enableIntent = new Intent(
-                                                                BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                                                        startActivity(enableIntent);
-                                                    } else {
-                                                        // mDevice
-                                                        devicesAddress = PrefUtils
-                                                                .getString(
-                                                                        mContext,
-                                                                        GlobalContants.DEVICEADDRESS,
-                                                                        "");
+                // 串口
+                int baudrate = 115200;
+                String path = "/dev/ttyMT0";
+                devicesName = "Serial device";
+                devicesAddress = path;
+                myPrinter = PrinterInstance.getPrinterInstance(new File(path),
+                        baudrate, 0, mHandler);
+                myPrinter.openConnection();
+                Log.i(TAG, "波特率:" + baudrate + "路径:" + path);
+                BaseActivity.startCheckStatus(mContext, myPrinter);
 
-                                                        if (devicesAddress == null
-                                                                || devicesAddress
-                                                                .length() <= 0) {
-                                                            Toast.makeText(
-                                                                    SettingActivity.this,
-                                                                    "您是第一次启动程序，请选择重新搜索连接！",
-                                                                    Toast.LENGTH_SHORT)
-                                                                    .show();
-                                                        } else {
-                                                            connect2BlueToothdevice();
-                                                        }
-                                                    }
-                                                }
-
-                                            }
-                                        })
-                                .setNegativeButton(R.string.str_resel,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int which) {
-                                                if (!(mBtAdapter == null)) {
-                                                    // 判断设备蓝牙功能是否打开
-                                                    if (!mBtAdapter.isEnabled()) {
-                                                        // 打开蓝牙功能
-                                                        Intent enableIntent = new Intent(
-                                                                BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                                                        startActivity(enableIntent);
-                                                        Intent intent = new Intent(
-                                                                mContext,
-                                                                BluetoothDeviceList.class);
-                                                        startActivityForResult(
-                                                                intent,
-                                                                CONNECT_DEVICE);
-                                                    } else {
-                                                        Intent intent = new Intent(
-                                                                mContext,
-                                                                BluetoothDeviceList.class);
-                                                        startActivityForResult(
-                                                                intent,
-                                                                CONNECT_DEVICE);
-                                                    }
-                                                }
-                                            }
-                                        }).show();
-                        break;
-                    case 1:// USB
-
-                        new AlertDialog.Builder(this)
-                                .setTitle(R.string.str_message)
-                                .setMessage(R.string.str_connlast)
-                                .setPositiveButton(R.string.yesconn,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface arg0, int arg1) {
-
-                                                UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
-
-                                                usbAutoConn(manager);
-                                            }
-                                        })
-                                .setNegativeButton(R.string.str_resel,
-                                        new DialogInterface.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int which) {
-
-                                                Intent intent = new Intent(
-                                                        mContext,
-                                                        UsbDeviceList.class);
-                                                startActivityForResult(intent,
-                                                        CONNECT_DEVICE);
-                                            }
-
-                                        }).show();
-                        break;
-                    case 2:// wifi
-                        Intent intent = new Intent(mContext, IpEditActivity.class);
-                        intent.putExtra(GlobalContants.WIFINAME, getWiFiName());
-                        startActivityForResult(intent, CONNECT_DEVICE);
-                        break;
-                    case 3:// serial port
-                        Intent intentSerial = new Intent(mContext,
-                                SerialsDeviceList.class);
-                        startActivityForResult(intentSerial, CONNECT_DEVICE);
-                        break;
-                    default:
-                        break;
-                }
             } else {
                 if (myPrinter != null) {
                     myPrinter.closeConnection();
                     myPrinter = null;
                     Log.i(TAG, "已经断开");
-                    if (interfaceType == 0 && hasRegDisconnectReceiver) {
-                        mContext.unregisterReceiver(myReceiver);
-                        hasRegDisconnectReceiver = false;
-//						 Log.i(TAG, "关闭了广播！");
-                    }
                 }
                 //下电
                 if (deviceControl != null) {
@@ -533,34 +348,21 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 }
                 BaseActivity.stopCheckStatus();
             }
-
         }
 
-        if (v == btn_scan_and_connect) {
-            if (!isConnected) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, MipcaActivityCapture.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
-            } else {
-                Toast.makeText(mContext, "当前已经连接到" + devicesName, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (v == btnForPrint) {
-
+        if (v == btnLabelPrint) {
             if (isConnected) {
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        XTUtils.printForTest(getResources(), myPrinter);
-                    }
-                }).start();
-
+                XTUtils.printLabelTest(getResources(), myPrinter);
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
-
+        }
+        if (v == btnNormalPrint) {
+            if (isConnected) {
+                XTUtils.printNormalTest(getResources(), myPrinter);
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
         }
         if (v == btn_selfprint_test) {
             if (isConnected) {
@@ -574,39 +376,24 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
-        if (v == btnForPrintNote) {
-            if (isConnected) {
-                if (isStart && timer != null) {
-                    timer.cancel();
-                    timer = null;
-                    isStart = false;
-                    btnForPrintNote.setText(getResources().getString(R.string.repeat_print_note));
-                    btnForPrint.setEnabled(true);
-                    btn_selfprint_test.setEnabled(true);
-                } else {
-                    start(2);
-                    isStart = true;
-                    btnForPrintNote.setText(getResources().getString(R.string.repeat_print_stop));
-                    btnForPrint.setEnabled(false);
-                    btn_selfprint_test.setEnabled(false);
-                }
-            } else {
-                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (v == btnSetVol) {
-            if (isConnected) {
-                String n = etV.getText().toString();
-                assert myPrinter != null;
-                String result = XTUtils.setVoltage(myPrinter, n);
-                Toast.makeText(mContext, "" + result, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
-            }
-        }
         if (v == btnSetType) {
             if (isConnected) {
                 int position = spinnerPaperType.getSelectedItemPosition();
+                SharedXmlUtil.getInstance(this, "print_type").write("type", position);
+                switch (position) {
+                    case 0:
+                        btnLabelPrint.setEnabled(false);
+                        btnNormalPrint.setEnabled(true);
+                        BaseActivity.startCheckStatus(mContext, myPrinter);
+                        break;
+                    case 1:
+                        btnLabelPrint.setEnabled(true);
+                        btnNormalPrint.setEnabled(false);
+                        BaseActivity.stopCheckStatus();
+                        break;
+                    default:
+                        break;
+                }
                 byte n = (byte) position;
                 XTUtils.setPaperType(myPrinter, n);
             } else {
@@ -647,41 +434,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
         }
-
         if (v == btn_update) {
             if (isConnected) {
                 BaseActivity.stopCheckStatus();
                 showConnectingDialog();
                 new updateThread().start();
-            } else {
-                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (v == btn_getstate) {
-            if (isConnected) {
-                myPrinter.setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_RIGHT);
-                Barcode barcode = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6, "http://weixin.qq.com/r/mDu7o9DEGo1lrZTA926K");
-                myPrinter.printBarCode(barcode);
-                int state;
-                state = myPrinter.getCurrentStatus();
-                //没有相应传感器 只能检测缺纸状态和正常状态
-                switch (state) {
-                    case 0:
-                        Toast.makeText(SettingActivity.this, "正常", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -1:
-                        Toast.makeText(SettingActivity.this, "通讯异常", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -2:
-                        Toast.makeText(SettingActivity.this, "缺纸", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -3:
-                        Toast.makeText(SettingActivity.this, "纸将尽", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -4:
-                        Toast.makeText(SettingActivity.this, "打印机开盖", Toast.LENGTH_SHORT).show();
-                        break;
-                }
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }
@@ -739,11 +496,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             }
             int a = 0;
             a = XTUtils.update(getResources(), myPrinter, in);
-//			Timer timer = new Timer();
-//			timer.schedule(timerTask,150000);
             if (a == -2) {
                 dismissConnectingDialog();
-//				timer.cancel();
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("提示")
                         .setMessage("升级完成，请重启打印机！")
@@ -754,183 +508,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         .setMessage("升级失败，请重启打印机。")
                         .setPositiveButton("确定", null).show();
             }
-            //XTUtils.sendSedDate(in,myPrinter);
             Looper.loop();
-        }
-    }
-
-
-    TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    new AlertDialog.Builder(SettingActivity.this)
-                            .setTitle("提示")
-                            .setMessage("超时，升级失败。")
-                            .setPositiveButton("确定", null).show();
-                }
-            });
-        }
-    };
-
-    public static String jsonToStringFromAssetFolder(String fileName,
-                                                     Context context) throws IOException {
-        AssetManager manager = context.getAssets();
-        InputStream file = manager.open(fileName);
-
-        byte[] data = new byte[file.available()];
-        file.read(data);
-        file.close();
-        return new String(data, "gbk");
-    }
-
-    // 安卓3.1以后才有权限操作USB
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == CONNECT_DEVICE) {
-            // 连接设备
-
-            if (interfaceType == 0) {
-
-                devicesAddress = data.getExtras().getString(
-                        BluetoothDeviceList.EXTRA_DEVICE_ADDRESS);
-                devicesName = data.getExtras().getString(
-                        BluetoothDeviceList.EXTRA_DEVICE_NAME);
-                Log.i("fdh", "设备名：" + devicesName + "设备地址:" + devicesAddress);
-                connect2BlueToothdevice();
-            } else if (interfaceType == 1)// usb
-            {
-                mUSBDevice = data.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                myPrinter = PrinterInstance.getPrinterInstance(mContext,
-                        mUSBDevice, mHandler);
-                devicesName = "USB device";
-                UsbManager mUsbManager = (UsbManager) mContext
-                        .getSystemService(Context.USB_SERVICE);
-
-                if (mUsbManager.hasPermission(mUSBDevice)) {
-                    // TODO
-                    myPrinter.openConnection();
-                    // myPrinter.printText("测试USB连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭/n");
-                    // myPrinter.closeConnection();
-                } else {
-                    // 没有权限询问用户是否授予权限
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                            mContext, 0, new Intent(ACTION_USB_PERMISSION), 0);
-                    IntentFilter filter = new IntentFilter(
-                            ACTION_USB_PERMISSION);
-                    filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-                    filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-                    mContext.registerReceiver(mUsbReceiver, filter);
-                    // 该代码执行后，系统弹出一个对话框
-                    mUsbManager.requestPermission(mUSBDevice, pendingIntent);
-                }
-
-            } else if (interfaceType == 2) {
-                // wifi
-                devicesName = "Net device";
-                devicesAddress = data.getStringExtra("ip_address");
-                myPrinter = PrinterInstance.getPrinterInstance(devicesAddress,
-                        9100, mHandler);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO
-                        // myPrinter.printText("测试WiFi连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭/n");
-                        myPrinter.openConnection();
-                    }
-                }).start();
-            } else if (interfaceType == 3) {
-                // 串口
-                int baudrate = 9600;
-                String path = data.getStringExtra("path");
-                devicesName = "Serial device";
-                devicesAddress = path;
-                String com_baudrate = data.getExtras().getString("baudrate");
-                if (com_baudrate == null || com_baudrate.length() == 0) {
-                    baudrate = 9600;
-                }
-                baudrate = Integer.parseInt(com_baudrate);
-                myPrinter = PrinterInstance.getPrinterInstance(new File(path),
-                        baudrate, 0, mHandler);
-                myPrinter.openConnection();
-                Log.i(TAG, "波特率:" + baudrate + "路径:" + path);
-                BaseActivity.startCheckStatus(mContext, myPrinter);
-            }
-
-        }
-        if (requestCode == SCANNIN_GREQUEST_CODE) {
-
-            // 校验扫描到的mac是否合法
-            devicesAddress = data.getExtras().getString(
-                    BluetoothDeviceList.EXTRA_DEVICE_ADDRESS);
-            // if(devicesAddress.length() == 17 && devicesAddress.charAt(2) ==
-            // ':'
-            // && devicesAddress.charAt(5) == ':' && devicesAddress.charAt(8) ==
-            // ':'
-            // && devicesAddress.charAt(11) == ':' && devicesAddress.charAt(14)
-            // == ':')
-            Log.i(TAG, "devicesAddress:" + devicesAddress);
-            if (BluetoothAdapter.checkBluetoothAddress(devicesAddress)) {
-                connect2BlueToothdevice();
-
-            } else {
-                Toast.makeText(mContext, "蓝牙mac:" + devicesAddress + "不合法", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
-
-    private void connect2BlueToothdevice() {
-        dialog.show();
-        mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(
-                devicesAddress);
-        devicesName = mDevice.getName();
-        myPrinter = PrinterInstance.getPrinterInstance(mDevice, mHandler);
-        if (mDevice.getBondState() == BluetoothDevice.BOND_NONE) {// 未绑定
-            // Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-            // mContext.startActivity(intent);
-            IntentFilter boundFilter = new IntentFilter();
-            boundFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-            mContext.registerReceiver(boundDeviceReceiver, boundFilter);
-            PairOrConnect(true);
-        } else {
-            PairOrConnect(false);
-        }
-    }
-
-    private void PairOrConnect(boolean pair) {
-        if (pair) {
-            IntentFilter boundFilter = new IntentFilter(
-                    BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-            mContext.registerReceiver(boundDeviceReceiver, boundFilter);
-            boolean success = false;
-            try {
-                Method createBondMethod = BluetoothDevice.class
-                        .getMethod("createBond");
-                success = (Boolean) createBondMethod.invoke(mDevice);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-            Log.i(TAG, "createBond is success? : " + success);
-
-        } else {
-            new connectThread().start();
-
         }
     }
 
@@ -957,99 +535,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 
     }
 
-    private BroadcastReceiver boundDeviceReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-                BluetoothDevice device = intent
-                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (!mDevice.equals(device)) {
-                    return;
-                }
-                switch (device.getBondState()) {
-                    case BluetoothDevice.BOND_BONDING:
-                        Log.i(TAG, "bounding......");
-                        break;
-                    case BluetoothDevice.BOND_BONDED:
-                        Log.i(TAG, "bound success");
-                        // if bound success, auto init BluetoothPrinter. open
-                        // connect.
-                        mContext.unregisterReceiver(boundDeviceReceiver);
-                        dialog.show();
-                        // 配对完成开始连接
-                        if (myPrinter != null) {
-                            new connectThread().start();
-                        }
-                        break;
-                    case BluetoothDevice.BOND_NONE:
-                        mContext.unregisterReceiver(boundDeviceReceiver);
-                        Log.i(TAG, "bound cancel");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    };
-
-    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
-        @Override
-        @SuppressLint("NewApi")
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            Log.w(TAG, "receiver action: " + action);
-
-            if (ACTION_USB_PERMISSION.equals(action)) {
-                synchronized (this) {
-                    mContext.unregisterReceiver(mUsbReceiver);
-                    UsbDevice device = (UsbDevice) intent
-                            .getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                    if (intent.getBooleanExtra(
-                            UsbManager.EXTRA_PERMISSION_GRANTED, false)
-                            && mUSBDevice.equals(device)) {
-                        myPrinter.openConnection();
-                    } else {
-                        mHandler.obtainMessage(Connect.FAILED).sendToTarget();
-                        Log.e(TAG, "permission denied for device " + device);
-                    }
-                }
-            }
-        }
-    };
-
-    private class connectThread extends Thread {
-        @Override
-        public void run() {
-
-            if (myPrinter != null) {
-                // TODO
-                isConnected = myPrinter.openConnection();
-                // myPrinter.printText("测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭测试蓝牙连续连接--打印--关闭/n");
-                // myPrinter.closeConnection();
-            }
-        }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
-        if (parent == spinner_interface_type) {
-            PrefUtils.setInt(mContext, GlobalContants.INTERFACETYPE, position);
-            interfaceType = position;
-            Log.i(TAG, "position:" + position);
-        }
-        if (parent == spinnerSetConcentration) {
-            if (!isConnected) {
-                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (parent == spinnerPaperType) {
-            if (!isConnected) {
-                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
-            }
-        }
+        Log.i(TAG, "position:" + position);
     }
 
     @Override
@@ -1072,79 +562,33 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         PrefUtils.setInt(mContext, GlobalContants.PAPERWIDTH, PrinterConstants.paperWidth);
     }
 
-    public void usbAutoConn(UsbManager manager) {
-        doDiscovery(manager);
-        if (!deviceList.isEmpty()) {
-            mUSBDevice = deviceList.get(0);
-        }
-        if (mUSBDevice != null) {
-            PrinterInstance.getPrinterInstance(mContext, mUSBDevice, mHandler)
-                    .openConnection();
-        } else {
-            mHandler.obtainMessage(Connect.FAILED).sendToTarget();
-            myPrinter.closeConnection();
-        }
-    }
-
-    @SuppressLint("NewApi")
-    private void doDiscovery(UsbManager manager) {
-        HashMap<String, UsbDevice> devices = manager.getDeviceList();
-        deviceList = new ArrayList<UsbDevice>();
-        for (UsbDevice device : devices.values()) {
-            if (USBPort.isUsbPrinter(device)) {
-                deviceList.add(device);
-            }
-        }
-    }
-
-    private String getWiFiName() {
-        String wifiName = null;
-        WifiManager mWifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        if (!mWifi.isWifiEnabled()) {
-            mWifi.setWifiEnabled(true);
-        }
-        WifiInfo wifiInfo = mWifi.getConnectionInfo();
-        wifiName = wifiInfo.getSSID();
-        wifiName = wifiName.replaceAll("\"", "");
-        return wifiName;
-    }
-
-    public BroadcastReceiver myReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            BluetoothDevice device = intent
-                    .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            if (action.equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)) {
-                if (device != null && myPrinter != null
-                        && isConnected && device.equals(mDevice)) {
-                    myPrinter.closeConnection();
-                    mHandler.obtainMessage(Connect.CLOSED).sendToTarget();
-                }
-            }
-        }
-    };
-
     private void copyFilesFromassets(Context context, String oldPath, String newPath) {
         try {
-            String fileNames[] = context.getAssets().list(oldPath);// 获取assets目录下的所有文件及目录名
-            if (fileNames.length > 0) {// 如果是目录
+            // 获取assets目录下的所有文件及目录名
+            String fileNames[] = context.getAssets().list(oldPath);
+            if (fileNames.length > 0) {
+                // 如果是目录
                 File file = new File(newPath);
-                file.mkdirs();// 如果文件夹不存在，则递归
+                file.mkdirs();
+                // 如果文件夹不存在，则递归
                 for (String fileName : fileNames) {
                     copyFilesFromassets(context, oldPath + "/" + fileName,
                             newPath + "/" + fileName);
                 }
-            } else {// 如果是文件
+            } else {
+                // 如果是文件
                 InputStream is = context.getAssets().open(oldPath);
                 FileOutputStream fos = new FileOutputStream(new File(newPath));
                 byte[] buffer = new byte[1024];
                 int byteCount = 0;
-                while ((byteCount = is.read(buffer)) != -1) {// 循环从输入流读取
+                // 循环从输入流读取
+                while ((byteCount = is.read(buffer)) != -1) {
                     // buffer字节
-                    fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
+                    // 将读取的输入流写入到输出流
+                    fos.write(buffer, 0, byteCount);
                 }
-                fos.flush();// 刷新缓冲区
+                // 刷新缓冲区
+                fos.flush();
                 is.close();
                 fos.close();
             }

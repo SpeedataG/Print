@@ -169,8 +169,8 @@ public class BaseActivity extends Activity {
                     }
                 }
             };
+            timer.schedule(timerTask, 0, 500);
         }
-        timer.schedule(timerTask, 0, 500);
     }
 
     public static void stopCheckStatus() {
