@@ -87,18 +87,6 @@ public class BarcoePrintActivity extends BaseActivity implements OnItemSelectedL
     @Override
     protected void onResume() {
         super.onResume();
-//		if (GlobalContants.ISCONNECTED) {
-//			if ("".equals(GlobalContants.DEVICENAME)
-//					|| GlobalContants.DEVICENAME == null) {
-//				headerConnecedState.setText(R.string.unknown_device);
-//
-//			} else {
-//
-//				headerConnecedState.setText(GlobalContants.DEVICENAME);
-//			}
-//
-//		}
-
     }
 
     private void init() {
@@ -354,6 +342,8 @@ public class BarcoePrintActivity extends BaseActivity implements OnItemSelectedL
                                 }
 
                             }
+                            etWidth.setText("" + width);
+                            etHeight.setText("" + height);
                             Barcode barcode = null;
                             String codeType = null;
                             switch (barType) {
@@ -660,11 +650,11 @@ public class BarcoePrintActivity extends BaseActivity implements OnItemSelectedL
             if (barcodeType == 1) {
 
                 Toast.makeText(mContext,
-                        "一维码：" + barcodeContent, 0)
+                        "一维码：" + barcodeContent, Toast.LENGTH_SHORT)
                         .show();
             } else {
                 Toast.makeText(mContext,
-                        "二维码：" + barcodeContent + " " + barcodeContent, 0)
+                        "二维码：" + barcodeContent + " " + barcodeContent, Toast.LENGTH_SHORT)
                         .show();
             }
             // 判端条码类型
