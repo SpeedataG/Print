@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ProgressDialog dialog;
     private DeviceControl deviceControl;
     private TextView tvAboutUs;
+    private PrinterInstance mPrinter;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -288,12 +289,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onDestroy() {
         super.onDestroy();
         mContext.unregisterReceiver(mUsbAttachReceiver);
-        if (deviceControl != null) {
-            try {
-                deviceControl.PowerOffDevice();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        mPrinter = PrinterInstance.mPrinter;
+        if (mPrinter != null) {
+            mPrinter.closeConnection();
+            mPrinter = null;
+            Log.i("zzc", "已经断开");
+        }
+        stopCheckStatus();
+        try {
+            deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+            deviceControl.PowerOffDevice();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

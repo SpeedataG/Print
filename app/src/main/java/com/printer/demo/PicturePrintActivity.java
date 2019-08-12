@@ -26,6 +26,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.printer.demo.utils.CanvasUtils;
@@ -54,6 +55,7 @@ public class PicturePrintActivity extends BaseActivity implements
     private ProgressDialog mPd;
     private String remp_dir = null;
     private static PrinterInstance mPrinter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +130,8 @@ public class PicturePrintActivity extends BaseActivity implements
 
     }
 
+
+
     @Override
     public void onClick(View view) {
         if (mPrinter == null || !SettingActivity.isConnected) {
@@ -135,7 +139,7 @@ public class PicturePrintActivity extends BaseActivity implements
             return;
         }
         if (view == btn_monochrome_print) {
-
+            progressDialog = ProgressDialog.show(this,"请等待","正在打印图片");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -167,6 +171,7 @@ public class PicturePrintActivity extends BaseActivity implements
                     btn_photo_print.setEnabled(true);
                     btn_select_photo.setEnabled(true);
                     btn_canvas_print.setEnabled(true);
+                    progressDialog.dismiss();
                 }
             }).start();
         } else if (view == btn_photo_print) {

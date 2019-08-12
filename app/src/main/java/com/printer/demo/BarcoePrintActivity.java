@@ -564,13 +564,13 @@ public class BarcoePrintActivity extends BaseActivity implements OnItemSelectedL
                     // etHeight.setText(R.string.level_default_value);
                     // tvQRSize.setText(R.string.multiple);
                     // } else if (barType == 1) {
-                    tvWidth.setText(R.string.characters_in_line);
-                    tvShowWidth.setText(R.string.characters_range);
-                    etWidth.setText(R.string.characters_default_value);
-                    tvHeigh.setText(R.string.level);
-                    tvShowHeight.setText(R.string.level_range_qrcode);
-                    etHeight.setText(R.string.level_range_default_value_qrcode);
-                    tvQRSize.setText(R.string.multiple);
+//                    tvWidth.setText(R.string.characters_in_line);
+//                    tvShowWidth.setText(R.string.characters_range);
+//                    etWidth.setText(R.string.characters_default_value);
+//                    tvHeigh.setText(R.string.level);
+//                    tvShowHeight.setText(R.string.level_range_qrcode);
+//                    etHeight.setText(R.string.level_range_default_value_qrcode);
+//                    tvQRSize.setText(R.string.multiple);
                     // } else if (barType == 2) {
                     // tvWidth.setText(R.string.barcode_width);
                     // tvShowWidth.setText(R.string.barcode_width_data_range_datamatrix);
@@ -617,13 +617,14 @@ public class BarcoePrintActivity extends BaseActivity implements OnItemSelectedL
      * @param spinner
      * @param value
      */
-    public static void setSpinnerItemSelectedByValue(Spinner spinner,
-                                                     String value) {
-        SpinnerAdapter apsAdapter = spinner.getAdapter(); // 得到SpinnerAdapter对象
+    public static void setSpinnerItemSelectedByValue(Spinner spinner, String value) {
+        // 得到SpinnerAdapter对象
+        SpinnerAdapter apsAdapter = spinner.getAdapter();
         int k = apsAdapter.getCount();
         for (int i = 0; i < k; i++) {
             if (value.equals(apsAdapter.getItem(i).toString())) {
-                spinner.setSelection(i, true);// 默认选中项
+                // 默认选中项
+                spinner.setSelection(i, true);
                 break;
             }
         }

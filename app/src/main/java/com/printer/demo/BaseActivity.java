@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.printer.demo.global.GlobalContants;
+import com.printer.demo.utils.PrefUtils;
 import com.printer.sdk.PrinterInstance;
 
 import java.util.Arrays;
@@ -52,6 +54,7 @@ public class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (isFirst) {
+            mPrinter = PrinterInstance.mPrinter;
             setTitleState(getResources().getString(R.string.off_line));
             isFirst = false;
         }
@@ -134,6 +137,8 @@ public class BaseActivity extends Activity {
             if (msg.what == 1) {
                 soundPool.play(soundId, 1, 1, 0, 0, 1);
                 Toast.makeText(context, "==缺纸==", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == 3) {
+                Toast.makeText(context, "==通讯异常，请断开重连==", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -160,6 +165,10 @@ public class BaseActivity extends Activity {
                                 Log.d("zzc:", "====缺纸====");
                                 handler.sendEmptyMessage(1);
                                 break;
+                            case 3:
+                                Log.d("zzc:", "====通讯异常====");
+                                handler.sendEmptyMessage(3);
+                                break;
                             default:
                                 Log.d("zzc:", "====status====" + status);
                                 break;
@@ -169,7 +178,7 @@ public class BaseActivity extends Activity {
                     }
                 }
             };
-            timer.schedule(timerTask, 0, 500);
+            timer.schedule(timerTask, 0, 1000);
         }
     }
 
@@ -181,5 +190,10 @@ public class BaseActivity extends Activity {
         if (timerTask != null) {
             timerTask.cancel();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

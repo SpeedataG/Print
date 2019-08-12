@@ -330,12 +330,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         baudrate, 0, mHandler);
                 myPrinter.openConnection();
                 Log.i(TAG, "波特率:" + baudrate + "路径:" + path);
-                BaseActivity.startCheckStatus(mContext, myPrinter);
+                startCheckStatus(mContext, myPrinter);
 
             } else {
                 if (myPrinter != null) {
                     myPrinter.closeConnection();
                     myPrinter = null;
+                    isConnected = false;
+                    updateButtonState(isConnected);
                     Log.i(TAG, "已经断开");
                 }
                 //下电
@@ -346,7 +348,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         e.printStackTrace();
                     }
                 }
-                BaseActivity.stopCheckStatus();
+                stopCheckStatus();
             }
         }
 
@@ -384,12 +386,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                     case 0:
                         btnLabelPrint.setEnabled(false);
                         btnNormalPrint.setEnabled(true);
-                        BaseActivity.startCheckStatus(mContext, myPrinter);
+                        startCheckStatus(mContext, myPrinter);
                         break;
                     case 1:
                         btnLabelPrint.setEnabled(true);
                         btnNormalPrint.setEnabled(false);
-                        BaseActivity.stopCheckStatus();
+                        stopCheckStatus();
                         break;
                     default:
                         break;
@@ -436,7 +438,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
         if (v == btn_update) {
             if (isConnected) {
-                BaseActivity.stopCheckStatus();
+                stopCheckStatus();
                 showConnectingDialog();
                 new updateThread().start();
             } else {
