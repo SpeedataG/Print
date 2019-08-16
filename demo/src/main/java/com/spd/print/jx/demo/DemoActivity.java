@@ -42,4 +42,10 @@ public class DemoActivity extends AppCompatActivity implements IConnectCallback 
             // TODO: 2019/8/16 连接关闭
         }
     }
+
+
+    private void singleImpl() {
+        PrintInstant.getInstance().setPrintImpl(new PrintImpl());
+        PrintInstant.getInstance().getPrintImpl().setPaperType(PaperConstant.TAG_PAPER);
+    }
 }
