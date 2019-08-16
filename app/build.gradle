@@ -8,8 +8,8 @@ android {
         applicationId "com.iprt.xzc_pc.testproject"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 4
-        versionName "5.0.3"
+        versionCode 6
+        versionName "5.0.5"
     }
 
     buildTypes {

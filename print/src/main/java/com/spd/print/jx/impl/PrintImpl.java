@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 import com.printer.sdk.Barcode;
 import com.printer.sdk.PrinterConstants;
 import com.printer.sdk.PrinterInstance;
+import com.printer.sdk.Table;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.inter.IPrint;
+import com.spd.print.jx.utils.PictureUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,6 +56,43 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
+    public int setDensity(int density) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return mPrinter.sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x16, (byte) density, 0x1F, 0x1F});
+    }
+
+    @Override
+    public void setPaperFeed(int line) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        line = line * 8;
+        byte[] bytes = new byte[]{0x1B, 0x4A, (byte) line};
+        mPrinter.sendBytesData(bytes);
+    }
+
+    @Override
+    public void setPaperBack(int line) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        line = line * 8;
+        byte[] bytes = new byte[]{0x1B, 0x4B, (byte) line};
+        mPrinter.sendBytesData(bytes);
+    }
+
+    @Override
+    public void printSelfCheck() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        byte[] bytes = new byte[]{0x1d, 0x28, 0x41, 0x02, 0x00, 0x00, 0x02};
+        mPrinter.sendBytesData(bytes);
+    }
+
+    @Override
     public void printText(String text) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
@@ -77,6 +116,21 @@ public class PrintImpl implements IPrint {
         mPrinter.printImage(bitmap, alignType, left, isCompressed);
     }
 
+    @Override
+    public void printBigImage(Bitmap bitmap, PrinterConstants.PAlign alignType, int left, boolean isCompressed) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        PictureUtils.printBitmapImage(mPrinter, bitmap, PrinterConstants.PAlign.NONE, 0, false);
+    }
+
+    @Override
+    public void printTable(Table table) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.printTable(table);
+    }
 
     /**
      * 获取打印机操作类

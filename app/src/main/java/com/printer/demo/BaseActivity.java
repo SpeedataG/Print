@@ -178,7 +178,7 @@ public class BaseActivity extends Activity {
                     }
                 }
             };
-            timer.schedule(timerTask, 0, 1000);
+            timer.schedule(timerTask, 500, 500);
         }
     }
 
@@ -189,7 +189,9 @@ public class BaseActivity extends Activity {
         }
         if (timerTask != null) {
             timerTask.cancel();
+            timerTask = null;
         }
+        Log.d("zzc:", "停止检测");
     }
 
     @Override

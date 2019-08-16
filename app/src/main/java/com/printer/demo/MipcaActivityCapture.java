@@ -43,7 +43,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 	private ViewfinderView viewfinderView;
 	private boolean hasSurface;
 	private Vector<BarcodeFormat> decodeFormats;
-	private String characterSet;
+	private String characterSet = "iso-8859-1";
 	private InactivityTimer inactivityTimer;
 	private MediaPlayer mediaPlayer;
 	private boolean playBeep;
@@ -86,7 +86,8 @@ public class MipcaActivityCapture extends Activity implements Callback {
 			surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		}
 		decodeFormats = null;
-		characterSet = null;
+//		characterSet = null;
+		characterSet = "iso-8859-1";
 
 		playBeep = true;
 		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -223,8 +224,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 			return;
 		}
 		if (handler == null) {
-			handler = new CaptureActivityHandler(this, decodeFormats,
-					characterSet);
+			handler = new CaptureActivityHandler(this, decodeFormats, characterSet);
 		}
 	}
 

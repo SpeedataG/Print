@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.serialport.DeviceControl;
 import android.util.Log;
 import android.view.View;
@@ -333,12 +334,16 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                 startCheckStatus(mContext, myPrinter);
 
             } else {
+                //关闭检测状态线程
+                stopCheckStatus();
+                SystemClock.sleep(500);
                 if (myPrinter != null) {
                     myPrinter.closeConnection();
                     myPrinter = null;
                     isConnected = false;
                     updateButtonState(isConnected);
                     Log.i(TAG, "已经断开");
+                    Log.i("zzc", "已经断开");
                 }
                 //下电
                 if (deviceControl != null) {
@@ -348,7 +353,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
                         e.printStackTrace();
                     }
                 }
-                stopCheckStatus();
             }
         }
 
