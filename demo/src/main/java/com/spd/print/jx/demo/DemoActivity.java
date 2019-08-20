@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.spd.print.jx.R;
 import com.spd.print.jx.constant.PaperConstant;
 import com.spd.print.jx.constant.PrintConstant;
 import com.spd.print.jx.impl.PrintImpl;
@@ -22,6 +23,7 @@ public class DemoActivity extends AppCompatActivity implements IConnectCallback 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         mPrintImpl = new PrintImpl();
         mPrintImpl.connectPrinter(this);
     }
@@ -29,11 +31,11 @@ public class DemoActivity extends AppCompatActivity implements IConnectCallback 
     @Override
     public void onPrinterConnectSuccess() {
         //设置纸类型
-        mPrintImpl.setPaperType(PaperConstant.TAG_PAPER);
+//        mPrintImpl.setPaperType(PaperConstant.TAG_PAPER);
         //打印文本1
-        mPrintImpl.printText("你好");
-        //打印文本2
-        mPrintImpl.getPrinter().printText("你好");
+//        mPrintImpl.printText("你好");
+//        //打印文本2
+//        mPrintImpl.getPrinter().printText("你好");
     }
 
     @Override

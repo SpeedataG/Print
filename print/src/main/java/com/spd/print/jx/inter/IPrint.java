@@ -42,6 +42,23 @@ public interface IPrint {
     PrinterInstance connectPrinter(File device, int baudrate, int flags, @NonNull IConnectCallback callback);
 
     /**
+     * 关闭连接
+     */
+    void closeConnect();
+
+    /**
+     * 向打印机发送数据
+     *
+     * @param srcData 要发送的byte数组
+     * @return <p>
+     * >0 成功发送到打印机的字节数
+     * -1 未初始化打印
+     * -2 srcData 为空或者srcData 里没有数据。
+     * </p>
+     */
+    int sendBytesData(byte[] srcData);
+
+    /**
      * 设置纸类型
      *
      * @return 返回值应加以说明，我还没看到这返回值是什么意思，你了解的话需要加上

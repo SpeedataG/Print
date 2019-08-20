@@ -57,6 +57,7 @@
     <string name="copies_number">打印份数</string>
     <string name="print_test">标签纸测试</string>
     <string name="print_normal_test">普通热敏纸测试</string>
+    <string name="print_all_black_test">全黑测试</string>
     <string name="repeat_print_test">打印自检页</string>
     <string name="repeat_print_note">重复打印小票</string>
     <string name="repeat_print_stop">停止</string>

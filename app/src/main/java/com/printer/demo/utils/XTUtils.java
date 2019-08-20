@@ -290,6 +290,15 @@ public class XTUtils {
         mPrinter.printTable(table);
     }
 
+    public static void printBlackTest(PrinterInstance mPrinter){
+        mPrinter.initPrinter();
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████\n");
+        mPrinter.initPrinter();
+    }
 
     public static void printTest(Resources resources, PrinterInstance mPrinter) {
 
@@ -318,7 +327,7 @@ public class XTUtils {
         mPrinter.printText(resources.getString(R.string.str_text_strong));
         mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2); // ��2��
 
-//        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+        mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
         mPrinter.printText(resources.getString(R.string.str_text_print));
 
         mPrinter.setFont(0, 0, 0, 0, 1);
@@ -343,7 +352,7 @@ public class XTUtils {
             mPrinter.setFont(0, i, i, 0, 0);
             mPrinter.printText(resources.getString(R.string.bigger) + (i + 1) + resources.getString(R.string.bigger1));
             mPrinter.setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-//            mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
+            mPrinter.printText("███████████████████████████████████████████████████████████████████████████████████████████");
             mPrinter.printText(resources.getString(R.string.str_text_print));
         }
 

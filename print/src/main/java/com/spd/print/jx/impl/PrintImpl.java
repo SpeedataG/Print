@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.serialport.DeviceControl;
 import android.support.annotation.NonNull;
 
 import com.printer.sdk.Barcode;
@@ -15,6 +16,7 @@ import com.spd.print.jx.inter.IPrint;
 import com.spd.print.jx.utils.PictureUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,13 @@ public class PrintImpl implements IPrint {
     @Override
     public PrinterInstance connectPrinter(@NonNull IConnectCallback callback) {
         mCallback = callback;
+        try {
+            DeviceControl deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+            deviceControl.PowerOnDevice();
+            deviceControl.newSetDir(46, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mPrinter = PrinterInstance.getPrinterInstance(new File("/dev/ttyMT0"), 115200, 0, printerHandler);
         mPrinter.openConnection();
         return mPrinter;
@@ -44,15 +53,32 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
+    public void closeConnect() {
+        mPrinter.closeConnection();
+        mPrinter = null;
+        try {
+            DeviceControl deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+            deviceControl.PowerOffDevice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int sendBytesData(byte[] srcData) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return mPrinter.sendBytesData(srcData);
+    }
+
+    @Override
     public int setPaperType(int paperType) {
         List<byte[]> paperList = new ArrayList<>();
         paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 0, 0x1F, 0x1F});
         paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 1, 0x1F, (byte) 192, (byte) 120, 0x1F, 0x46, (byte) 23, 0x1F, 0x1F});
         paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 2, 0x1F, 0x1F});
-        if (mPrinter == null) {
-            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
-        }
-        return mPrinter.sendBytesData(paperList.get(paperType));
+        return sendBytesData(paperList.get(paperType));
     }
 
     @Override

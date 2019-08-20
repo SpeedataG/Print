@@ -190,10 +190,21 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/btn_selfprint_test"
+                android:id="@+id/btn_all_black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_normal_print"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/print_all_black_test"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_selfprint_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_all_black"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"

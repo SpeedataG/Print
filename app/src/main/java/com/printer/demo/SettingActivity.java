@@ -73,7 +73,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     protected static final String TAG = "SettingActivity";
     private static Button btn_search_devices, btn_selfprint_test,
             btn_update, btnLabelPrint, btnSetConcentration,
-            btnSetType, btnPaperOut, btnPaperBack, btnNormalPrint;
+            btnSetType, btnPaperOut, btnPaperBack, btnNormalPrint,
+            btnAllBlackPrint;
     // 连接状态
     public static boolean isConnected = false;
     public static String devicesName = "未知设备";
@@ -189,6 +190,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         //普通纸测试
         btnNormalPrint = findViewById(R.id.btn_normal_print);
         btnNormalPrint.setOnClickListener(this);
+
+        btnAllBlackPrint = findViewById(R.id.btn_all_black);
+        btnAllBlackPrint.setOnClickListener(this);
 
         //走纸 退纸
         btnPaperOut = findViewById(R.id.btn_paper_out);
@@ -366,6 +370,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         if (v == btnNormalPrint) {
             if (isConnected) {
                 XTUtils.printNormalTest(getResources(), myPrinter);
+            } else {
+                Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (v == btnAllBlackPrint) {
+            if (isConnected) {
+                XTUtils.printBlackTest(myPrinter);
             } else {
                 Toast.makeText(mContext, getString(R.string.no_connected), Toast.LENGTH_SHORT).show();
             }

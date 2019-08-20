@@ -1,8 +1,6 @@
 package com.spd.print.jx.utils;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.serialport.DeviceControl;
 import android.util.Log;
 
 import com.printer.sdk.PrinterConstants;
@@ -10,8 +8,6 @@ import com.printer.sdk.PrinterInstance;
 import com.printer.sdk.utils.Utils;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

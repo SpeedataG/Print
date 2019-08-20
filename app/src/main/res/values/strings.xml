@@ -57,6 +57,7 @@
     <string name="check_status">Check Status</string>
     <string name="print_test">Label paper test</string>
     <string name="print_normal_test">Thermal paper test</string>
+    <string name="print_all_black_test">All black test</string>
     <string name="repeat_print_test">Print Self-checking page</string>
     <string name="repeat_print_note">Repeat Print Receipt</string>
     <string name="repeat_print_stop">Stop</string>

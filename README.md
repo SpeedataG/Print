@@ -1,2 +1,2 @@
-# JXPrintDome
-JX打印dome
+# JXPrintDemo
+JX打印demo
