@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.spd.print.jx.R;
 import com.spd.print.jx.constant.PaperConstant;
 import com.spd.print.jx.constant.PrintConstant;
 import com.spd.print.jx.impl.PrintImpl;
@@ -23,7 +22,6 @@ public class DemoActivity extends AppCompatActivity implements IConnectCallback 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         mPrintImpl = new PrintImpl();
         mPrintImpl.connectPrinter(this);
     }
