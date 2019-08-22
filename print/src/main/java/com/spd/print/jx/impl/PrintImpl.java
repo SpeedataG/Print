@@ -13,10 +13,14 @@ import com.printer.sdk.PrinterInstance;
 import com.printer.sdk.Table;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.inter.IPrint;
+import com.spd.print.jx.utils.CRC16;
 import com.spd.print.jx.utils.PictureUtils;
+import com.spd.print.jx.utils.StringUtils;
 
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +58,9 @@ public class PrintImpl implements IPrint {
 
     @Override
     public void closeConnect() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
         mPrinter.closeConnection();
         mPrinter = null;
         try {
@@ -70,6 +77,38 @@ public class PrintImpl implements IPrint {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
         return mPrinter.sendBytesData(srcData);
+    }
+
+    @Override
+    public int read(byte[] buffer) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return mPrinter.read(buffer);
+    }
+
+    @Override
+    public void initPrinter() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.initPrinter();
+    }
+
+    @Override
+    public void setFont(int mCharacterType, int mWidth, int mHeight, int mBold, int mUnderline) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.setFont(mCharacterType, mWidth, mHeight, mBold, mUnderline);
+    }
+
+    @Override
+    public void setPrinter(int command, int value) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.setPrinter(command, value);
     }
 
     @Override
@@ -156,6 +195,14 @@ public class PrintImpl implements IPrint {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
         mPrinter.printTable(table);
+    }
+
+    @Override
+    public int update(InputStream inputStream) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return UpdatePrinter.update(inputStream, mPrinter);
     }
 
     /**

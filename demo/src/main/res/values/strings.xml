@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">JXPrintDemo</string>
     <string name="connect_printer">连接打印机</string>
+    <string name="disconnect_printer">断开连接</string>
     <string name="print_setting">打印设置</string>
     <string name="system_update">系统升级</string>
+    <string name="paper_feed">走纸</string>
+    <string name="paper_back">退纸</string>
+    <string name="print_self_page">打印自检页</string>
+    <string name="normal_print">普通纸打印测试</string>
+    <string name="label_print">标签纸打印测试</string>
+
+    <string name="toast_success">连接成功</string>
+    <string name="toast_fail">连接失败</string>
+    <string name="toast_close">连接关闭</string>
+    <string name="toast_operation_success">成功</string>
+    <string name="toast_operation_fail">失败</string>
+
+    <string name="example_text">打印演示文本：abc123</string>
 </resources>

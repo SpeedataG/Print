@@ -8,6 +8,7 @@ public class BaseApp extends Application {
 
 
     private static PrintImpl sPrinterImpl;
+    public static Boolean isConnection = false;
 
     @Override
     public void onCreate() {

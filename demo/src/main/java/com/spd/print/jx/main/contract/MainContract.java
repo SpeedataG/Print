@@ -17,5 +17,10 @@ public interface MainContract {
          * 连接打印机
          */
         void connectPrinter();
+
+        /**
+         * 断开连接
+         */
+        void disconnectPrinter();
     }
 }

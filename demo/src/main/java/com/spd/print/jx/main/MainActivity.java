@@ -3,13 +3,20 @@ package com.spd.print.jx.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.spd.lib.mvp.BaseMvpActivity;
 import com.spd.print.jx.R;
+import com.spd.print.jx.application.BaseApp;
+import com.spd.print.jx.constant.PrintConstant;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.main.presenter.MainPresenter;
 import com.spd.print.jx.setting.PrintSettingActivity;
+import com.spd.print.jx.utils.ToastUtil;
 
 /**
  * @author :Reginer in  2019/8/21 11:00.
@@ -18,6 +25,7 @@ import com.spd.print.jx.setting.PrintSettingActivity;
  */
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements View.OnClickListener, IConnectCallback {
 
+    private Button btnConnect;
 
     @Override
     protected int getActLayoutId() {
@@ -26,7 +34,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-        findViewById(R.id.connectPrinter).setOnClickListener(this);
+        btnConnect = findViewById(R.id.connectPrinter);
+        btnConnect.setOnClickListener(this);
         findViewById(R.id.printSetting).setOnClickListener(this);
     }
 
@@ -45,12 +54,15 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.connectPrinter:
-                mPresenter.connectPrinter();
+                if (!BaseApp.isConnection) {
+                    mPresenter.connectPrinter();
+                } else {
+                    mPresenter.disconnectPrinter();
+                }
                 break;
             case R.id.printSetting:
                 startActivity(new Intent(this, PrintSettingActivity.class));
                 break;
-
             default:
                 break;
         }
@@ -58,11 +70,26 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
 
     @Override
     public void onPrinterConnectSuccess() {
-
+        BaseApp.isConnection = true;
+        btnConnect.setText(getResources().getString(R.string.disconnect_printer));
+        ToastUtil.customToastView(mContext, getString(R.string.toast_success), Toast.LENGTH_SHORT
+                , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
     }
 
     @Override
     public void onPrinterConnectFailed(int errorCode) {
-
+        BaseApp.isConnection = false;
+        switch (errorCode) {
+            case PrintConstant.CONNECT_CLOSED:
+                btnConnect.setText(getResources().getString(R.string.connect_printer));
+                ToastUtil.customToastView(mContext, getString(R.string.toast_close), Toast.LENGTH_SHORT
+                        , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
+                break;
+            default:
+                btnConnect.setText(getResources().getString(R.string.connect_printer));
+                ToastUtil.customToastView(mContext, getString(R.string.toast_fail), Toast.LENGTH_SHORT
+                        , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
+                break;
+        }
     }
 }

@@ -22,4 +22,9 @@ public class MainPresenter extends BasePresenter<MainActivity, MainModel> implem
         BaseApp.getPrinterImpl().connectPrinter(getView());
     }
 
+    @Override
+    public void disconnectPrinter() {
+        BaseApp.getPrinterImpl().closeConnect();
+    }
+
 }

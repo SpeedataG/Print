@@ -11,6 +11,7 @@ import com.spd.print.jx.constant.DensityConstant;
 import com.spd.print.jx.constant.PaperConstant;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author :Reginer in  2019/8/16 10:23.
@@ -57,6 +58,54 @@ public interface IPrint {
      * </p>
      */
     int sendBytesData(byte[] srcData);
+
+    /**
+     * 读取打印机返回的数据
+     *
+     * @param buffer 用于接收读到字节的数组
+     * @return <p>
+     * >0 成功读到的字节数
+     * -1 未初始化打印
+     * -2 srcData 为空或者 srcData 里没有数据。
+     * </p>
+     */
+    int read(byte[] buffer);
+
+    /**
+     * <p>
+     * 初始化打印机
+     * 可以清除缓存
+     * </p>
+     */
+    void initPrinter();
+
+    /**
+     * 设置打印机字体
+     *
+     * @param mCharacterType 0 表示 12*24 字体大小，1 表示 9*16 字体大小，此设置临时有效
+     * @param mWidth         倍宽，范围 0~7
+     * @param mHeight        倍高，范围 0~7
+     * @param mBold          0 不加粗，1 加粗
+     * @param mUnderline     0 无 下划线，1 下划线
+     */
+    void setFont(int mCharacterType, int mWidth, int mHeight, int mBold, int mUnderline);
+
+    /**
+     * 设置打印机打印
+     *
+     * @param command <p>
+     *                PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LNCH 打印并走纸 value 点行
+     *                PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE 打印并走纸 value 字符行
+     *                PrinterConstants.Command.ALIGN 设置打印内容位置，Value 值可指定设置的具体位置
+     *                </p>
+     * @param value   <p>
+     *                Value 值可指定设置的具体位置
+     *                PrinterConstants.Command.ALIGN_LEFT;
+     *                PrinterConstants.Command.ALIGN_CENTER;
+     *                PrinterConstants.Command.ALIGN_RIGHT
+     *                </p>
+     */
+    void setPrinter(int command, int value);
 
     /**
      * 设置纸类型
@@ -142,5 +191,12 @@ public interface IPrint {
      * @param table 表格
      */
     void printTable(Table table);
+
+    /**
+     * 升级sdk
+     * @param inputStream 升级文件
+     * @return -2 成功
+     */
+    int update(InputStream inputStream);
 
 }
