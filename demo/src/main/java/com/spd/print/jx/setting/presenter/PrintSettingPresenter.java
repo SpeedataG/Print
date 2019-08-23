@@ -150,7 +150,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
                 getView().onUpdateError(e);
             }
             int a = 0;
-            a = BaseApp.getPrinterImpl().update(in);
+            a = BaseApp.getPrinterImpl().update(in, "35 31 34 30 34");
             if (a == -2) {
                 getView().onUpdateSuccess();
             } else {

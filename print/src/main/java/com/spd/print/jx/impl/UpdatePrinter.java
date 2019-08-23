@@ -16,7 +16,7 @@ import java.io.InputStream;
  */
 public class UpdatePrinter {
 
-    public static int update(InputStream inputStream, PrinterInstance mPrinter) {
+    public static int update(InputStream inputStream, String hexFileLength, PrinterInstance mPrinter) {
         DataInputStream dataStream = new DataInputStream(inputStream);
         CRC16 crc = new CRC16();
         byte[] comein = new byte[]{(byte) 31, (byte) 17, (byte) 31, (byte) 66, (byte) 117, (byte) 112, (byte) 103, (byte) 114, (byte) 97, (byte) 100, (byte) 101};
@@ -24,7 +24,9 @@ public class UpdatePrinter {
         byte[] ready = new byte[]{(byte) 49};
         byte[] block = new byte[]{(byte) 1, (byte) 0, (byte) 255, (byte) 84, (byte) 54, (byte) 95, (byte) 80, (byte) 82, (byte) 74, (byte) 46, (byte) 98, (byte) 105, (byte) 110, (byte) 00, (byte) 49, (byte) 51, (byte) 52, (byte) 50, (byte) 50, (byte) 52};
         // 35 31 34 31 32 bin文件的大小
-        byte[] filename = StringUtils.hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 35 31 34 30 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A9 25".replaceAll(" ", ""));
+        String fileName = "01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 " + hexFileLength + " 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A9 25";
+        byte[] filename = StringUtils.hexStringToByte(fileName.replaceAll(" ", ""));
+        //        byte[] filename = StringUtils.hexStringToByte("01 00 FF 54 36 5F 50 52 4A 2E 62 69 6E 00 35 31 34 30 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A9 25".replaceAll(" ", ""));
         mPrinter.sendBytesData(comein);
         try {
             Thread.sleep(3000L);

@@ -21,6 +21,12 @@ public class PrintPictureActivity extends BaseMvpActivity<PrintPicturePresenter>
     }
 
     @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        mToolBar.setNavigationIcon(R.drawable.ic_back);
+    }
+
+    @Override
     protected PrintPicturePresenter createPresenter() {
         return new PrintPicturePresenter();
     }

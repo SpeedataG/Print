@@ -22,6 +22,12 @@ public class PrintBarcodeActivity extends BaseMvpActivity<PrintBarcodePresenter>
     }
 
     @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        mToolBar.setNavigationIcon(R.drawable.ic_back);
+    }
+
+    @Override
     protected PrintBarcodePresenter createPresenter() {
         return new PrintBarcodePresenter();
     }

@@ -198,11 +198,11 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
-    public int update(InputStream inputStream) {
+    public int update(InputStream inputStream, String hexFileLength) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
-        return UpdatePrinter.update(inputStream, mPrinter);
+        return UpdatePrinter.update(inputStream, hexFileLength, mPrinter);
     }
 
     /**

@@ -194,9 +194,11 @@ public interface IPrint {
 
     /**
      * 升级sdk
+     *
      * @param inputStream 升级文件
+     * @param hexFileLength 文件大小
      * @return -2 成功
      */
-    int update(InputStream inputStream);
+    int update(InputStream inputStream, String hexFileLength);
 
 }

@@ -1,0 +1,806 @@
+{
+	"opts": [
+        {
+            "optCode": 10
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 40,
+            "endX": 760,
+            "endY": 40,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 40,
+            "endX": 40,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 760,
+            "beginY": 40,
+            "endX": 760,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 880,
+            "endX": 760,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 889,
+            "endX": 760,
+            "endY": 889,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 889,
+            "endX": 40,
+            "endY": 1400,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 760,
+            "beginY": 889,
+            "endX": 760,
+            "endY": 1400,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1400,
+            "endX": 760,
+            "endY": 1400,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 136,
+            "endX": 760,
+            "endY": 136,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 472,
+            "beginY": 192,
+            "endX": 760,
+            "endY": 192,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 296,
+            "endX": 760,
+            "endY": 296,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 400,
+            "endX": 760,
+            "endY": 400,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 504,
+            "endX": 760,
+            "endY": 504,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 608,
+            "endX": 760,
+            "endY": 608,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 792,
+            "endX": 760,
+            "endY": 792,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 88,
+            "beginY": 296,
+            "endX": 88,
+            "endY": 608,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 88,
+            "beginY": 792,
+            "endX": 88,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 336,
+            "beginY": 792,
+            "endX": 336,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 512,
+            "beginY": 792,
+            "endX": 512,
+            "endY": 880,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 472,
+            "beginY": 136,
+            "endX": 472,
+            "endY": 296,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1016,
+            "endX": 760,
+            "endY": 1016,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1104,
+            "endX": 760,
+            "endY": 1104,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1192,
+            "endX": 760,
+            "endY": 1192,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1232,
+            "endX": 760,
+            "endY": 1232,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 40,
+            "beginY": 1272,
+            "endX": 760,
+            "endY": 1272,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 88,
+            "beginY": 1016,
+            "endX": 88,
+            "endY": 1192,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 216,
+            "beginY": 1192,
+            "endX": 216,
+            "endY": 1272,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 304,
+            "beginY": 889,
+            "endX": 304,
+            "endY": 1016,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 400,
+            "beginY": 1192,
+            "endX": 400,
+            "endY": 1272,
+            "width": 1
+        },
+        {
+            "optCode": 13,
+            "beginX": 576,
+            "beginY": 1192,
+            "endX": 576,
+            "endY": 1272,
+            "width": 1
+        },
+        {
+            "optCode": 14,
+            "barcodeType": 1,
+            "width": 2,
+            "ratio": 2,
+            "height": 86,
+            "x": 70,
+            "y": 160,
+            "number": "001160689123"
+        },
+        {
+            "optCode": 12,
+            "x": 148,
+            "y": 260,
+            "fontType": 2,
+            "isBold": true,
+            "content": "001 160 689 123"
+        },
+        {
+            "optCode": 12,
+            "x": 488,
+            "y": 144,
+            "fontType": 4,
+            "isBold": true,
+            "content": "三号便利箱/袋"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 312,
+            "fontType": 2,
+            "isBold": true,
+            "content": "目"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 336,
+            "fontType": 2,
+            "isBold": true,
+            "content": "的"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 360,
+            "fontType": 2,
+            "isBold": true,
+            "content": "地"
+        },
+        {
+            "optCode": 12,
+            "x": 114,
+            "y": 312,
+            "fontType": 6,
+            "isBold": true,
+            "content": "7312"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 416,
+            "fontType": 2,
+            "isBold": true,
+            "content": "收"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 440,
+            "fontType": 2,
+            "isBold": true,
+            "content": "件"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 464,
+            "fontType": 2,
+            "isBold": true,
+            "content": "人"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 412,
+            "fontType": 2,
+            "isBold": false,
+            "content": "熊二  13913913913"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 440,
+            "fontType": 2,
+            "isBold": false,
+            "content": "湖南省湘潭市雨湖区学府路与建设路口交汇口666号南山科"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 468,
+            "fontType": 2,
+            "isBold": false,
+            "content": "技产业基地B栋88楼湖南省湘潭市雨湖区学府路与建设路口"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 520,
+            "fontType": 2,
+            "isBold": true,
+            "content": "寄"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 544,
+            "fontType": 2,
+            "isBold": true,
+            "content": "件"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 568,
+            "fontType": 2,
+            "isBold": true,
+            "content": "人"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 516,
+            "fontType": 2,
+            "isBold": false,
+            "content": "熊大  13913913913"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 544,
+            "fontType": 2,
+            "isBold": false,
+            "content": "深圳市雨湖区学府路与建设路口交汇口666号南山科技产业"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 572,
+            "fontType": 2,
+            "isBold": false,
+            "content": "基地B栋16楼"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 616,
+            "fontType": 2,
+            "isBold": true,
+            "content": "付款方式:"
+        },
+        {
+            "optCode": 12,
+            "x": 168,
+            "y": 616,
+            "fontType": 2,
+            "isBold": false,
+            "content": "寄付"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 644,
+            "fontType": 2,
+            "isBold": true,
+            "content": "月结账号:"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 672,
+            "fontType": 2,
+            "isBold": true,
+            "content": "第三方地区:"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 700,
+            "fontType": 2,
+            "isBold": true,
+            "content": "计费重量:"
+        },
+        {
+            "optCode": 12,
+            "x": 168,
+            "y": 700,
+            "fontType": 2,
+            "isBold": false,
+            "content": "5kg"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 728,
+            "fontType": 2,
+            "isBold": true,
+            "content": "费用合计:"
+        },
+        {
+            "optCode": 12,
+            "x": 168,
+            "y": 728,
+            "fontType": 2,
+            "isBold": false,
+            "content": "42元"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 756,
+            "fontType": 2,
+            "isBold": true,
+            "content": "定时派送日期:"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 616,
+            "fontType": 2,
+            "isBold": true,
+            "content": "声明价值:"
+        },
+        {
+            "optCode": 12,
+            "x": 544,
+            "y": 616,
+            "fontType": 2,
+            "isBold": false,
+            "content": "2000元"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 644,
+            "fontType": 2,
+            "isBold": true,
+            "content": "保价费用:"
+        },
+        {
+            "optCode": 12,
+            "x": 544,
+            "y": 644,
+            "fontType": 2,
+            "isBold": false,
+            "content": "10元"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 672,
+            "fontType": 2,
+            "isBold": true,
+            "content": "包装费用:"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 700,
+            "fontType": 2,
+            "isBold": true,
+            "content": "运费:"
+        },
+        {
+            "optCode": 12,
+            "x": 496,
+            "y": 700,
+            "fontType": 2,
+            "isBold": false,
+            "content": "22元"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 728,
+            "fontType": 2,
+            "isBold": true,
+            "content": "长*宽*高:"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 800,
+            "fontType": 2,
+            "isBold": true,
+            "content": "托"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 824,
+            "fontType": 2,
+            "isBold": true,
+            "content": "寄"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 848,
+            "fontType": 2,
+            "isBold": true,
+            "content": "物"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 824,
+            "fontType": 2,
+            "isBold": false,
+            "content": "衣物"
+        },
+        {
+            "optCode": 12,
+            "x": 344,
+            "y": 800,
+            "fontType": 1,
+            "isBold": true,
+            "content": "收件员:"
+        },
+        {
+            "optCode": 12,
+            "x": 408,
+            "y": 800,
+            "fontType": 1,
+            "isBold": false,
+            "content": "42663200"
+        },
+        {
+            "optCode": 12,
+            "x": 344,
+            "y": 828,
+            "fontType": 1,
+            "isBold": true,
+            "content": "寄件日期:"
+        },
+        {
+            "optCode": 12,
+            "x": 424,
+            "y": 828,
+            "fontType": 1,
+            "isBold": false,
+            "content": "03月31日"
+        },
+        {
+            "optCode": 12,
+            "x": 344,
+            "y": 856,
+            "fontType": 1,
+            "isBold": true,
+            "content": "派件员:"
+        },
+        {
+            "optCode": 12,
+            "x": 520,
+            "y": 800,
+            "fontType": 1,
+            "isBold": true,
+            "content": "签名:"
+        },
+        {
+            "optCode": 12,
+            "x": 600,
+            "y": 856,
+            "fontType": 1,
+            "isBold": false,
+            "content": "年      月      日"
+        },
+        {
+            "optCode": 16,
+            "width": 192,
+            "height": 69,
+            "x": 76,
+            "y": 920,
+            "octetStr": "0000007FFFE0000000000000000000000000000000000000000001FFFFFC00000000000000000000000000000000000000000FFFFFFF80000000000000000000000000000000000000007FFFFFFFF000000000000000000000000000000000000001FFFFFFFFFC00000000000000000000000000000000000007FFFFFFFFFF0000000000000000000000000000000000001FFFFFFFFFFFC000000000000000000000000000000000003FFFFFFFFFFFE000000000000000000000000000000000001FFFE0003FFFC000000000000000000000000000000000000FFF000003FF80000000000000000000000000000000000107F8000000FF04000FFF8F81F3FE00FF803FFE07FC07FC0383E00000001E0E000FFFCF83F3FFE1FFF03FFF1FFE0FFE03C000000000081E000FFFCFC3E3FFF1FFF83FFE1FFE1FFE07E000000000003F000FFFC7C7E3FFF9FFFC3FFF3FFE3FFE07E000000000003F000FC087EFC3FFFDF8FE3F003F063F060FF000000000007F800F8003FFC3E0FDF87E3E003E003E000FF000000000007F800F8001FF83E07DF87E3E007E003E001FF000000000007FC00F8001FF03E07DF87E3E003F003F001FE000000000003FC00F8000FF03E07DF87E3E003FC03FC01FE003C0001F803FE00FFF80FE03E0FDF8FE3FFC3FF03FF03FC03FFC03FFFC3FE00FFF807E03E3F9FFFC3FFE1FFC1FFC3FC07FFF0FFFFE1FE00FFF807C03FFF9FFF83FFE0FFE0FFE3FC0FFFF0FFFFE1FE00FFF80FE03FFF1FFF03FFE03FE01FF7F81FFFF0FFFFE0FF00F8000FF03FFE1FFE03E0000FF00FF7F81FFFF0FFFFE0FF00F8001FF03FF81FBF03E00003F003FFF83F80F0FE01E0FF00F8001FF83F801F9F03E00003F001FFF83F0030FC0020FF00F8003FF83E001F9F83E00003F001FFF03F0000FC00007F80F8003EFC3E001F8FC3E00703F303FFF03F0000FC00007F80FFFC7E7C3E001F87C3FFF3CFE3CFEFF03F8000FC00007F80FFFC7C7E3E001F87E3FFE3FFE3FFEFF03FC000FC00007F80FFFCF83F3E001F83F3FFF7FFC3FFCFF01FF000FC0C007F80FFFDF83F3E001F83F3FFE3FF03FF0FF01FFC00FC3E007F8000000000000000000000003000380FF00FFF00FC7F007F8000000000000000000000000000000FF007FF80FC7F807F8000000000000000000000000000000FF001FFC0FC7F807F8000000000000000000000000000000FF0007FE0FC7F007F8000000000006000000018000000000FF0001FF0FC3F007F80E1DFFC0000F000000038000000000FF00007F0FC1C007F80E9DFFC0000F0000307FFE00103FF8FF00003F8FC00007F80EDDFFC0000F000038FFFE00383FF8FF00003F8FC00007F80EDC38000FFFFF003CFFFF003C0000FF00001F8FC00007F80EDCFFC00FFFFF001E0380001E0000FF82001F8FC0000FF80EDCFFC00FFFFE000C7FFC000C00007F83003F8FC0000FF00EDCFFC0000F0000007FFE0000FFFE7F83C03F8FC0000FF00EDCC1C0000F0000247FFE0010FFFE7FC3F8FF0FC0000FF00EDCCDC0000F00003E739E003EFFFE7FC3FFFF0FC0001FE00EDCDDC003FFFC007E739E003E0F003FC3FFFE0FC0001FE00EDCDDC003FFFC000E7FFE000E0F003FC3FFFC0FC0003FE00EDCDDC003FFFC000E7FFE000E1E003FE0FFF80FC0003FE00EDCDDC0000F00000E0FE0000E1C701FE03FE00FC0003FC00EDCDDC0000F00000E0FF0000E3C781FF000000000007FC00EFCDDC0000F00000E1FF8000E783C0FF000000000007F800EDCDDC0000F00000E7FBE000E7FFC0FF000000000007F800EDCDDC01FFFFF000E7B9E000F7FFE07E000000000003F000EFC1C001FFFFF000F0380000F7FFE07E000000000003F000EDC1E001FFFFF001F8380001F800803C000000000001E001C1CFFC0000F00007FFFFE007FFFFE0381C00000001C0E001C1CFFC0000F000079FFFF0079FFFF0107F00000007F0400081CE1C0000F000070FFFF00707FFF000FFE000003FF8000000000000000000000000000000000001FFFE0003FFFC000000000000000000000000000000000003FFFFFFFFFFFE000000000000000000000000000000000001FFFFFFFFFFFC0000000000000000000000000000000000007FFFFFFFFFF00000000000000000000000000000000000001FFFFFFFFFC000000000000000000000000000000000000007FFFFFFFF0000000000000000000000000000000000000000FFFFFFFC00000000000000000000000000000000000000003FFFFFC0000000000000000000000000000000000000000001FFFC0000000000000000000000000000000000000"
+        },
+        {
+            "optCode": 14,
+            "barcodeType": 1,
+            "width": 2,
+            "ratio": 2,
+            "height": 64,
+            "x": 350,
+            "y": 904,
+            "number": "001160689123"
+        },
+        {
+            "optCode": 12,
+            "x": 430,
+            "y": 984,
+            "fontType": 2,
+            "isBold": true,
+            "content": "001 160 689 123"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1024,
+            "fontType": 2,
+            "isBold": true,
+            "content": "收"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1048,
+            "fontType": 2,
+            "isBold": true,
+            "content": "件"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1072,
+            "fontType": 2,
+            "isBold": true,
+            "content": "人"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 1024,
+            "fontType": 2,
+            "isBold": false,
+            "content": "熊二  13913913913"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 1056,
+            "fontType": 1,
+            "isBold": false,
+            "content": "湖南省湘潭市雨湖区学府路与建设路口交汇口666号南山科技产业基地B栋88楼湖南省湘潭"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 1080,
+            "fontType": 1,
+            "isBold": false,
+            "content": "市雨湖区学府路与建设路口交汇口666号南山科技产业基地B栋88楼"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1112,
+            "fontType": 2,
+            "isBold": true,
+            "content": "寄"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1136,
+            "fontType": 2,
+            "isBold": true,
+            "content": "件"
+        },
+        {
+            "optCode": 12,
+            "x": 50,
+            "y": 1160,
+            "fontType": 2,
+            "isBold": true,
+            "content": "人"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 1112,
+            "fontType": 2,
+            "isBold": false,
+            "content": "熊大  13913913913"
+        },
+        {
+            "optCode": 12,
+            "x": 112,
+            "y": 1144,
+            "fontType": 1,
+            "isBold": false,
+            "content": "深圳市雨湖区学府路与建设路口交汇口666号南山科技产业基地B栋16楼"
+        },
+        {
+            "optCode": 12,
+            "x": 88,
+            "y": 1204,
+            "fontType": 1,
+            "isBold": true,
+            "content": "托寄物"
+        },
+        {
+            "optCode": 12,
+            "x": 264,
+            "y": 1204,
+            "fontType": 1,
+            "isBold": true,
+            "content": "衣物"
+        },
+        {
+            "optCode": 12,
+            "x": 88,
+            "y": 1244,
+            "fontType": 1,
+            "isBold": true,
+            "content": "数量"
+        },
+        {
+            "optCode": 12,
+            "x": 264,
+            "y": 1244,
+            "fontType": 1,
+            "isBold": true,
+            "content": "1"
+        },
+        {
+            "optCode": 12,
+            "x": 448,
+            "y": 1204,
+            "fontType": 1,
+            "isBold": true,
+            "content": "付款方式"
+        },
+        {
+            "optCode": 12,
+            "x": 624,
+            "y": 1204,
+            "fontType": 1,
+            "isBold": true,
+            "content": "寄付"
+        },
+        {
+            "optCode": 12,
+            "x": 448,
+            "y": 1244,
+            "fontType": 1,
+            "isBold": true,
+            "content": "费用合计"
+        },
+        {
+            "optCode": 12,
+            "x": 624,
+            "y": 1244,
+            "fontType": 1,
+            "isBold": true,
+            "content": "42元"
+        },
+        {
+            "optCode": 11
+        }
+    ]
+	}

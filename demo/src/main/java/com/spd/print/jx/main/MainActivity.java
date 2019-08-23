@@ -12,10 +12,13 @@ import android.widget.Toast;
 import com.spd.lib.mvp.BaseMvpActivity;
 import com.spd.print.jx.R;
 import com.spd.print.jx.application.BaseApp;
+import com.spd.print.jx.barcodeprint.PrintBarcodeActivity;
 import com.spd.print.jx.constant.PrintConstant;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.main.presenter.MainPresenter;
+import com.spd.print.jx.pictureprint.PrintPictureActivity;
 import com.spd.print.jx.setting.PrintSettingActivity;
+import com.spd.print.jx.textprint.PrintTextActivity;
 import com.spd.print.jx.utils.ToastUtil;
 
 /**
@@ -37,6 +40,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
         btnConnect = findViewById(R.id.connectPrinter);
         btnConnect.setOnClickListener(this);
         findViewById(R.id.printSetting).setOnClickListener(this);
+        findViewById(R.id.printText).setOnClickListener(this);
+        findViewById(R.id.printBarcode).setOnClickListener(this);
+        findViewById(R.id.printPicture).setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +68,15 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
                 break;
             case R.id.printSetting:
                 startActivity(new Intent(this, PrintSettingActivity.class));
+                break;
+            case R.id.printText:
+                startActivity(new Intent(this, PrintTextActivity.class));
+                break;
+            case R.id.printBarcode:
+                startActivity(new Intent(this, PrintBarcodeActivity.class));
+                break;
+            case R.id.printPicture:
+                startActivity(new Intent(this, PrintPictureActivity.class));
                 break;
             default:
                 break;
