@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="@string/paper_feed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/systemUpdate" />
+        app:layout_constraintTop_toBottomOf="@id/systemUpdate" />
 
     <Button
         android:id="@+id/paperBack"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/paper_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paperFeed" />
+        app:layout_constraintTop_toBottomOf="@id/paperFeed" />
 
     <Button
         android:id="@+id/print_normal_paper"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/normal_print"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paperBack" />
+        app:layout_constraintTop_toBottomOf="@id/paperBack" />
 
     <Button
         android:id="@+id/print_label_paper"
@@ -53,5 +53,74 @@
         android:layout_height="wrap_content"
         android:text="@string/print_self_page"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/print_label_paper" />
+        app:layout_constraintTop_toBottomOf="@id/print_label_paper" />
+
+    <EditText
+        android:id="@+id/et_sensitivity"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="23"
+        app:layout_constraintEnd_toStartOf="@id/btn_set_sensitivity"
+        app:layout_constraintTop_toBottomOf="@id/print_self_page" />
+
+    <Button
+        android:id="@+id/btn_set_sensitivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置灵敏度"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/print_self_page" />
+
+    <Spinner
+        android:id="@+id/sp_density"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/array_density"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_set_density"
+        app:layout_constraintEnd_toStartOf="@id/btn_set_density"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_sensitivity" />
+
+    <Button
+        android:id="@+id/btn_set_density"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置浓度"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_sensitivity" />
+
+    <Spinner
+        android:id="@+id/sp_paper_type"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/array_type"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_set_paper_type"
+        app:layout_constraintEnd_toStartOf="@id/btn_set_paper_type"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_density" />
+
+    <Button
+        android:id="@+id/btn_set_paper_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置纸类型"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_density" />
+
+    <Button
+        android:id="@+id/btn_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="读返回值"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_read_show"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_read" />
+
+
 </android.support.constraint.ConstraintLayout>

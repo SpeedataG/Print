@@ -1,10 +1,8 @@
 package com.spd.print.jx.setting.presenter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.SystemClock;
+import android.util.Log;
 
 import com.printer.sdk.PrinterConstants;
 import com.spd.lib.mvp.BasePresenter;
@@ -19,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -35,37 +34,8 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
     @Override
     public void systemUpdate() {
         //开始升级
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                InputStream in = null;
-                //创建文件夹
-                File f = new File("/sdcard/Android/data/updata");
-                if (!f.exists()) {
-                    f.mkdir();
-                }
-                //复制升级文件到指定目录
-                copyFilesFromassets(getView(), "T581U0.73-V0.16-sbtV05.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
-                //获取升级文件
-                File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
-                try {
-                    in = new FileInputStream(fileParent);
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    getView().onUpdateError(e);
-                }
-                int a = 0;
-                a = BaseApp.getPrinterImpl().update(in);
-                if (a == -2) {
-                    getView().onUpdateSuccess();
-                } else {
-                    getView().onUpdateError(null);
-                }
-                Looper.loop();
-            }
-        }).start();
+        UpdateThread update = new UpdateThread();
+        update.start();
     }
 
     public void setPaperFeed() {
@@ -113,6 +83,81 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
     public void printSelfCheck() {
         byte[] selfCheck = new byte[]{0x1d, 0x28, 0x41, 0x02, 0x00, 0x00, 0x02};
         BaseApp.getPrinterImpl().sendBytesData(selfCheck);
+    }
+
+    /**
+     * 设置灵敏度
+     *
+     * @param sensitivity 灵敏度值
+     */
+    public void setSensitivity(String sensitivity) {
+        if (sensitivity.isEmpty()) {
+            int sen = Integer.parseInt(sensitivity);
+            BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) sen, 0x1F, 0x1F});
+        }
+    }
+
+    /**
+     * 读返回值
+     *
+     * @return 返回值
+     */
+    public String readStatus() {
+        byte[] result = new byte[6];
+        BaseApp.getPrinterImpl().read(result);
+        Log.d("zzc", "read====" + Arrays.toString(result));
+        return Arrays.toString(result);
+    }
+
+    /**
+     * 设置浓度
+     *
+     * @param density 0——5 低到高
+     */
+    public void setDensity(int density) {
+        BaseApp.getPrinterImpl().setDensity(density);
+    }
+
+    /**
+     * 设置纸类型
+     *
+     * @param type 类型
+     */
+    public void setPaperType(int type) {
+        BaseApp.getPrinterImpl().setPaperType(type);
+    }
+
+    private class UpdateThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            Looper.prepare();
+            InputStream in = null;
+            //创建文件夹
+            File f = new File("/sdcard/Android/data/updata");
+            if (!f.exists()) {
+                f.mkdir();
+            }
+            //复制升级文件到指定目录
+            copyFilesFromassets(getView(), "T581U0.73-V0.16-sbtV05.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
+            //获取升级文件
+            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
+            try {
+                in = new FileInputStream(fileParent);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                getView().onUpdateError(e);
+            }
+            int a = 0;
+            a = BaseApp.getPrinterImpl().update(in);
+            if (a == -2) {
+                getView().onUpdateSuccess();
+            } else {
+                getView().onUpdateError(null);
+            }
+            Looper.loop();
+        }
     }
 
     private void copyFilesFromassets(Context context, String oldPath, String newPath) {

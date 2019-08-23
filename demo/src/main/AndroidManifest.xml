@@ -36,13 +36,22 @@
             android:label="@string/print_setting" />
         <activity
             android:name=".main.MainActivity"
-            android:label="标题">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".textprint.PrintTextActivity"
+            android:label="@string/print_text" />
+        <activity
+            android:name=".barcodeprint.PrintBarcodeActivity"
+            android:label="@string/print_barcode" />
+        <activity
+            android:name=".pictureprint.PrintPictureActivity"
+            android:label="@string/print_picture" />
     </application>
 
 </manifest>

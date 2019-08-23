@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/connectPrinter"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/connect_printer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,9 +17,30 @@
 
     <Button
         android:id="@+id/printSetting"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/print_setting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/connectPrinter" />
+
+    <Button
+        android:id="@+id/printText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/print_text"
+        app:layout_constraintTop_toBottomOf="@id/printSetting" />
+
+    <Button
+        android:id="@+id/printBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/print_barcode"
+        app:layout_constraintTop_toBottomOf="@id/printText" />
+
+    <Button
+        android:id="@+id/printPicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/print_picture"
+        app:layout_constraintTop_toBottomOf="@id/printBarcode" />
+
 </android.support.constraint.ConstraintLayout>
