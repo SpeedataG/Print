@@ -6,41 +6,202 @@
     android:layout_height="match_parent"
     tools:context="com.spd.print.jx.main.MainActivity">
 
+    <ImageView
+        android:id="@+id/img_icon_connect"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@mipmap/home_disconnect"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="contentDescription" />
+
     <Button
         android:id="@+id/connectPrinter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/btn_selector"
         android:text="@string/connect_printer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#5eabe8"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_icon_connect"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/printSetting"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/print_setting"
-        app:layout_constraintTop_toBottomOf="@id/connectPrinter" />
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/device_name"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/connectPrinter"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
-        android:id="@+id/printText"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_status_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/print_text"
-        app:layout_constraintTop_toBottomOf="@id/printSetting" />
+        android:layout_marginBottom="50dp"
+        android:text="@string/status_disconnect"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/connectPrinter"
+        app:layout_constraintLeft_toRightOf="@id/tv_device_name" />
 
-    <Button
-        android:id="@+id/printBarcode"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_device_address"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/print_barcode"
-        app:layout_constraintTop_toBottomOf="@id/printText" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/device_address"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_device_name" />
 
-    <Button
-        android:id="@+id/printPicture"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_status_address"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/print_picture"
-        app:layout_constraintTop_toBottomOf="@id/printBarcode" />
+        android:layout_marginTop="10dp"
+        android:text="@string/status_disconnect"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/tv_device_address"
+        app:layout_constraintTop_toBottomOf="@id/tv_device_name" />
+
+    <ImageView
+        android:id="@+id/iv_main_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/bg_main_body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="contentDescription" />
+
+    <LinearLayout
+        android:id="@+id/ll_text_print"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/ll_picture_print"
+        app:layout_constraintCircleRadius="10dp"
+        app:layout_constraintRight_toLeftOf="@id/ll_barcode_print"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_body"
+        app:layout_constraintTop_toTopOf="@id/iv_main_body">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@mipmap/icon_text"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/print_text"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_barcode_print"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/ll_setting"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_body"
+        app:layout_constraintLeft_toRightOf="@id/ll_text_print"
+        app:layout_constraintTop_toTopOf="@id/iv_main_body">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@mipmap/icon_barcode"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/print_barcode"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_picture_print"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_body"
+        app:layout_constraintLeft_toRightOf="@id/ll_setting"
+        app:layout_constraintStart_toStartOf="@+id/iv_main_body"
+        app:layout_constraintTop_toBottomOf="@id/ll_text_print">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@mipmap/icon_picture"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/print_picture"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_setting"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_body"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main_body"
+        app:layout_constraintLeft_toRightOf="@id/ll_picture_print"
+        app:layout_constraintTop_toBottomOf="@id/ll_barcode_print">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@mipmap/icon_setting"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/print_setting"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

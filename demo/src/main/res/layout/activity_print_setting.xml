@@ -7,128 +7,270 @@
     android:background="@color/viewBackground"
     tools:context="com.spd.print.jx.setting.PrintSettingActivity">
 
-    <Button
-        android:id="@+id/systemUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/system_update"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <ImageView
+        android:id="@+id/iv_printer_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:background="@mipmap/setting_printer"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/paperFeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/paper_feed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/systemUpdate" />
-
-    <Button
-        android:id="@+id/paperBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/paper_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/paperFeed" />
-
-    <Button
-        android:id="@+id/print_normal_paper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/normal_print"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/paperBack" />
-
-    <Button
-        android:id="@+id/print_label_paper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_print"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/print_normal_paper" />
-
-    <Button
-        android:id="@+id/print_self_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/print_self_page"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/print_label_paper" />
-
-    <EditText
-        android:id="@+id/et_sensitivity"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:text="23"
-        app:layout_constraintEnd_toStartOf="@id/btn_set_sensitivity"
-        app:layout_constraintTop_toBottomOf="@id/print_self_page" />
-
-    <Button
-        android:id="@+id/btn_set_sensitivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置灵敏度"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/print_self_page" />
-
-    <Spinner
-        android:id="@+id/sp_density"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/array_density"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_set_density"
-        app:layout_constraintEnd_toStartOf="@id/btn_set_density"
-        app:layout_constraintTop_toBottomOf="@id/btn_set_sensitivity" />
-
-    <Button
-        android:id="@+id/btn_set_density"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置浓度"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_set_sensitivity" />
-
-    <Spinner
-        android:id="@+id/sp_paper_type"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/array_type"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_set_paper_type"
-        app:layout_constraintEnd_toStartOf="@id/btn_set_paper_type"
-        app:layout_constraintTop_toBottomOf="@id/btn_set_density" />
-
-    <Button
-        android:id="@+id/btn_set_paper_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置纸类型"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_set_density" />
-
-    <Button
-        android:id="@+id/btn_fatigue_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="疲劳测试"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_set_paper_type" />
-
-    <Button
-        android:id="@+id/btn_read"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="读返回值"
-        app:layout_constraintLeft_toLeftOf="parent"
+    <ImageView
+        android:id="@+id/iv_update"
+        android:layout_width="80dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="14dp"
+        android:background="@mipmap/setting_update"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_read_show"
-        android:layout_width="200dp"
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_read" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/device_name"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_printer_img"
+        app:layout_constraintTop_toBottomOf="@id/iv_update" />
 
+    <TextView
+        android:id="@+id/tv_status_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/status_disconnect"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/tv_device_name"
+        app:layout_constraintTop_toBottomOf="@id/iv_update" />
+
+    <TextView
+        android:id="@+id/tv_device_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/device_address"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_printer_img"
+        app:layout_constraintTop_toBottomOf="@id/tv_device_name" />
+
+    <TextView
+        android:id="@+id/tv_status_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/status_disconnect"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/tv_device_address"
+        app:layout_constraintTop_toBottomOf="@id/tv_device_name" />
+
+    <Button
+        android:id="@+id/setting_connectPrinter"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/btn_selector"
+        android:text="@string/connect_printer"
+        android:textColor="#5eabe8"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_printer_img" />
+
+    <ImageView
+        android:id="@+id/iv_setting_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/bg_main_body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="contentDescription" />
+
+    <ImageView
+        android:id="@+id/setting_param"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_white_radius"
+        app:layout_constraintLeft_toLeftOf="@id/iv_setting_body"
+        app:layout_constraintRight_toRightOf="@id/iv_setting_body"
+        app:layout_constraintTop_toTopOf="@id/iv_setting_body" />
+
+    <TextView
+        android:id="@+id/tv_paper_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/title_paper_type"
+        android:textColor="@color/gray_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@id/setting_param"
+        app:layout_constraintTop_toTopOf="@id/setting_param" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_paper_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_paper_type"
+        app:layout_constraintTop_toBottomOf="@id/tv_paper_type">
+
+        <TextView
+            android:id="@+id/set_paper_type"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_body"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/normal_paper"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignTop="@id/set_paper_type"
+            android:layout_alignEnd="@id/set_paper_type"
+            android:layout_alignBottom="@id/set_paper_type"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/down_arrow" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_set_paper_type"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/btn_setting_selector"
+        android:text="@string/confirm_setting"
+        android:textColor="@color/blue_text"
+        app:layout_constraintBaseline_toBaselineOf="@id/rl_paper_type"
+        app:layout_constraintRight_toRightOf="@id/setting_param" />
+
+    <TextView
+        android:id="@+id/tv_density"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/title_density"
+        android:textColor="@color/gray_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@id/setting_param"
+        app:layout_constraintTop_toBottomOf="@id/rl_paper_type" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_density"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_density"
+        app:layout_constraintTop_toBottomOf="@id/tv_density">
+
+        <TextView
+            android:id="@+id/set_density"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_body"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="1"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignTop="@id/set_density"
+            android:layout_alignEnd="@id/set_density"
+            android:layout_alignBottom="@id/set_density"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/down_arrow" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_set_density"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/btn_setting_selector"
+        android:text="@string/confirm_setting"
+        android:textColor="@color/blue_text"
+        app:layout_constraintBaseline_toBaselineOf="@id/rl_density"
+        app:layout_constraintRight_toRightOf="@id/setting_param" />
+
+    <Button
+        android:id="@+id/btn_print_test"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_light_blue_selector"
+        android:text="@string/print_normal_paper"
+        android:textColor="@color/blue_text"
+        app:layout_constraintBottom_toBottomOf="@id/setting_param"
+        app:layout_constraintLeft_toLeftOf="@id/setting_param"
+        app:layout_constraintRight_toRightOf="@id/setting_param"
+        app:layout_constraintTop_toBottomOf="@id/rl_density" />
+
+    <RelativeLayout
+        android:id="@+id/rl_feed_paper"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        app:layout_constraintLeft_toLeftOf="@id/setting_param"
+        app:layout_constraintTop_toBottomOf="@id/setting_param">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_back_paper"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        app:layout_constraintRight_toRightOf="@id/setting_param"
+        app:layout_constraintTop_toTopOf="@id/rl_feed_paper">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_print_self"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        app:layout_constraintLeft_toLeftOf="@id/setting_param"
+        app:layout_constraintTop_toBottomOf="@id/rl_feed_paper">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_fatigue_test"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_layout_btn_selector"
+        app:layout_constraintRight_toRightOf="@id/setting_param"
+        app:layout_constraintTop_toBottomOf="@id/rl_back_paper">
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

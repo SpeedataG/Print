@@ -13,6 +13,8 @@ import com.spd.print.jx.setting.contract.PrintSettingContract;
 import com.spd.print.jx.setting.model.PrintSettingModel;
 import com.spd.print.jx.utils.XTUtils;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +25,11 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author :Reginer in  2019/8/21 12:10.
@@ -30,7 +37,8 @@ import java.util.TimerTask;
  * 功能描述:
  */
 public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, PrintSettingModel> implements PrintSettingContract.Presenter {
-    private Timer timer;
+
+    private ScheduledExecutorService executorService;
 
     @Override
     protected PrintSettingModel createModel() {
@@ -133,22 +141,29 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         BaseApp.getPrinterImpl().setPaperType(type);
     }
 
+
     /**
      * 疲劳测试
      */
     public void fatigueTest(final Resources resources) {
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+        executorService = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
+        executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                //do something
                 XTUtils.printNote(resources, BaseApp.getPrinterImpl());
             }
-        }, 0, 30000);
+        }, 0, 30, TimeUnit.SECONDS);
+
     }
 
+    /**
+     * 停止疲劳测试
+     */
     public void stopFatigueTest() {
-        timer.cancel();
-        timer = null;
+        if (executorService != null) {
+            executorService.shutdown();
+        }
     }
 
     private class UpdateThread extends Thread {

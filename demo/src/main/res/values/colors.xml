@@ -7,7 +7,17 @@
     <color name="textColorHint">#A0A0A0</color>
     <color name="textColorVice">#6C6C6C</color>
     <color name="viewLineColor">#F0F0F0</color>
-    <color name="viewBackground">#62AEE8</color>
+    <color name="viewBackground">#61AFE8</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#404040</color>
+    <color name="white_press">#CCCCCC</color>
+
+    <color name="blue_text">#5eabe8</color>
+    <color name="red_text">#fe6464</color>
+    <color name="gray_text">#999999</color>
+    <color name="black_text">#333333</color>
+    <color name="white_text">#ffffff</color>
+
+    <color name="bg_body">#f2f2f2</color>
+    <color name="bg_light_blue_btn">#ebf7fe</color>
 </resources>

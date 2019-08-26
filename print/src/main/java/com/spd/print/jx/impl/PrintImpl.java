@@ -59,7 +59,7 @@ public class PrintImpl implements IPrint {
     @Override
     public void closeConnect() {
         if (mPrinter == null) {
-            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+            return;
         }
         mPrinter.closeConnection();
         mPrinter = null;

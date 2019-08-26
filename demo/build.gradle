@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.spd.print.jx.demo"
-        minSdkVersion 22
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

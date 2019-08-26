@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">JXPrintDemo</string>
     <string name="connect_printer">连接打印机</string>
-    <string name="disconnect_printer">断开连接</string>
+    <string name="disconnect_printer">断开打印机</string>
     <string name="print_setting">打印设置</string>
     <string name="print_text">文本打印</string>
     <string name="print_barcode">条码打印</string>
@@ -20,6 +20,20 @@
     <string name="toast_operation_fail">失败</string>
 
     <string name="example_text">打印演示文本：abc123</string>
+
+    <!--main-->
+    <string name="status_disconnect">未连接</string>
+    <string name="device_name">设备名称：</string>
+    <string name="device_address">设备地址：</string>
+
+    <!--设置页面-->
+    <string name="title_paper_type">纸类型：</string>
+    <string name="title_density">浓度：</string>
+    <string name="confirm_setting">确认设置</string>
+    <string name="normal_paper">普通纸</string>
+    <string name="label_paper">标签纸</string>
+    <string name="print_normal_paper">普通热敏纸测试</string>
+    <string name="print_label_paper">标签纸测试</string>
 
     <!-- TextPrintActivity -->
     <string name="text_input">请输入文字:</string>
