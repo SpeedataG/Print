@@ -33,6 +33,10 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     private EditText etSensitivity;
     private TextView tvReadShow;
     private Spinner spDensity, spPaperType;
+    /**
+     * 是否正在打印
+     */
+    private boolean isPrint = false;
 
     @Override
     protected int getActLayoutId() {
@@ -61,6 +65,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         findViewById(R.id.btn_set_paper_type).setOnClickListener(this);
         spDensity = findViewById(R.id.sp_density);
         spPaperType = findViewById(R.id.sp_paper_type);
+        findViewById(R.id.btn_fatigue_test).setOnClickListener(this);
     }
 
     @Override
@@ -102,6 +107,15 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                 break;
             case R.id.btn_set_paper_type:
                 mPresenter.setPaperType(spPaperType.getSelectedItemPosition());
+                break;
+            case R.id.btn_fatigue_test:
+                if (isPrint) {
+                    isPrint = false;
+                    mPresenter.stopFatigueTest();
+                } else {
+                    isPrint = true;
+                    mPresenter.fatigueTest(getResources());
+                }
                 break;
             default:
                 break;

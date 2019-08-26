@@ -107,6 +107,14 @@
         app:layout_constraintTop_toBottomOf="@id/btn_set_density" />
 
     <Button
+        android:id="@+id/btn_fatigue_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="疲劳测试"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_paper_type" />
+
+    <Button
         android:id="@+id/btn_read"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

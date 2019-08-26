@@ -20,4 +20,56 @@
     <string name="toast_operation_fail">失败</string>
 
     <string name="example_text">打印演示文本：abc123</string>
+
+    <!-- TextPrintActivity -->
+    <string name="text_input">请输入文字:</string>
+    <string name="hex_close">十六进制关</string>
+    <string name="hex_open">十六进制开</string>
+    <string name="content_to_print">请输入要打印的文字。。。</string>
+    <string name="print_note">小票打印示例</string>
+    <string name="example_for_codepage_print">代码页打印示例</string>
+    <string name="company_name">打印机公司</string>
+    <string name="shop_company_title">宁波月湖店</string>
+    <string name="shop_num">门店号：</string>
+    <string name="shop_note_num">单据号：</string>
+    <string name="shop_cashier_num">收银员：</string>
+    <string name="shop_receipt_date">单据日期：</string>
+    <string name="shop_print_time">打印时间：</string>
+    <string name="shop_goods_number">数量：</string>
+    <string name="shop_goods_total_price">总计：</string>
+    <string name="shop_payment">付款：</string>
+    <string name="shop_change">找零：</string>
+    <string name="shop_company_name">公司名称：江苏某某家居用品有限公司</string>
+    <string name="shop_company_site">公司网址：</string>
+    <string name="shop_company_address">地址：江苏省宁波市某某路某某号</string>
+    <string name="shop_company_tel">电话：</string>
+    <string name="shop_Service_Line">服务专线：</string>
+    <string name="shop_thanks">谢谢惠顾,欢迎再次光临！</string>
+    <string name="shop_demo">Demo 版本！</string>
+    <string name="note_title">品名;数量;单价;金额</string>
+    <string name="coffee">咖啡</string>
+    <string name="tableware">消毒餐具</string>
+    <string name="peanuts">油炸花生米</string>
+    <string name="cucumber">蒜泥黄瓜</string>
+    <string name="frog">干锅田鸡</string>
+    <string name="rice">米饭</string>
+    <string name="str_note">打印小票效果演示：</string>
+    <string name="str_show">演示：</string>
+    <string name="shop_receipt_num">单据</string>
+    <string name="bags">保鲜袋</string>
+    <string name="umbrella">雨伞</string>
+    <string name="hook">铁丝挂钩</string>
+
+    <string name="str_text">打印文本效果展示：</string>
+    <string name="str_text_left">文字居左效果演示abc123：</string>
+    <string name="str_text_right">文字居右效果演示abc123：</string>
+    <string name="str_text_center">文字居中效果演示abc123：</string>
+    <string name="str_text_strong">文字加粗效果演示abc123：</string>
+    <string name="str_text_underline">文字下划线效果演示abc123：</string>
+    <string name="str_text_print">效果演示abc123</string>
+    <string name="str_text_height">同行不同高效果演示：：</string>
+    <string name="times">倍</string>
+    <string name="bigger">放大</string>
+    <string name="bigger1">倍效果演示abc123</string>
+
 </resources>

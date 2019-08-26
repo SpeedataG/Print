@@ -1,6 +1,7 @@
 package com.spd.print.jx.setting.presenter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Looper;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.spd.print.jx.application.BaseApp;
 import com.spd.print.jx.setting.PrintSettingActivity;
 import com.spd.print.jx.setting.contract.PrintSettingContract;
 import com.spd.print.jx.setting.model.PrintSettingModel;
+import com.spd.print.jx.utils.XTUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author :Reginer in  2019/8/21 12:10.
@@ -26,6 +30,8 @@ import java.util.Objects;
  * 功能描述:
  */
 public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, PrintSettingModel> implements PrintSettingContract.Presenter {
+    private Timer timer;
+
     @Override
     protected PrintSettingModel createModel() {
         return new PrintSettingModel();
@@ -125,6 +131,24 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      */
     public void setPaperType(int type) {
         BaseApp.getPrinterImpl().setPaperType(type);
+    }
+
+    /**
+     * 疲劳测试
+     */
+    public void fatigueTest(final Resources resources) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                XTUtils.printNote(resources, BaseApp.getPrinterImpl());
+            }
+        }, 0, 30000);
+    }
+
+    public void stopFatigueTest() {
+        timer.cancel();
+        timer = null;
     }
 
     private class UpdateThread extends Thread {
