@@ -81,7 +81,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/btn_selector"
         android:text="@string/connect_printer"
-        android:textColor="#5eabe8"
+        android:textColor="@color/blue_text"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -161,6 +161,7 @@
         android:background="@drawable/btn_setting_selector"
         android:text="@string/confirm_setting"
         android:textColor="@color/blue_text"
+        android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@id/rl_paper_type"
         app:layout_constraintRight_toRightOf="@id/setting_param" />
 
@@ -214,6 +215,7 @@
         android:background="@drawable/btn_setting_selector"
         android:text="@string/confirm_setting"
         android:textColor="@color/blue_text"
+        android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@id/rl_density"
         app:layout_constraintRight_toRightOf="@id/setting_param" />
 
@@ -224,6 +226,7 @@
         android:background="@drawable/btn_light_blue_selector"
         android:text="@string/print_normal_paper"
         android:textColor="@color/blue_text"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/setting_param"
         app:layout_constraintLeft_toLeftOf="@id/setting_param"
         app:layout_constraintRight_toRightOf="@id/setting_param"
@@ -238,6 +241,26 @@
         app:layout_constraintLeft_toLeftOf="@id/setting_param"
         app:layout_constraintTop_toBottomOf="@id/setting_param">
 
+        <ImageView
+            android:id="@+id/iv_feed_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/setting_feed" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_feed_img"
+            android:text="@string/paper_feed"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -248,6 +271,26 @@
         android:background="@drawable/bg_layout_btn_selector"
         app:layout_constraintRight_toRightOf="@id/setting_param"
         app:layout_constraintTop_toTopOf="@id/rl_feed_paper">
+
+        <ImageView
+            android:id="@+id/iv_back_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/setting_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_back_img"
+            android:text="@string/paper_back"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -260,6 +303,25 @@
         app:layout_constraintLeft_toLeftOf="@id/setting_param"
         app:layout_constraintTop_toBottomOf="@id/rl_feed_paper">
 
+        <ImageView
+            android:id="@+id/iv_self_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/setting_self" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_self_img"
+            android:text="@string/print_self_page"
+            android:textColor="@color/black_text"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -270,6 +332,41 @@
         android:background="@drawable/bg_layout_btn_selector"
         app:layout_constraintRight_toRightOf="@id/setting_param"
         app:layout_constraintTop_toBottomOf="@id/rl_back_paper">
+
+        <ImageView
+            android:id="@+id/iv_fatigue_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/setting_fatigue" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_fatigue_img"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_fatigue_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_fatigue_test"
+                android:textColor="@color/black_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fatigue_test"
+                android:textColor="@color/black_text"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 

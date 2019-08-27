@@ -52,6 +52,16 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         update.start();
     }
 
+    @Override
+    public void connectPrinter() {
+        BaseApp.getPrinterImpl().connectPrinter(getView());
+    }
+
+    @Override
+    public void disconnectPrinter() {
+        BaseApp.getPrinterImpl().closeConnect();
+    }
+
     public void setPaperFeed() {
         BaseApp.getPrinterImpl().setPaperFeed(2);
     }
@@ -129,6 +139,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param density 0——5 低到高
      */
     public void setDensity(int density) {
+        BaseApp.mSharedXmlUtil.write("density", density);
         BaseApp.getPrinterImpl().setDensity(density);
     }
 
@@ -138,6 +149,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param type 类型
      */
     public void setPaperType(int type) {
+        BaseApp.mSharedXmlUtil.write("paper_type", type);
         BaseApp.getPrinterImpl().setPaperType(type);
     }
 

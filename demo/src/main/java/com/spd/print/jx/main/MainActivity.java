@@ -70,6 +70,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
                     mPresenter.connectPrinter();
                 } else {
                     mPresenter.disconnectPrinter();
+                    statusName.setText(getResources().getString(R.string.status_disconnect));
+                    statusAddress.setText(getResources().getString(R.string.status_disconnect));
+                    btnConnect.setText(getResources().getString(R.string.connect_printer));
+                    mIvConnect.setImageResource(R.mipmap.home_disconnect);
                 }
                 break;
             case R.id.ll_setting:
@@ -107,10 +111,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
         BaseApp.isConnection = false;
         BaseApp.deviceName = getResources().getString(R.string.status_disconnect);
         BaseApp.deviceAddress = getResources().getString(R.string.status_disconnect);
-        statusName.setText(BaseApp.deviceName);
-        statusAddress.setText(BaseApp.deviceAddress);
-        btnConnect.setText(getResources().getString(R.string.connect_printer));
-        mIvConnect.setImageResource(R.mipmap.home_disconnect);
         switch (errorCode) {
             case PrintConstant.CONNECT_CLOSED:
                 ToastUtil.customToastView(mContext, getString(R.string.toast_close), Toast.LENGTH_SHORT
@@ -121,6 +121,18 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
                         , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BaseApp.isConnection){
+            btnConnect.setText(getResources().getString(R.string.disconnect_printer));
+        }else {
+            btnConnect.setText(getResources().getString(R.string.connect_printer));
+        }
+        statusName.setText(BaseApp.deviceName);
+        statusAddress.setText(BaseApp.deviceAddress);
     }
 
     @Override

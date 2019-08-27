@@ -10,6 +10,9 @@
     <string name="paper_feed">走纸</string>
     <string name="paper_back">退纸</string>
     <string name="print_self_page">打印自检页</string>
+    <string name="fatigue_test">疲劳测试</string>
+    <string name="start_fatigue_test">开始</string>
+    <string name="stop_fatigue_test">停止</string>
     <string name="normal_print">普通纸打印测试</string>
     <string name="label_print">标签纸打印测试</string>
 
@@ -34,6 +37,8 @@
     <string name="label_paper">标签纸</string>
     <string name="print_normal_paper">普通热敏纸测试</string>
     <string name="print_label_paper">标签纸测试</string>
+
+    <string name="toast_error_tips">请先连接打印机</string>
 
     <!-- TextPrintActivity -->
     <string name="text_input">请输入文字:</string>

@@ -28,5 +28,14 @@ public interface PrintSettingContract {
          * 系统升级
          */
         void systemUpdate();
+        /**
+         * 连接打印机
+         */
+        void connectPrinter();
+
+        /**
+         * 断开连接
+         */
+        void disconnectPrinter();
     }
 }

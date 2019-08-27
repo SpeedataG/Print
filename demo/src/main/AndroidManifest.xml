@@ -52,6 +52,9 @@
         <activity
             android:name=".pictureprint.PrintPictureActivity"
             android:label="@string/print_picture" />
+        <activity
+            android:name=".popupwindow.PopupWindowActivity"
+            android:theme="@style/MyDialogStyleBottom" />
     </application>
 
 </manifest>
