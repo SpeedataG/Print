@@ -139,7 +139,6 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param density 0——5 低到高
      */
     public void setDensity(int density) {
-        BaseApp.mSharedXmlUtil.write("density", density);
         BaseApp.getPrinterImpl().setDensity(density);
     }
 
@@ -149,7 +148,6 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param type 类型
      */
     public void setPaperType(int type) {
-        BaseApp.mSharedXmlUtil.write("paper_type", type);
         BaseApp.getPrinterImpl().setPaperType(type);
     }
 
@@ -163,7 +161,11 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
             @Override
             public void run() {
                 //do something
-                XTUtils.printNote(resources, BaseApp.getPrinterImpl());
+                try {
+                    XTUtils.printNote(resources, BaseApp.getPrinterImpl());
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
             }
         }, 0, 30, TimeUnit.SECONDS);
 
@@ -201,10 +203,15 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
                 getView().onUpdateError(e);
             }
             int a = 0;
-            a = BaseApp.getPrinterImpl().update(in, "35 31 34 30 34");
-            if (a == -2) {
-                getView().onUpdateSuccess();
-            } else {
+            try {
+                a = BaseApp.getPrinterImpl().update(in, "35 31 34 30 34");
+                if (a == -2) {
+                    getView().onUpdateSuccess();
+                } else {
+                    getView().onUpdateError(null);
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace();
                 getView().onUpdateError(null);
             }
             Looper.loop();

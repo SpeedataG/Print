@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_body">
+
+    <ImageView
+        android:id="@+id/picture_body_img"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/bg_text_body"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_picture_preview"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/my_monochrome_image"
+        app:layout_constraintEnd_toEndOf="@id/picture_body_img"
+        app:layout_constraintStart_toStartOf="@id/picture_body_img"
+        app:layout_constraintTop_toTopOf="@id/picture_body_img" />
+
+    <Button
+        android:id="@+id/btn_print_bitmap"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_setting_selector"
+        android:text="@string/picture_bitmap_print"
+        android:textColor="@color/blue_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/picture_body_img"
+        app:layout_constraintEnd_toStartOf="@id/btn_print_canvas"
+        app:layout_constraintStart_toStartOf="@id/picture_body_img"
+        app:layout_constraintTop_toBottomOf="@id/iv_picture_preview" />
+
+    <Button
+        android:id="@+id/btn_print_canvas"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_setting_selector"
+        android:text="@string/picture_canvas_print"
+        android:textColor="@color/blue_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/picture_body_img"
+        app:layout_constraintEnd_toEndOf="@id/picture_body_img"
+        app:layout_constraintStart_toEndOf="@id/btn_print_bitmap"
+        app:layout_constraintTop_toBottomOf="@id/iv_picture_preview" />
+
+    <Button
+        android:id="@+id/btn_picture_photo"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_deep_blue_selector"
+        android:text="@string/picture_local_photo"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

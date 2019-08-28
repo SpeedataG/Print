@@ -15,7 +15,6 @@ public class BaseApp extends Application {
     public static Boolean isConnection = false;
     public static String deviceName = "";
     public static String deviceAddress = "";
-    public static SharedXmlUtil mSharedXmlUtil;
 
     @Override
     public void onCreate() {
@@ -23,7 +22,6 @@ public class BaseApp extends Application {
         sPrinterImpl = new PrintImpl();
         deviceName = getResources().getString(R.string.status_disconnect);
         deviceAddress = getResources().getString(R.string.status_disconnect);
-        mSharedXmlUtil = SharedXmlUtil.getInstance(this, "setting");
     }
 
     public static PrintImpl getPrinterImpl() {

@@ -11,6 +11,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#404040</color>
     <color name="white_press">#CCCCCC</color>
+    <color name="blue_press">#4b86b6</color>
 
     <color name="blue_text">#5eabe8</color>
     <color name="red_text">#fe6464</color>
@@ -20,4 +21,6 @@
 
     <color name="bg_body">#f2f2f2</color>
     <color name="bg_light_blue_btn">#ebf7fe</color>
+    
+    <color name="transparent">#00ffffff</color>
 </resources>

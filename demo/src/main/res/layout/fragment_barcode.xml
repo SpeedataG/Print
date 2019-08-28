@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_code_type_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/code_type"
+        android:textColor="@color/gray_text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_barcode_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:background="@color/bg_body"
+        android:drawableEnd="@mipmap/down_arrow"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="codeType"
+        android:textColor="@color/black_text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_code_type_tips"
+        app:layout_constraintStart_toStartOf="@id/tv_code_type_tips"
+        app:layout_constraintTop_toBottomOf="@id/tv_code_type_tips" />
+
+    <TextView
+        android:id="@+id/tv_code_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/code_content"
+        app:layout_constraintStart_toStartOf="@id/tv_barcode_type"
+        app:layout_constraintTop_toBottomOf="@id/tv_barcode_type" />
+
+    <EditText
+        android:id="@+id/et_barcode_content"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/bg_text_edit"
+        android:gravity="top"
+        android:padding="10dp"
+        android:text="@string/code_content_ex"
+        android:textColor="@color/black_text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_code_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_code_content" />
+
+    <Button
+        android:id="@+id/btn_send_print"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_deep_blue_selector"
+        android:text="@string/send_print"
+        android:textColor="@color/white_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

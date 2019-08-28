@@ -42,6 +42,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     private AlertDialog dialog;
     private TextView tvPaperType, tvDensity, statusName, statusAddress, tvFatigue;
     private Button btnConnect, btnPrintTest;
+    private SharedXmlUtil mSharedXmlUtil;
     /**
      * 是否正在打印
      */
@@ -101,7 +102,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                     mPresenter.setPaperBack();
                     break;
                 case R.id.btn_print_test:
-                    switch (BaseApp.mSharedXmlUtil.read("paper_type", 0)) {
+                    switch (mSharedXmlUtil.read("paper_type", 0)) {
                         case 1:
                             mPresenter.printLabelTest(getString(R.string.example_text));
                             break;
@@ -115,10 +116,12 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                     break;
                 case R.id.btn_set_density:
                     mPresenter.setDensity(densityInt);
+                    mSharedXmlUtil.write("density", densityInt);
                     break;
                 case R.id.btn_set_paper_type:
                     mPresenter.setPaperType(typeInt);
                     setPaperType(typeInt);
+                    mSharedXmlUtil.write("paper_type", typeInt);
                     break;
                 case R.id.rl_fatigue_test:
                     if (isPrint) {
@@ -165,9 +168,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     public void onUpdateSuccess() {
         // TODO: 2019/8/21 升级成功
         progressDialogDismiss();
-        BaseApp.isConnection = false;
-        BaseApp.deviceName = getResources().getString(R.string.status_disconnect);
-        BaseApp.deviceAddress = getResources().getString(R.string.status_disconnect);
+        mPresenter.disconnectPrinter();
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -208,7 +209,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         // 设置对话框的高
         wm.height = 500;
         // 对话框背景透明度
-        wm.alpha = 0.4f;
+        wm.alpha = 0.5f;
         // 遮罩层亮度
         wm.dimAmount = 0.2f;
         window.setAttributes(wm);
@@ -252,8 +253,9 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setPaperType(BaseApp.mSharedXmlUtil.read("paper_type", 0));
-        setDensity(BaseApp.mSharedXmlUtil.read("density", 0));
+        mSharedXmlUtil = SharedXmlUtil.getInstance(this, "setting");
+        setPaperType(mSharedXmlUtil.read("paper_type", 0));
+        setDensity(mSharedXmlUtil.read("density", 0));
     }
 
     @Override

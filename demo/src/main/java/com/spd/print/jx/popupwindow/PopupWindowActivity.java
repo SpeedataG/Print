@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.spd.print.jx.R;
 import com.spd.print.jx.adapter.DownListAdapter;
 import com.spd.print.jx.application.BaseApp;
+import com.speedata.libutils.SharedXmlUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,10 +45,10 @@ public class PopupWindowActivity extends Activity {
         if (SET_TYPE.equals(setting)) {
             list.add(getResources().getString(R.string.normal_paper));
             list.add(getResources().getString(R.string.label_paper));
-            downListAdapter.setChecked(BaseApp.mSharedXmlUtil.read("paper_type", 1));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this,"setting").read("paper_type", 1));
         } else if (SET_DENSITY.equals(setting)) {
             list.addAll(Arrays.asList("1", "2", "3", "4", "5"));
-            downListAdapter.setChecked(BaseApp.mSharedXmlUtil.read("density", 1));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this,"setting").read("density", 1));
         }
     }
 

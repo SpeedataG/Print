@@ -40,6 +40,30 @@
 
     <string name="toast_error_tips">请先连接打印机</string>
 
+    <!--文本打印页面-->
+    <string name="text_note_ex">小票打印示例</string>
+    <string name="text_code_ex">代码页打印示例</string>
+    <string name="text_table_ex">表格打印示例</string>
+    <string name="text_edit_title">编辑文字</string>
+    <string name="text_check_hex">十六进制</string>
+    <string name="send_print">发送打印</string>
+    <string name="text_print_test">This is just test!</string>
+
+    <!--图片打印-->
+    <string name="picture_local_photo">本地选择图片打印</string>
+    <string name="picture_bitmap_print">打印预置二值图</string>
+    <string name="picture_canvas_print">画布方式</string>
+
+    <!--条码打印-->
+    <string name="barcode_print_ex">一维码打印示例</string>
+    <string name="qr_code_print_ex">二维码打印示例</string>
+    <string name="scan_print_ex">扫一扫打印</string>
+    <string name="barcode_fragment">一维码</string>
+    <string name="qr_code_fragment">二维码</string>
+    <string name="code_type">条码类型：</string>
+    <string name="code_content">编辑条码内容：</string>
+    <string name="code_content_ex">0123456789</string>
+
     <!-- TextPrintActivity -->
     <string name="text_input">请输入文字:</string>
     <string name="hex_close">十六进制关</string>
