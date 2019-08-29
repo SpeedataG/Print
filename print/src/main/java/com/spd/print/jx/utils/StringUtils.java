@@ -21,4 +21,38 @@ public class StringUtils {
         return b;
     }
 
+    /**
+     * 把十六进制字符串转换成byte[]字节数组
+     *
+     * @param content 如 "0x54 0x68"
+     * @return byte[]
+     */
+    public static byte[] string2bytes(String content) {
+        char[] charArray = content.toCharArray();
+        byte[] tempByte = new byte[512];
+        tempByte[0] = 0x34;
+        int count = 0;
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == 'x') {
+                tempByte[count++] = (byte) (char2Int(charArray[i + 1]) * 16 + char2Int(charArray[i + 2]));
+            }
+        }
+        byte[] retByte = new byte[count];
+        System.arraycopy(tempByte, 0, retByte, 0, count);
+        return tempByte;
+    }
+
+    private static int char2Int(char data) {
+        if (data >= 48 && data <= 57) {
+            //0~9
+            data -= 48;
+        } else if (data >= 65 && data <= 70) {
+            //A~F
+            data -= 55;
+        } else if (data >= 97 && data <= 102) {
+            //a~f
+            data -= 87;
+        }
+        return Integer.valueOf(data);
+    }
 }

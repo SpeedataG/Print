@@ -13,6 +13,8 @@
         <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色。-->
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@android:color/white</item>
+        <!--隐藏状态栏-->
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="ViewLineStyle">
@@ -25,6 +27,7 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
+
     <style name="MyDialogStyleBottom" parent="android:Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/AnimBottom</item>
         <!-- 边框 -->

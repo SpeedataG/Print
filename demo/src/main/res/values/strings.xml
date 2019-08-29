@@ -13,7 +13,7 @@
     <string name="fatigue_test">疲劳测试</string>
     <string name="start_fatigue_test">开始</string>
     <string name="stop_fatigue_test">停止</string>
-    <string name="normal_print">普通纸打印测试</string>
+    <string name="normal_print">热敏纸打印测试</string>
     <string name="label_print">标签纸打印测试</string>
 
     <string name="toast_success">连接成功</string>
@@ -33,7 +33,7 @@
     <string name="title_paper_type">纸类型：</string>
     <string name="title_density">浓度：</string>
     <string name="confirm_setting">确认设置</string>
-    <string name="normal_paper">普通纸</string>
+    <string name="normal_paper">热敏纸</string>
     <string name="label_paper">标签纸</string>
     <string name="print_normal_paper">普通热敏纸测试</string>
     <string name="print_label_paper">标签纸测试</string>
@@ -47,7 +47,9 @@
     <string name="text_edit_title">编辑文字</string>
     <string name="text_check_hex">十六进制</string>
     <string name="send_print">发送打印</string>
-    <string name="text_print_test">This is just test!</string>
+    <string name="text_print_test">This is just a test!</string>
+    <string name="text_print_test_hex">0x54 0x68 0x69 0x73 0x20 0x69 0x73 0x20 0x6a 0x75 0x73 0x74 0x20 0x61 0x20 0x74 0x65 0x73 0x74 0x21 0x0a 0x0d</string>
+    <string name="print">打印</string>
 
     <!--图片打印-->
     <string name="picture_local_photo">本地选择图片打印</string>

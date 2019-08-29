@@ -7,8 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.spd.print.jx.R;
 import com.spd.print.jx.adapter.DownListAdapter;
@@ -26,9 +29,13 @@ public class PopupWindowActivity extends Activity {
 
     private final static String SET_TYPE = "type";
     private final static String SET_DENSITY = "density";
+    private final static String SET_BARCODE = "barcode";
+    private final static String SET_QR_CODE = "qr_code";
+    private final static String SET_CODE_PAGES = "code_pages";
     private ListView listView;
     private List<String> list = new ArrayList<>();
     private DownListAdapter downListAdapter;
+    private String setting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,14 +48,22 @@ public class PopupWindowActivity extends Activity {
     }
 
     private void initData() {
-        String setting = getIntent().getStringExtra("setting");
+        setting = getIntent().getStringExtra("setting");
         if (SET_TYPE.equals(setting)) {
             list.add(getResources().getString(R.string.normal_paper));
             list.add(getResources().getString(R.string.label_paper));
-            downListAdapter.setChecked(SharedXmlUtil.getInstance(this,"setting").read("paper_type", 1));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this, "setting").read("paper_type", 1));
         } else if (SET_DENSITY.equals(setting)) {
-            list.addAll(Arrays.asList("1", "2", "3", "4", "5"));
-            downListAdapter.setChecked(SharedXmlUtil.getInstance(this,"setting").read("density", 1));
+            list.addAll(Arrays.asList(getResources().getStringArray(R.array.array_density)));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this, "setting").read("density", 1));
+        } else if (SET_BARCODE.equals(setting)) {
+            list.addAll(Arrays.asList(getResources().getStringArray(R.array.barcode1)));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this, "setting").read("barcode", 0));
+        } else if (SET_QR_CODE.equals(setting)) {
+            list.addAll(Arrays.asList(getResources().getStringArray(R.array.barcode2)));
+            downListAdapter.setChecked(SharedXmlUtil.getInstance(this, "setting").read("qr_code", 0));
+        } else if (SET_CODE_PAGES.equals(setting)) {
+            list.addAll(Arrays.asList(getResources().getStringArray(R.array.code_pages)));
         }
     }
 
@@ -68,6 +83,9 @@ public class PopupWindowActivity extends Activity {
                 bundle.putInt("position", position);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
+                if (SET_CODE_PAGES.equals(setting)) {
+                    finish();
+                }
             }
         });
     }

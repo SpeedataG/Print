@@ -13,4 +13,74 @@
         <item>标签纸</item>
         <item>黑标纸</item>
     </string-array>
+
+    <string-array name="barcode1">
+        <item>CODE128</item>
+        <item>CODE39</item>
+        <item>CODEBAR</item>
+        <item>ITF</item>
+        <item>CODE93</item>
+        <item>UPC-A</item>
+        <item>UPC-E</item>
+        <item>EAN13</item>
+        <item>EAN8</item>
+        <item>All Types</item>
+    </string-array>
+
+    <string-array name="barcode2">
+        <item>QRCODE</item>
+        <item>PDF417</item>
+        <item>DATAMATRIX</item>
+    </string-array>
+
+    <string-array name="code_pages">
+        <item>CP437 [U.S.A., Standard Europe]</item>
+        <item>Katakana</item>
+        <item>CP850 [Multilingual]</item>
+        <item>CP860 [Portuguese]</item>
+        <item>CP863 [Canadian-French]</item>
+        <item>CP865 [Nordic]</item>
+        <item>WCP1251 [Cyrillic]</item>
+        <item>CP866 Cyrilliec #2</item>
+        <item>MIK[Cyrillic /Bulgarian]</item>
+        <item>CP755 [East Europe，Latvian 2]</item>
+        <item>Iran</item>
+        <item>reserve</item>
+        <item>reserve</item>
+        <item>reserve</item>
+        <item>reserve</item>
+        <item>CP862 [Hebrew]</item>
+        <item>WCP1252 Latin I</item>
+        <item>WCP1253 [Greek]</item>
+        <item>CP852 [Latina 2]</item>
+        <item>CP858 Multilingual Latin Ⅰ+Euro)</item>
+        <item>Iran II</item>
+        <item>Latvian</item>
+        <item>CP864 [Arabic]</item>
+        <item>ISO–8859–1 [West Europe]</item>
+        <item>CP737 [Greek]</item>
+        <item>WCP1257 [Baltic]</item>
+        <item>Thai</item>
+        <item>CP720[Arabic]</item>
+        <item>CP855</item>
+        <item>CP857[Turkish]</item>
+        <item>WCP1250[Central Eurpoe]</item>
+        <item>CP775</item>
+        <item>WCP1254[Turkish]</item>
+        <item>WCP1255[Hebrew]</item>
+        <item>WCP1256[Arabic]</item>
+        <item>WCP1258[Vietnam]</item>
+        <item>ISO–8859–2[Latin 2]</item>
+        <item>ISO–8859–3[Latin 3]</item>
+        <item>ISO–8859–4[Baltic]</item>
+        <item>ISO–8859–5[Cyrillic]</item>
+        <item>ISO–8859–6[Arabic]</item>
+        <item>ISO–8859–7[Greek]</item>
+        <item>ISO–8859–8[Hebrew]</item>
+        <item>ISO–8859–9[Turkish]</item>
+        <item>ISO–8859–15 [Latin 3]</item>
+        <item>Thai2</item>
+        <item>CP856</item>
+        <item>全选</item>
+    </string-array>
 </resources>
