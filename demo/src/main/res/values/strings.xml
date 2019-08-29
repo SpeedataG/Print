@@ -55,6 +55,8 @@
     <string name="picture_local_photo">本地选择图片打印</string>
     <string name="picture_bitmap_print">打印预置二值图</string>
     <string name="picture_canvas_print">画布方式</string>
+    <string name="print_bitmap_test">打印单色位图演示：\n</string>
+    <string name="print_bitmap_end_test">打印结束\n</string>
 
     <!--条码打印-->
     <string name="barcode_print_ex">一维码打印示例</string>
