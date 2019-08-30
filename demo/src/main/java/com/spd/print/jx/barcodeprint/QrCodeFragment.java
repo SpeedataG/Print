@@ -6,17 +6,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.printer.sdk.Barcode;
+import com.printer.sdk.PrinterConstants;
 import com.shizhefei.fragment.LazyFragment;
 import com.spd.print.jx.R;
+import com.spd.print.jx.application.BaseApp;
 import com.spd.print.jx.popupwindow.PopupWindowActivity;
 import com.speedata.libutils.SharedXmlUtil;
+
+import static com.printer.sdk.PrinterConstants.BarcodeType.*;
+
 
 /**
  * @author zzc
  */
 public class QrCodeFragment extends LazyFragment implements View.OnClickListener {
     private EditText etBarcodeContent;
-    private int typeInt;
+    private int typeInt = 0;
     private TextView tvQrCodeType;
 
     public QrCodeFragment() {
@@ -76,7 +82,17 @@ public class QrCodeFragment extends LazyFragment implements View.OnClickListener
     private void sendPrint() {
         String content = etBarcodeContent.getText().toString();
         if (!content.isEmpty()) {
-//            BaseApp.getPrinterImpl().printBarCode(content);
+            Barcode barcode;
+            int[] width = new int[]{0, 1, 8};
+            int[] height = new int[]{76, 0, 0};
+            byte[] bytes = new byte[]{QRCODE, PDF417, DATAMATRIX};
+            barcode = new Barcode(bytes[typeInt], width[typeInt], height[typeInt], 6, content);
+            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);
+            BaseApp.getPrinterImpl().printText("打印 " + tvQrCodeType.getText().toString() + " 码效果展示：");
+            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+            BaseApp.getPrinterImpl().printBarCode(barcode);
+            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_LEFT);
         }
     }
 }

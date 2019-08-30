@@ -2,16 +2,19 @@ package com.spd.print.jx.barcodeprint;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.printer.sdk.Barcode;
 import com.shizhefei.fragment.LazyFragment;
 import com.spd.print.jx.R;
 import com.spd.print.jx.application.BaseApp;
 import com.spd.print.jx.popupwindow.PopupWindowActivity;
 import com.speedata.libutils.SharedXmlUtil;
+
+import static com.printer.sdk.PrinterConstants.*;
+import static com.printer.sdk.PrinterConstants.BarcodeType.*;
 
 /**
  * @author zzc
@@ -19,7 +22,7 @@ import com.speedata.libutils.SharedXmlUtil;
 public class BarcodeFragment extends LazyFragment implements View.OnClickListener {
 
     private EditText etBarcodeContent;
-    private int typeInt;
+    private int typeInt = 0;
     private TextView tvBarcodeType;
 
     public BarcodeFragment() {
@@ -79,7 +82,28 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
     private void sendPrint() {
         String content = etBarcodeContent.getText().toString();
         if (!content.isEmpty()) {
-//            BaseApp.getPrinterImpl().printBarCode(content);
+            int width = 2;
+            int height = 162;
+            Barcode barcode;
+            byte[] bytes = new byte[]{CODE128, CODE39, CODABAR, ITF, CODE93, UPC_A, UPC_E, JAN13, JAN8};
+            if (typeInt < 9) {
+                barcode = new Barcode(bytes[typeInt], width, height, 2, content);
+                BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_CENTER);
+                BaseApp.getPrinterImpl().printText("打印 " + tvBarcodeType.getText().toString() + " 码效果展示：");
+                BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                BaseApp.getPrinterImpl().printBarCode(barcode);
+                BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+                BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_LEFT);
+            } else {
+                for (int i = 0; i < typeInt; i++) {
+                    barcode = new Barcode(bytes[typeInt], width, height, 2, content);
+                    BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_CENTER);
+                    BaseApp.getPrinterImpl().printText("打印 " + getResources().getStringArray(R.array.barcode1)[i] + " 码效果演示：");
+                    BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                    BaseApp.getPrinterImpl().printBarCode(barcode);
+                    BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                }
+            }
         }
     }
 }

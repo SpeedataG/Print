@@ -21,6 +21,10 @@
 
     <color name="bg_body">#f2f2f2</color>
     <color name="bg_light_blue_btn">#ebf7fe</color>
-    
+
     <color name="transparent">#00ffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="snow">#FFFAFA</color>
 </resources>

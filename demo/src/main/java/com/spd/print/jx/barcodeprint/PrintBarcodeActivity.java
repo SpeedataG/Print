@@ -1,6 +1,6 @@
 package com.spd.print.jx.barcodeprint;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -10,12 +10,14 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
-import com.spd.lib.mvp.BaseModel;
 import com.spd.lib.mvp.BaseMvpActivity;
 import com.spd.print.jx.R;
 import com.spd.print.jx.adapter.BarcodeAdapter;
 import com.spd.print.jx.barcodeprint.contract.PrintBarcodeContract;
 import com.spd.print.jx.barcodeprint.presenter.PrintBarcodePresenter;
+import com.spd.print.jx.barcodeprint.zxing.MipcaActivityCapture;
+
+import java.util.Objects;
 
 /**
  * 条码打印页
@@ -30,10 +32,15 @@ public class PrintBarcodeActivity extends BaseMvpActivity<PrintBarcodePresenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_barcode_ex:
+                mPresenter.printBarcodeEx();
                 break;
             case R.id.tv_qrcode_ex:
+                mPresenter.printQrCodeEx();
                 break;
             case R.id.tv_scan_print:
+                Intent intent = new Intent();
+                intent.setClass(mContext, MipcaActivityCapture.class);
+                startActivityForResult(intent, 1);
                 break;
             default:
                 break;
@@ -85,4 +92,18 @@ public class PrintBarcodeActivity extends BaseMvpActivity<PrintBarcodePresenter>
         indicatorViewPager.setAdapter(barcodeAdapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                // 得到扫描后的条码的类型
+                int barcodeType = Objects.requireNonNull(Objects.requireNonNull(data).getExtras()).getInt("codetype");
+                // 得到扫描后的内容再生成条码并打印
+                String barcodeContent = Objects.requireNonNull(data.getExtras()).getString("code_content");
+                // 执行打印
+                mPresenter.printScanTest(barcodeType, barcodeContent);
+            }
+        }
+    }
 }

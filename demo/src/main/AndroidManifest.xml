@@ -55,6 +55,7 @@
         <activity
             android:name=".popupwindow.PopupWindowActivity"
             android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".barcodeprint.zxing.MipcaActivityCapture" />
     </application>
 
 </manifest>
