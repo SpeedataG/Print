@@ -28,7 +28,16 @@ public class PrintBarcodeActivity extends BaseMvpActivity<PrintBarcodePresenter>
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.tv_barcode_ex:
+                break;
+            case R.id.tv_qrcode_ex:
+                break;
+            case R.id.tv_scan_print:
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -72,7 +81,7 @@ public class PrintBarcodeActivity extends BaseMvpActivity<PrintBarcodePresenter>
         mIndicator.setScrollBar(scrollBar);
         mViewPager.setOffscreenPageLimit(2);
         IndicatorViewPager indicatorViewPager = new IndicatorViewPager(mIndicator, mViewPager);
-        BarcodeAdapter barcodeAdapter = new BarcodeAdapter(getSupportFragmentManager(),this);
+        BarcodeAdapter barcodeAdapter = new BarcodeAdapter(getSupportFragmentManager(), this);
         indicatorViewPager.setAdapter(barcodeAdapter);
     }
 

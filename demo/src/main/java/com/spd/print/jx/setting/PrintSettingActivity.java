@@ -124,7 +124,11 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                     mSharedXmlUtil.write("paper_type", typeInt);
                     break;
                 case R.id.rl_fatigue_test:
-                    if (isPrint) {
+                    if (!BaseApp.isConnection){
+                        ToastUtil.customToastView(mContext, getString(R.string.toast_error_tips), Toast.LENGTH_SHORT
+                                , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
+                    }
+                    if (isPrint||!BaseApp.isConnection) {
                         isPrint = false;
                         mPresenter.stopFatigueTest();
                         tvFatigue.setText(getString(R.string.start_fatigue_test));
