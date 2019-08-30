@@ -119,4 +119,6 @@
     <string name="bigger">放大</string>
     <string name="bigger1">倍效果演示abc123</string>
 
+    <string name="progress_update">正在升级…</string>
+    <string name="progress_print">正在打印…</string>
 </resources>

@@ -1,9 +1,16 @@
 package com.spd.print.jx.pictureprint;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +20,12 @@ import com.spd.print.jx.R;
 import com.spd.print.jx.application.BaseApp;
 import com.spd.print.jx.pictureprint.contract.PrintPictureContract;
 import com.spd.print.jx.pictureprint.presenter.PrintPicturePresenter;
+import com.spd.print.jx.popupwindow.ProgressDialog;
 import com.spd.print.jx.utils.ToastUtil;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.zip.Inflater;
 
 /**
  * 图片打印
@@ -68,5 +80,23 @@ public class PrintPictureActivity extends BaseMvpActivity<PrintPicturePresenter>
         findViewById(R.id.btn_print_canvas).setOnClickListener(this);
         findViewById(R.id.btn_picture_photo).setOnClickListener(this);
         mIvPreview = findViewById(R.id.iv_picture_preview);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            mPresenter.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void progressDialogShow() {
+        ProgressDialog.getInstance(this).show();
+    }
+
+    @Override
+    public void progressDialogDismiss() {
+        ProgressDialog.getInstance(this).dismiss();
     }
 }

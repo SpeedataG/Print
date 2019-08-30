@@ -14,10 +14,11 @@
         android:layout_marginBottom="10dp" />
 
     <TextView
+        android:id="@+id/tv_progress_text"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
-        android:text="正在升级..."
+        android:text="@string/progress_update"
         android:textColor="@color/white" />
 
 </LinearLayout>
