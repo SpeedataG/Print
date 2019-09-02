@@ -13,11 +13,8 @@ import com.printer.sdk.PrinterInstance;
 import com.printer.sdk.Table;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.inter.IPrint;
-import com.spd.print.jx.utils.CRC16;
 import com.spd.print.jx.utils.PictureUtils;
-import com.spd.print.jx.utils.StringUtils;
 
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
