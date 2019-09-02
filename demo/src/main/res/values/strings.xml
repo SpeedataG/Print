@@ -66,8 +66,20 @@
     <string name="qr_code_fragment">二维码</string>
     <string name="code_type">条码类型：</string>
     <string name="code_content">编辑条码内容：</string>
+    <string name="code_len">(条码长度)</string>
     <string name="code_content_ex">0123456789</string>
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+
+    <string name="toast_content_illegal">请输入合法字符\n</string>
+    <string name="toast_code39_legal">0–9、A–Z、$、%、+、空格</string>
+    <string name="toast_code_bar_legal">0–9、A–D、$、+、-、.、/、:</string>
+    <string name="toast_number_legal">0–9</string>
+    <string name="toast_content_length">内容长度错误</string>
+    <string name="toast_len_code128">(2 ≤ length ≤ 255)</string>
+    <string name="toast_len_upc">(11 ≤ length ≤ 12)</string>
+    <string name="toast_len_ean13">(12 ≤ length ≤ 13)</string>
+    <string name="toast_len_ean8">(7 ≤ length ≤ 8)</string>
+    <string name="toast_len_def">(1 ≤ length ≤ 255)</string>
 
     <!-- TextPrintActivity -->
     <string name="text_input">请输入文字:</string>

@@ -2,6 +2,8 @@ package com.spd.jxprint.barcodeprint;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import com.shizhefei.fragment.LazyFragment;
 import com.spd.jxprint.R;
 import com.spd.jxprint.application.BaseApp;
 import com.spd.jxprint.popupwindow.PopupWindowActivity;
+import com.spd.jxprint.utils.CheckUtils;
 import com.spd.print.jx.utils.ToastUtil;
 import com.speedata.libutils.SharedXmlUtil;
 
@@ -37,6 +40,7 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
     private EditText etBarcodeContent;
     private int typeInt = 0;
     private TextView tvBarcodeType;
+    private TextView tvBarcodeLen;
 
     public BarcodeFragment() {
     }
@@ -55,13 +59,31 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
         initView();
         tvBarcodeType.setText(getResources().getStringArray(R.array.barcode1)[0]);
         SharedXmlUtil.getInstance(getActivity(), "setting").write("barcode", 0);
+        checkLength(etBarcodeContent.getText().toString());
     }
 
     private void initView() {
         tvBarcodeType = (TextView) findViewById(R.id.tv_barcode_type);
         tvBarcodeType.setOnClickListener(this);
         findViewById(R.id.btn_send_print).setOnClickListener(this);
+        tvBarcodeLen = (TextView) findViewById(R.id.tv_code_len);
         etBarcodeContent = (EditText) findViewById(R.id.et_barcode_content);
+        etBarcodeContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkText(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -95,12 +117,18 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
             typeInt = bundle.getInt("position");
             tvBarcodeType.setText(type);
             SharedXmlUtil.getInstance(getActivity(), "setting").write("barcode", typeInt);
+            checkLength(etBarcodeContent.getText().toString());
         }
     }
 
     private void sendPrint() {
         String content = etBarcodeContent.getText().toString();
         if (!content.isEmpty()) {
+            if (!checkLength(content)) {
+                ToastUtil.customToastView(getContext(), getString(R.string.toast_content_length), Toast.LENGTH_SHORT
+                        , (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                return;
+            }
             int width = 2;
             int height = 162;
             Barcode barcode;
@@ -123,6 +151,62 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
                     BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
                 }
             }
+        }
+    }
+
+    private void checkText(String text) {
+        switch (typeInt) {
+            case 1:
+                if (CheckUtils.code39Check(text)) {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                } else {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
+                    ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_code39_legal)
+                            , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                }
+                break;
+            case 2:
+                if (CheckUtils.codeBarCheck(text)) {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                } else {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
+                    ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_code_bar_legal)
+                            , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                }
+                break;
+            case 0:
+            case 4:
+                break;
+            default:
+                if (CheckUtils.numberCheck(text)) {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                } else {
+                    etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
+                    ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_number_legal)
+                            , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                }
+                break;
+        }
+    }
+
+    private boolean checkLength(String text) {
+        switch (typeInt) {
+            case 0:
+                tvBarcodeLen.setText(getString(R.string.toast_len_code128));
+                return text.length() <= 255 && text.length() >= 2;
+            case 5:
+            case 6:
+                tvBarcodeLen.setText(getString(R.string.toast_len_upc));
+                return text.length() <= 12 && text.length() >= 11;
+            case 7:
+                tvBarcodeLen.setText(getString(R.string.toast_len_ean13));
+                return text.length() <= 13 && text.length() >= 12;
+            case 8:
+                tvBarcodeLen.setText(getString(R.string.toast_len_ean8));
+                return text.length() <= 8 && text.length() >= 7;
+            default:
+                tvBarcodeLen.setText(getString(R.string.toast_len_def));
+                return text.length() <= 255 && text.length() >= 1;
         }
     }
 }
