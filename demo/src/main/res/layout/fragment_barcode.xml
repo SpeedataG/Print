@@ -52,6 +52,7 @@
         android:text="@string/code_len"
         android:textColor="@color/gray_text"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/tv_code_content"
         app:layout_constraintTop_toTopOf="@id/tv_code_content" />
 

@@ -17,6 +17,8 @@ import com.spd.jxprint.popupwindow.PopupWindowActivity;
 import com.spd.print.jx.utils.ToastUtil;
 import com.speedata.libutils.SharedXmlUtil;
 
+import java.util.Objects;
+
 import static com.printer.sdk.PrinterConstants.BarcodeType.DATAMATRIX;
 import static com.printer.sdk.PrinterConstants.BarcodeType.PDF417;
 import static com.printer.sdk.PrinterConstants.BarcodeType.QRCODE;
@@ -83,7 +85,7 @@ public class QrCodeFragment extends LazyFragment implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1) {
             Bundle bundle = data.getExtras();
-            String type = bundle.getString("listResult");
+            String type = Objects.requireNonNull(bundle).getString("listResult");
             typeInt = bundle.getInt("position");
             tvQrCodeType.setText(type);
             SharedXmlUtil.getInstance(getActivity(), "setting").write("qr_code", typeInt);
@@ -94,8 +96,8 @@ public class QrCodeFragment extends LazyFragment implements View.OnClickListener
         String content = etBarcodeContent.getText().toString();
         if (!content.isEmpty()) {
             Barcode barcode;
-            int[] width = new int[]{0, 1, 8};
-            int[] height = new int[]{76, 0, 0};
+            int[] width = new int[]{0, 1, 0};
+            int[] height = new int[]{76, 0, 8};
             byte[] bytes = new byte[]{QRCODE, PDF417, DATAMATRIX};
             barcode = new Barcode(bytes[typeInt], width[typeInt], height[typeInt], 6, content);
             BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);

@@ -57,6 +57,7 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_barcode);
         initView();
+        tvBarcodeLen.setVisibility(View.VISIBLE);
         tvBarcodeType.setText(getResources().getStringArray(R.array.barcode1)[0]);
         SharedXmlUtil.getInstance(getActivity(), "setting").write("barcode", 0);
         checkLength(etBarcodeContent.getText().toString());
@@ -117,6 +118,7 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
             typeInt = bundle.getInt("position");
             tvBarcodeType.setText(type);
             SharedXmlUtil.getInstance(getActivity(), "setting").write("barcode", typeInt);
+            checkText(etBarcodeContent.getText().toString());
             checkLength(etBarcodeContent.getText().toString());
         }
     }
@@ -127,6 +129,9 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
             if (!checkLength(content)) {
                 ToastUtil.customToastView(getContext(), getString(R.string.toast_content_length), Toast.LENGTH_SHORT
                         , (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                return;
+            }
+            if (!checkText(content)) {
                 return;
             }
             int width = 2;
@@ -143,7 +148,7 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
                 BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_LEFT);
             } else {
                 for (int i = 0; i < typeInt; i++) {
-                    barcode = new Barcode(bytes[typeInt], width, height, 2, content);
+                    barcode = new Barcode(bytes[i], width, height, 2, content);
                     BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_CENTER);
                     BaseApp.getPrinterImpl().printText("打印 " + getResources().getStringArray(R.array.barcode1)[i] + " 码效果演示：");
                     BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
@@ -154,38 +159,42 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
         }
     }
 
-    private void checkText(String text) {
+    private boolean checkText(String text) {
         switch (typeInt) {
             case 1:
                 if (CheckUtils.code39Check(text)) {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                    return true;
                 } else {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
                     ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_code39_legal)
                             , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                    return false;
                 }
-                break;
             case 2:
                 if (CheckUtils.codeBarCheck(text)) {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                    return true;
                 } else {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
                     ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_code_bar_legal)
                             , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                    return false;
                 }
-                break;
             case 0:
             case 4:
-                break;
+                etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                return true;
             default:
                 if (CheckUtils.numberCheck(text)) {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.black_text));
+                    return true;
                 } else {
                     etBarcodeContent.setTextColor(getResources().getColor(R.color.red_text));
                     ToastUtil.customToastView(getContext(), getString(R.string.toast_content_illegal) + getString(R.string.toast_number_legal)
                             , Toast.LENGTH_SHORT, (TextView) LayoutInflater.from(getContext()).inflate(R.layout.layout_toast, null));
+                    return false;
                 }
-                break;
         }
     }
 

@@ -67,7 +67,7 @@
     <string name="code_type">条码类型：</string>
     <string name="code_content">编辑条码内容：</string>
     <string name="code_len">(条码长度)</string>
-    <string name="code_content_ex">0123456789</string>
+    <string name="code_content_ex">012345678912</string>
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
 
     <string name="toast_content_illegal">请输入合法字符\n</string>

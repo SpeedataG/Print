@@ -9,7 +9,7 @@ public class CheckUtils {
 
     public static boolean numberCheck(String content) {
         if (!content.isEmpty()) {
-            String regex = "^\\d$";
+            String regex = "^\\d*$";
             return content.matches(regex);
         }
         return false;
