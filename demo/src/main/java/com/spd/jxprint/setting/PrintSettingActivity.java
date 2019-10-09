@@ -254,8 +254,8 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSharedXmlUtil = SharedXmlUtil.getInstance(this, "setting");
-        setPaperType(mSharedXmlUtil.read("paper_type", 0));
-        setDensity(mSharedXmlUtil.read("density", 0));
+        setPaperType(mSharedXmlUtil.read("paper_type", 1));
+        setDensity(mSharedXmlUtil.read("density", 1));
     }
 
     @Override
