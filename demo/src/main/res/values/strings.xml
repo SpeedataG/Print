@@ -134,4 +134,8 @@
 
     <string name="progress_update">正在升级…</string>
     <string name="progress_print">正在打印…</string>
+    <string name="dialog_setting_update">升级固件</string>
+    <string name="dialog_update_tips">升级过程发生中断可能导致打印机无法正常工作，确定升级固件吗？</string>
+    <string name="ok">确认</string>
+    <string name="cancel">取消</string>
 </resources>

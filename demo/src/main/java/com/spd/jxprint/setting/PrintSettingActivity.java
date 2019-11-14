@@ -88,8 +88,15 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         try {
             switch (v.getId()) {
                 case R.id.iv_update:
-                    progressDialogShow();
-                    mPresenter.systemUpdate();
+                    UpdateDialog updateDialog = new UpdateDialog(this);
+                    updateDialog.setOnSureListener(new UpdateDialog.OnSureListener() {
+                        @Override
+                        public void click() {
+                            progressDialogShow();
+                            mPresenter.systemUpdate();
+                        }
+                    });
+                    updateDialog.show();
                     break;
                 case R.id.rl_feed_paper:
                     mPresenter.setPaperFeed();

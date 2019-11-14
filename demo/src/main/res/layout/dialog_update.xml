@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_more"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_setting_update"
+        android:textColor="@color/text_content"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_update_tips"
+        android:textColor="@color/text_title"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#e7edea" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/white_to_gray_left"
+            android:text="@string/cancel"
+            android:textColor="@drawable/blue_to_deep" />
+        <View
+            android:background="#e7eaed"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:id="@+id/btn_sure"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/white_to_gray_right"
+            android:text="@string/ok"
+            android:textColor="@drawable/gray_to_deep" />
+    </LinearLayout>
+
+
+</LinearLayout>
