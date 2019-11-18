@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
-import android.serialport.DeviceControl;
+import android.serialport.DeviceControlSpd;
 import android.support.annotation.NonNull;
 
 import com.printer.sdk.Barcode;
@@ -34,7 +34,7 @@ public class PrintImpl implements IPrint {
     public PrinterInstance connectPrinter(@NonNull IConnectCallback callback) {
         mCallback = callback;
         try {
-            DeviceControl deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+            DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
             deviceControl.PowerOnDevice();
             deviceControl.newSetDir(46, 0);
         } catch (IOException e) {
@@ -61,7 +61,7 @@ public class PrintImpl implements IPrint {
         mPrinter.closeConnection();
         mPrinter = null;
         try {
-            DeviceControl deviceControl = new DeviceControl(DeviceControl.PowerType.NEW_MAIN, 8);
+            DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
             deviceControl.PowerOffDevice();
         } catch (IOException e) {
             e.printStackTrace();
