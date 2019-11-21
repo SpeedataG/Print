@@ -110,7 +110,8 @@ public interface IPrint {
     /**
      * 设置纸类型
      *
-     * @return 返回值应加以说明，我还没看到这返回值是什么意思，你了解的话需要加上
+     * @param paperType 纸类型
+     * @return
      * <p>
      * >0 成功发送到打印机的字节数
      * -1 未初始化打印

@@ -183,7 +183,7 @@ public class PrintImpl implements IPrint {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
-        PictureUtils.printBitmapImage(mPrinter, bitmap, PrinterConstants.PAlign.NONE, 0, false);
+        PictureUtils.printBitmapImage(mPrinter, bitmap, alignType, left, isCompressed);
     }
 
     @Override
