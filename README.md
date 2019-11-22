@@ -20,3 +20,12 @@ allprojects {
 	}
 
  ```
+ 
+  
+## API文档
+
+	详细的接口说明在showdoc，地址：https://www.showdoc.cc/576945461255467?page_id=3402674411306014
+
+北京思必拓科技股份有限公司
+
+网址 http://www.speedata.cn/
