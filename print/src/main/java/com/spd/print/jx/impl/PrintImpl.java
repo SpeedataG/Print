@@ -105,7 +105,11 @@ public class PrintImpl implements IPrint {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
-        mPrinter.setPrinter(command, value);
+        List commandList = new ArrayList();
+        commandList.add(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LNCH);
+        commandList.add(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE);
+        commandList.add(PrinterConstants.Command.ALIGN);
+        mPrinter.setPrinter((int) commandList.get(command), value);
     }
 
     @Override
@@ -171,19 +175,29 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
-    public void printImage(Bitmap bitmap, PrinterConstants.PAlign alignType, int left, boolean isCompressed) {
+    public void printImage(Bitmap bitmap, int alignType, int left, boolean isCompressed) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
-        mPrinter.printImage(bitmap, alignType, left, isCompressed);
+        List<PrinterConstants.PAlign> alignList = new ArrayList<>();
+        alignList.add(PrinterConstants.PAlign.START);
+        alignList.add(PrinterConstants.PAlign.CENTER);
+        alignList.add(PrinterConstants.PAlign.END);
+        alignList.add(PrinterConstants.PAlign.NONE);
+        mPrinter.printImage(bitmap, alignList.get(alignType), left, isCompressed);
     }
 
     @Override
-    public void printBigImage(Bitmap bitmap, PrinterConstants.PAlign alignType, int left, boolean isCompressed) {
+    public void printBigImage(Bitmap bitmap, int alignType, int left, boolean isCompressed) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
-        PictureUtils.printBitmapImage(mPrinter, bitmap, alignType, left, isCompressed);
+        List<PrinterConstants.PAlign> alignList = new ArrayList<>();
+        alignList.add(PrinterConstants.PAlign.START);
+        alignList.add(PrinterConstants.PAlign.CENTER);
+        alignList.add(PrinterConstants.PAlign.END);
+        alignList.add(PrinterConstants.PAlign.NONE);
+        PictureUtils.printBitmapImage(mPrinter, bitmap, alignList.get(alignType), left, isCompressed);
     }
 
     @Override
@@ -200,6 +214,31 @@ public class PrintImpl implements IPrint {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
         return UpdatePrinter.update(inputStream, hexFileLength, mPrinter);
+    }
+
+    @Override
+    public void setSensitivity(int sensitivity) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) sensitivity, 0x1F, 0x1F});
+    }
+
+    @Override
+    public void setOutPaperLen(int len) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        len = len * 8;
+        mPrinter.sendBytesData(new byte[]{0x1F, 0x11, 0x1F, (byte) 0xC0, (byte) len, 0x1F, 0x1F});
+    }
+
+    @Override
+    public void searchGap() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.sendBytesData(new byte[]{0x0C});
     }
 
     /**

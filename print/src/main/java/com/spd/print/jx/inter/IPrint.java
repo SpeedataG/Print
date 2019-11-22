@@ -111,8 +111,7 @@ public interface IPrint {
      * 设置纸类型
      *
      * @param paperType 纸类型
-     * @return
-     * <p>
+     * @return <p>
      * >0 成功发送到打印机的字节数
      * -1 未初始化打印
      * -2 srcData 为空或者srcData 里没有数据。
@@ -174,17 +173,17 @@ public interface IPrint {
      * @param left         -
      * @param isCompressed 是否压缩
      */
-    void printImage(Bitmap bitmap, PrinterConstants.PAlign alignType, int left, boolean isCompressed);
+    void printImage(Bitmap bitmap, int alignType, int left, boolean isCompressed);
 
     /**
      * 数据分包打印 适合大图片打印
      *
      * @param bitmap       单色位图
-     * @param alignType    对齐方式
+     * @param alignType    对齐方式 0-start,1-center,2-end,3-none
      * @param left         偏移 alignType为NONE时有效
      * @param isCompressed 是否压缩
      */
-    void printBigImage(Bitmap bitmap, PrinterConstants.PAlign alignType, int left, boolean isCompressed);
+    void printBigImage(Bitmap bitmap, int alignType, int left, boolean isCompressed);
 
     /**
      * 打印表格
@@ -196,10 +195,29 @@ public interface IPrint {
     /**
      * 升级sdk
      *
-     * @param inputStream 升级文件
+     * @param inputStream   升级文件
      * @param hexFileLength 文件大小
      * @return -2 成功
      */
     int update(InputStream inputStream, String hexFileLength);
+
+    /**
+     * 设置灵敏度
+     *
+     * @param sensitivity 电压值
+     */
+    void setSensitivity(int sensitivity);
+
+    /**
+     * 设置出纸距离
+     *
+     * @param len 电压值 (mm)
+     */
+    void setOutPaperLen(int len);
+
+    /**
+     * 定位
+     */
+    void searchGap();
 
 }
