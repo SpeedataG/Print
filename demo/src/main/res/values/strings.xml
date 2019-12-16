@@ -22,7 +22,7 @@
     <string name="toast_operation_success">成功</string>
     <string name="toast_operation_fail">失败</string>
 
-    <string name="example_text">打印演示文本：abc123</string>
+    <string name="example_text">打印演示文本：abc123\n</string>
 
     <!--main-->
     <string name="status_disconnect">未连接</string>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     private TextView tvPaperType, tvDensity, statusName, statusAddress, tvFatigue;
     private Button btnConnect, btnPrintTest;
     private SharedXmlUtil mSharedXmlUtil;
+    private EditText etSensitivity;
+    private Button setSen;
     /**
      * 是否正在打印
      */
@@ -76,6 +79,8 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         statusName = findViewById(R.id.tv_status_name);
         statusAddress = findViewById(R.id.tv_status_address);
         tvFatigue = findViewById(R.id.tv_fatigue_test);
+        etSensitivity = findViewById(R.id.et_sensitivity);
+        findViewById(R.id.set_sen).setOnClickListener(this);
     }
 
     @Override
@@ -160,6 +165,10 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                     Intent intentDensity = new Intent(this, PopupWindowActivity.class);
                     intentDensity.putExtra("setting", "density");
                     startActivityForResult(intentDensity, 2);
+                    break;
+                case R.id.set_sen:
+                    String sen = etSensitivity.getText().toString();
+                    mPresenter.setSensitivity(sen);
                     break;
                 default:
                     break;

@@ -116,7 +116,7 @@ public class PrintImpl implements IPrint {
     public int setPaperType(int paperType) {
         List<byte[]> paperList = new ArrayList<>();
         paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 0, 0x1F, 0x1F});
-        paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 1, 0x1F, (byte) 192, (byte) 120, 0x1F, 0x46, (byte) 23, 0x1F, 0x1F});
+        paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 1, 0x1F, (byte) 192, (byte) 144, 0x1F, 0x46, (byte) 20, 0x1F, 0x1F});
         paperList.add(new byte[]{0x1F, 0x11, 0x1F, 0x44, (byte) 2, 0x1F, 0x1F});
         return sendBytesData(paperList.get(paperType));
     }

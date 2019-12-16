@@ -2,9 +2,18 @@ package com.spd.jxprint.setting.presenter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Looper;
 import android.util.Log;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.printer.sdk.CanvasPrint;
+import com.printer.sdk.FontProperty;
 import com.printer.sdk.PrinterConstants;
 import com.spd.jxprint.application.BaseApp;
 import com.spd.jxprint.setting.PrintSettingActivity;
@@ -75,7 +84,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         BaseApp.getPrinterImpl().initPrinter();
         BaseApp.getPrinterImpl().printText(text);
         BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, 0);
+        BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
     }
 
@@ -89,12 +98,113 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
         BaseApp.getPrinterImpl().sendBytesData(backBytes);
         BaseApp.getPrinterImpl().initPrinter();
-        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
+        print();
+//        test();
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
         BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, 0);
+        BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
-        byte[] bytes = new byte[]{0x0C};
+        byte[] bytes = new byte[]{0x1D, 0x53};
         BaseApp.getPrinterImpl().sendBytesData(bytes);
+    }
+
+    private void test() {
+        CanvasPrint cp = new CanvasPrint();
+        cp.init(PrinterConstants.PrinterType.M21);
+        FontProperty fp = new FontProperty();
+        fp.setFont(false, false, false, false, 20, null);
+        cp.setFontProperty(fp);
+        cp.drawText(10, 30, "物料名称");
+        cp.drawText(10, 60, "wuliaomingcheng");
+        Bitmap bitmap = createBitmapQR_CODE("www111", 120, 120);
+        cp.drawImage(250, 0, bitmap);
+        cp.drawText(10, 120, "规格型号");
+
+        cp.drawText(220, 150, "test example\n");
+        Log.d("zzz", "print: " + cp.getLength());
+        BaseApp.getPrinterImpl().printImage(cp.getCanvasImage(), 3, 0, false);
+    }
+
+    private void print() {
+        Bitmap bitmapQrCode = createBitmapQR_CODE("wuliaobianhao", 120, 120);
+        //创建画布
+        CanvasPrint cp = new CanvasPrint();
+        //初始化画布
+        cp.init(PrinterConstants.PrinterType.M21);
+        if (bitmapQrCode != null) {
+            cp.drawImage(250, 0, bitmapQrCode);
+        }
+        //创建字体
+        FontProperty fp = new FontProperty();
+        //字体属性赋值 此处参数个数根据SDK版本不同，有略微差别，酌情增减。
+        fp.setFont(false, false, false, false, 26, null);
+        //设置字体
+        cp.setFontProperty(fp);
+        cp.drawText(150, 30, "数量:");
+        cp.drawText(150,60,80,60,"呜呜呜呜柔柔弱弱无无无无人多多多");
+
+        fp.setFont(false, false, false, false, 20, null);
+        cp.setFontProperty(fp);
+        //将文字画到画布上指定坐标处
+        cp.drawText(10, 30, "物料名称");
+//        cp.drawText(10, 60, "wuliaomingcheng");
+        cp.drawText(10,60,80,60,"呜呜呜呜柔柔弱弱无无无无人多多多");
+        getWidth("呜呜呜呜柔柔弱弱无无无无人多多多");
+        cp.drawText(10, 120, "规格型号");
+
+        cp.drawText(10, 150, "guigexinghao");
+        cp.drawText(220, 150, "wuliaobianhao");
+
+
+        Log.d("zzz", "print: " + cp.getLength());
+        //打印画布
+        BaseApp.getPrinterImpl().printBigImage(cp.getCanvasImage(), 3, 0, false);
+    }
+    private int getWidth(String str) {
+        Paint paint = new Paint();
+        Rect rect = new Rect();
+        paint.getTextBounds(str, 0, str.length(), rect);
+        Log.d("zzc", "width=" + rect.width() + "  height=" + rect.height());
+        return rect.width();
+    }
+
+    /**
+     * 生成QR_CODE类型二维码图片
+     *
+     * @param str    内容
+     * @param param1 宽度
+     * @param param2 高度
+     * @return
+     */
+    public static Bitmap createBitmapQR_CODE(String str, int param1, int param2) {
+        try {
+            BitMatrix matrix = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, param1, param2);
+            int width = matrix.width;
+            int height = matrix.height;
+            int[] pixels = new int[width * height];
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x) {
+                    if (matrix.get(x, y)) {
+                        pixels[y * width + x] = 0xff000000; // black pixel
+                    } else {
+                        pixels[y * width + x] = 0xffffffff; // white pixel
+                    }
+                }
+            }
+            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bmp.setPixels(pixels, 0, width, 0, 0, width, height);
+            return bmp;
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -106,12 +216,29 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
     }
 
     /**
+     * 设置打印速度
+     *
+     * @param speed 默认4
+     *              4---47mm/s
+     *              3---45.2mm/s
+     *              2---40.8mm/s
+     *              1---36.4mm/s
+     *              0---33mm/s
+     */
+    public void setSpeed(String speed) {
+        if (!speed.isEmpty()) {
+            int sp = Integer.parseInt(speed);
+            BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x15, (byte) sp, 0x1F, 0x1F});
+        }
+    }
+
+    /**
      * 设置灵敏度
      *
      * @param sensitivity 灵敏度值
      */
     public void setSensitivity(String sensitivity) {
-        if (sensitivity.isEmpty()) {
+        if (!sensitivity.isEmpty()) {
             int sen = Integer.parseInt(sensitivity);
             BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) sen, 0x1F, 0x1F});
         }
@@ -188,9 +315,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
                 f.mkdir();
             }
             //复制升级文件到指定目录
-            copyFilesFromassets(getView(), "T581U0.73-V0.16-sbtV05.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
+            copyFilesFromassets(getView(), "T581U0.73-V0.16-sbtV06.bin", "/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV06.bin");
             //获取升级文件
-            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV05.bin");
+            File fileParent = new File("/sdcard/Android/data/updata/T581U0.73-V0.16-sbtV06.bin");
             try {
                 in = new FileInputStream(fileParent);
 
@@ -200,7 +327,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
             }
             int a = 0;
             try {
-                a = BaseApp.getPrinterImpl().update(in, "35 31 34 30 34");
+                a = BaseApp.getPrinterImpl().update(in, "35 31 33 35 32");
                 if (a == -2) {
                     getView().onUpdateSuccess();
                 } else {
