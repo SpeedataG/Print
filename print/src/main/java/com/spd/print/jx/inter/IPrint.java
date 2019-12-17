@@ -130,6 +130,18 @@ public interface IPrint {
     int setDensity(@DensityConstant.PrintDensity int density);
 
     /**
+     * 设置打印速度
+     *
+     * @param speed 默认4
+     *              4---47mm/s
+     *              3---45.2mm/s
+     *              2---40.8mm/s
+     *              1---36.4mm/s
+     *              0---33mm/s
+     */
+    void setSpeed(int speed);
+
+    /**
      * 设置走纸
      *
      * @param line 走纸行数 mm
@@ -219,5 +231,13 @@ public interface IPrint {
      * 定位
      */
     void searchGap();
+
+    /**
+     * 设置打印机参数
+     *
+     * @param params {@link com.spd.print.jx.constant.ParamsConstant}
+     *               可以多个设置指令一起设置
+     */
+    void setAllParams(byte[]... params);
 
 }

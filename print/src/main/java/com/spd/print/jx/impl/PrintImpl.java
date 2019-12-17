@@ -130,6 +130,14 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
+    public void setSpeed(int speed) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        mPrinter.sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x15, (byte) speed, 0x1F, 0x1F});
+    }
+
+    @Override
     public void setPaperFeed(int line) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
@@ -239,6 +247,23 @@ public class PrintImpl implements IPrint {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
         mPrinter.sendBytesData(new byte[]{0x0C});
+    }
+
+    @Override
+    public void setAllParams(byte[]... params) {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        int len = params.length * 3 + 4;
+        byte[] send = new byte[len];
+        for (int i = 0; i < params.length; i++) {
+            System.arraycopy(params[i], 0, send, i * 3 + 2, 3);
+        }
+        send[0] = 0x1F;
+        send[1] = 0x11;
+        send[len - 2] = 0x1F;
+        send[len - 1] = 0x1F;
+        mPrinter.sendBytesData(send);
     }
 
     /**

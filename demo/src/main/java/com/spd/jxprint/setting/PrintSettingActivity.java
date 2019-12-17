@@ -41,7 +41,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     private Button btnConnect, btnPrintTest;
     private SharedXmlUtil mSharedXmlUtil;
     private EditText etSensitivity;
-    private Button setSen;
+    private Button btnAligning;
     /**
      * 是否正在打印
      */
@@ -81,6 +81,8 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         tvFatigue = findViewById(R.id.tv_fatigue_test);
         etSensitivity = findViewById(R.id.et_sensitivity);
         findViewById(R.id.set_sen).setOnClickListener(this);
+        btnAligning = findViewById(R.id.btn_aligning);
+        btnAligning.setOnClickListener(this);
     }
 
     @Override
@@ -170,6 +172,9 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
                     String sen = etSensitivity.getText().toString();
                     mPresenter.setSensitivity(sen);
                     break;
+                case R.id.btn_aligning:
+                    mPresenter.printAligning();
+                    break;
                 default:
                     break;
             }
@@ -245,6 +250,7 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
         statusName.setText(BaseApp.deviceName);
         statusAddress.setText(BaseApp.deviceAddress);
         btnConnect.setText(getResources().getString(R.string.disconnect_printer));
+        mPresenter.initPrint(typeInt, densityInt);
         ToastUtil.customToastView(mContext, getString(R.string.toast_success), Toast.LENGTH_SHORT
                 , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
     }
@@ -270,8 +276,10 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSharedXmlUtil = SharedXmlUtil.getInstance(this, "setting");
-        setPaperType(mSharedXmlUtil.read("paper_type", 1));
-        setDensity(mSharedXmlUtil.read("density", 1));
+        densityInt = mSharedXmlUtil.read("paper_type", 1);
+        typeInt = mSharedXmlUtil.read("density", 1);
+        setPaperType(densityInt);
+        setDensity(typeInt);
     }
 
     @Override
@@ -291,10 +299,12 @@ public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter>
             case 1:
                 tvPaperType.setText(getString(R.string.label_paper));
                 btnPrintTest.setText(getString(R.string.print_label_paper));
+                btnAligning.setVisibility(View.VISIBLE);
                 break;
             default:
                 tvPaperType.setText(getString(R.string.normal_paper));
                 btnPrintTest.setText(getString(R.string.print_normal_paper));
+                btnAligning.setVisibility(View.GONE);
                 break;
         }
     }

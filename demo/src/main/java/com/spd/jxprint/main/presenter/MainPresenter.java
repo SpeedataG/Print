@@ -5,6 +5,7 @@ import com.spd.jxprint.application.BaseApp;
 import com.spd.jxprint.main.MainActivity;
 import com.spd.jxprint.main.contract.MainContract;
 import com.spd.jxprint.main.model.MainModel;
+import com.spd.print.jx.constant.ParamsConstant;
 
 /**
  * @author :Reginer in  2019/8/21 11:11.
@@ -25,6 +26,10 @@ public class MainPresenter extends BasePresenter<MainActivity, MainModel> implem
     @Override
     public void disconnectPrinter() {
         BaseApp.getPrinterImpl().closeConnect();
+    }
+
+    public void initPrint(int type, int density) {
+        BaseApp.getPrinterImpl().setAllParams(ParamsConstant.paperType(type), ParamsConstant.density(density));
     }
 
 }

@@ -140,20 +140,20 @@ public class BarcodeFragment extends LazyFragment implements View.OnClickListene
             byte[] bytes = new byte[]{CODE128, CODE39, CODABAR, ITF, CODE93, UPC_A, UPC_E, JAN13, JAN8};
             if (typeInt < 9) {
                 barcode = new Barcode(bytes[typeInt], width, height, 2, content);
-                BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_CENTER);
+                BaseApp.getPrinterImpl().setPrinter(2, 1);
                 BaseApp.getPrinterImpl().printText("打印 " + tvBarcodeType.getText().toString() + " 码效果展示：");
-                BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                BaseApp.getPrinterImpl().setPrinter(1, 2);
                 BaseApp.getPrinterImpl().printBarCode(barcode);
-                BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-                BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_LEFT);
+                BaseApp.getPrinterImpl().setPrinter(1, 3);
+                BaseApp.getPrinterImpl().setPrinter(2, 0);
             } else {
                 for (int i = 0; i < typeInt; i++) {
                     barcode = new Barcode(bytes[i], width, height, 2, content);
-                    BaseApp.getPrinterImpl().setPrinter(Command.ALIGN, Command.ALIGN_CENTER);
+                    BaseApp.getPrinterImpl().setPrinter(2, 1);
                     BaseApp.getPrinterImpl().printText("打印 " + getResources().getStringArray(R.array.barcode1)[i] + " 码效果演示：");
-                    BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                    BaseApp.getPrinterImpl().setPrinter(1, 2);
                     BaseApp.getPrinterImpl().printBarCode(barcode);
-                    BaseApp.getPrinterImpl().setPrinter(Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+                    BaseApp.getPrinterImpl().setPrinter(1, 2);
                 }
             }
         }

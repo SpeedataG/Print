@@ -103,7 +103,7 @@ public class PrintPicturePresenter extends BasePresenter<PrintPictureActivity, P
             BaseApp.getPrinterImpl().initPrinter();
             BaseApp.getPrinterImpl().printText("\n");
             BaseApp.getPrinterImpl().printText(getView().getString(R.string.print_bitmap_test));
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
+            BaseApp.getPrinterImpl().setPrinter(1, 1);
             BitmapFactory.Options bfoOptions = new BitmapFactory.Options();
             bfoOptions.inScaled = false;
             Bitmap bitmap = BitmapFactory.decodeResource(getView().getResources(), R.drawable.my_monochrome_image, bfoOptions);

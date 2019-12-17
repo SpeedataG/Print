@@ -100,12 +100,12 @@ public class QrCodeFragment extends LazyFragment implements View.OnClickListener
             int[] height = new int[]{76, 0, 8};
             byte[] bytes = new byte[]{QRCODE, PDF417, DATAMATRIX};
             barcode = new Barcode(bytes[typeInt], width[typeInt], height[typeInt], 6, content);
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);
+            BaseApp.getPrinterImpl().setPrinter(2, 1);
             BaseApp.getPrinterImpl().printText("打印 " + tvQrCodeType.getText().toString() + " 码效果展示：");
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+            BaseApp.getPrinterImpl().setPrinter(1, 2);
             BaseApp.getPrinterImpl().printBarCode(barcode);
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_LEFT);
+            BaseApp.getPrinterImpl().setPrinter(1, 3);
+            BaseApp.getPrinterImpl().setPrinter(2, 0);
         }
     }
 }

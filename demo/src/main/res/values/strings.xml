@@ -37,6 +37,7 @@
     <string name="label_paper">标签纸</string>
     <string name="print_normal_paper">普通热敏纸测试</string>
     <string name="print_label_paper">标签纸测试</string>
+    <string name="btn_aligning">标签对齐</string>
 
     <string name="toast_error_tips">请先连接打印机</string>
 

@@ -23,19 +23,19 @@ public class PrintBarcodePresenter extends BasePresenter<PrintBarcodeActivity, P
     }
 
     public void printBarcodeEx() {
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);
+        BaseApp.getPrinterImpl().setPrinter(2, 1);
         Barcode barcode1 = new Barcode(PrinterConstants.BarcodeType.CODE128, 2, 150, 2, "(10)CEDIS-1");
         BaseApp.getPrinterImpl().printBarCode(barcode1);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_LEFT);
+        BaseApp.getPrinterImpl().setPrinter(1, 3);
+        BaseApp.getPrinterImpl().setPrinter(2, 0);
     }
 
     public void printQrCodeEx() {
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);
+        BaseApp.getPrinterImpl().setPrinter(2, 1);
         Barcode barcode2 = new Barcode(PrinterConstants.BarcodeType.QRCODE, 2, 3, 6, "123456");
         BaseApp.getPrinterImpl().printBarCode(barcode2);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_LEFT);
+        BaseApp.getPrinterImpl().setPrinter(2, 3);
+        BaseApp.getPrinterImpl().setPrinter(2, 0);
     }
 
     public void printScanTest(int barcodeType, String barcodeContent) {
@@ -70,7 +70,7 @@ public class PrintBarcodePresenter extends BasePresenter<PrintBarcodeActivity, P
         } else {
             Toast.makeText(getView(), "二维码：" + barcodeContent, Toast.LENGTH_SHORT).show();
         }
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER);
+        BaseApp.getPrinterImpl().setPrinter(2, 1);
         // 判端条码类型
         switch (barcodeType) {
             case 1:
@@ -88,6 +88,6 @@ public class PrintBarcodePresenter extends BasePresenter<PrintBarcodeActivity, P
             default:
                 break;
         }
-        BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 2);
+        BaseApp.getPrinterImpl().setPrinter(1, 2);
     }
 }

@@ -21,6 +21,8 @@ import com.spd.jxprint.setting.contract.PrintSettingContract;
 import com.spd.jxprint.setting.model.PrintSettingModel;
 import com.spd.jxprint.utils.XTUtils;
 import com.spd.lib.mvp.BasePresenter;
+import com.spd.print.jx.constant.ParamsConstant;
+import com.spd.print.jx.utils.PictureUtils;
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -67,6 +69,10 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         BaseApp.getPrinterImpl().closeConnect();
     }
 
+    public void initPrint(int type, int density) {
+        BaseApp.getPrinterImpl().setAllParams(ParamsConstant.paperType(type), ParamsConstant.density(density));
+    }
+
     public void setPaperFeed() {
         BaseApp.getPrinterImpl().setPaperFeed(2);
     }
@@ -98,15 +104,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
         BaseApp.getPrinterImpl().sendBytesData(backBytes);
         BaseApp.getPrinterImpl().initPrinter();
-//        BaseApp.getPrinterImpl().printText(text);
+        BaseApp.getPrinterImpl().printText(text);
         print();
-//        test();
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().printText(text);
+        BaseApp.getPrinterImpl().printText(text);
         BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
         BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
@@ -114,25 +114,8 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         BaseApp.getPrinterImpl().sendBytesData(bytes);
     }
 
-    private void test() {
-        CanvasPrint cp = new CanvasPrint();
-        cp.init(PrinterConstants.PrinterType.M21);
-        FontProperty fp = new FontProperty();
-        fp.setFont(false, false, false, false, 20, null);
-        cp.setFontProperty(fp);
-        cp.drawText(10, 30, "物料名称");
-        cp.drawText(10, 60, "wuliaomingcheng");
-        Bitmap bitmap = createBitmapQR_CODE("www111", 120, 120);
-        cp.drawImage(250, 0, bitmap);
-        cp.drawText(10, 120, "规格型号");
-
-        cp.drawText(220, 150, "test example\n");
-        Log.d("zzz", "print: " + cp.getLength());
-        BaseApp.getPrinterImpl().printImage(cp.getCanvasImage(), 3, 0, false);
-    }
-
     private void print() {
-        Bitmap bitmapQrCode = createBitmapQR_CODE("wuliaobianhao", 120, 120);
+        Bitmap bitmapQrCode = PictureUtils.createBitmapQrCode("wuliaobianhao", 120, 120);
         //创建画布
         CanvasPrint cp = new CanvasPrint();
         //初始化画布
@@ -147,64 +130,24 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         //设置字体
         cp.setFontProperty(fp);
         cp.drawText(150, 30, "数量:");
-        cp.drawText(150,60,80,60,"呜呜呜呜柔柔弱弱无无无无人多多多");
-
         fp.setFont(false, false, false, false, 20, null);
         cp.setFontProperty(fp);
         //将文字画到画布上指定坐标处
         cp.drawText(10, 30, "物料名称");
-//        cp.drawText(10, 60, "wuliaomingcheng");
-        cp.drawText(10,60,80,60,"呜呜呜呜柔柔弱弱无无无无人多多多");
-        getWidth("呜呜呜呜柔柔弱弱无无无无人多多多");
+        cp.drawText(10, 60, "wuliaomingcheng");
         cp.drawText(10, 120, "规格型号");
-
         cp.drawText(10, 150, "guigexinghao");
         cp.drawText(220, 150, "wuliaobianhao");
-
-
         Log.d("zzz", "print: " + cp.getLength());
         //打印画布
         BaseApp.getPrinterImpl().printBigImage(cp.getCanvasImage(), 3, 0, false);
     }
-    private int getWidth(String str) {
-        Paint paint = new Paint();
-        Rect rect = new Rect();
-        paint.getTextBounds(str, 0, str.length(), rect);
-        Log.d("zzc", "width=" + rect.width() + "  height=" + rect.height());
-        return rect.width();
-    }
 
     /**
-     * 生成QR_CODE类型二维码图片
-     *
-     * @param str    内容
-     * @param param1 宽度
-     * @param param2 高度
-     * @return
+     * 标签纸对齐缝隙
      */
-    public static Bitmap createBitmapQR_CODE(String str, int param1, int param2) {
-        try {
-            BitMatrix matrix = new MultiFormatWriter().encode(str,
-                    BarcodeFormat.QR_CODE, param1, param2);
-            int width = matrix.width;
-            int height = matrix.height;
-            int[] pixels = new int[width * height];
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
-                    if (matrix.get(x, y)) {
-                        pixels[y * width + x] = 0xff000000; // black pixel
-                    } else {
-                        pixels[y * width + x] = 0xffffffff; // white pixel
-                    }
-                }
-            }
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            bmp.setPixels(pixels, 0, width, 0, 0, width, height);
-            return bmp;
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void printAligning() {
+        BaseApp.getPrinterImpl().searchGap();
     }
 
     /**

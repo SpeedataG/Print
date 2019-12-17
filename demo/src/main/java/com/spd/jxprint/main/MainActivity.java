@@ -21,6 +21,7 @@ import com.spd.lib.mvp.BaseMvpActivity;
 import com.spd.print.jx.constant.PrintConstant;
 import com.spd.print.jx.inter.IConnectCallback;
 import com.spd.print.jx.utils.ToastUtil;
+import com.speedata.libutils.SharedXmlUtil;
 
 /**
  * @author :Reginer in  2019/8/21 11:00.
@@ -32,6 +33,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
     private Button btnConnect;
     private TextView statusName, statusAddress;
     private ImageView mIvConnect;
+    private SharedXmlUtil mSharedXmlUtil;
 
     @Override
     protected int getActLayoutId() {
@@ -101,6 +103,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
         statusName.setText(BaseApp.deviceName);
         statusAddress.setText(BaseApp.deviceAddress);
         btnConnect.setText(getResources().getString(R.string.disconnect_printer));
+        int densityInt = mSharedXmlUtil.read("paper_type", 1);
+        int typeInt = mSharedXmlUtil.read("density", 1);
+        mPresenter.initPrint(typeInt, densityInt);
         mIvConnect.setImageResource(R.mipmap.home_connect);
         ToastUtil.customToastView(mContext, getString(R.string.toast_success), Toast.LENGTH_SHORT
                 , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
@@ -121,6 +126,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
                         , (TextView) LayoutInflater.from(mContext).inflate(R.layout.layout_toast, null));
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSharedXmlUtil = SharedXmlUtil.getInstance(this, "setting");
     }
 
     @Override

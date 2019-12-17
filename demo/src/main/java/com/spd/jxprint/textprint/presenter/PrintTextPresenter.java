@@ -84,7 +84,7 @@ public class PrintTextPresenter extends BasePresenter<PrintTextActivity, PrintTe
         if (cTypeId != 47) {
 
             BaseApp.getPrinterImpl().printText(getView().getResources().getString(R.string.print) + cType + getView().getResources().getString(R.string.str_show));
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+            BaseApp.getPrinterImpl().setPrinter(1, 3);
 
             BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x1c, (byte) 0x2E});
 
@@ -93,14 +93,14 @@ public class PrintTextPresenter extends BasePresenter<PrintTextActivity, PrintTe
             BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x0A});
 
             BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x1c, (byte) 0x26});
-            BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+            BaseApp.getPrinterImpl().setPrinter(1, 3);
 
         } else {
             for (cTypeId = 0; cTypeId < 46; cTypeId++) {
                 if (cTypeId > 14 || cTypeId < 11) {
 
                     BaseApp.getPrinterImpl().printText(getView().getResources().getString(R.string.print) + cType + getView().getResources().getString(R.string.str_show));
-                    BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+                    BaseApp.getPrinterImpl().setPrinter(1, 3);
 
                     BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x1c, (byte) 0x2E});
 
@@ -109,7 +109,7 @@ public class PrintTextPresenter extends BasePresenter<PrintTextActivity, PrintTe
                     BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x0A});
 
                     BaseApp.getPrinterImpl().sendBytesData(new byte[]{(byte) 0x1c, (byte) 0x26});
-                    BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 3);
+                    BaseApp.getPrinterImpl().setPrinter(1, 3);
                 }
             }
         }

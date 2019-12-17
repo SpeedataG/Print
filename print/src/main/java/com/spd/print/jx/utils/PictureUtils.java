@@ -4,6 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.printer.sdk.PrinterConstants;
 import com.printer.sdk.PrinterInstance;
 import com.printer.sdk.utils.Utils;
@@ -120,5 +124,40 @@ public class PictureUtils {
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return bitmap;
+    }
+
+    /**
+     * 生成QR_CODE类型二维码图片
+     *
+     * @param str    内容
+     * @param param1 宽度
+     * @param param2 高度
+     * @return
+     */
+    public static Bitmap createBitmapQrCode(String str, int param1, int param2) {
+        try {
+            BitMatrix matrix = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, param1, param2);
+            int width = matrix.width;
+            int height = matrix.height;
+            int[] pixels = new int[width * height];
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x) {
+                    if (matrix.get(x, y)) {
+                        // black pixel
+                        pixels[y * width + x] = 0xff000000;
+                    } else {
+                        // white pixel
+                        pixels[y * width + x] = 0xffffffff;
+                    }
+                }
+            }
+            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bmp.setPixels(pixels, 0, width, 0, 0, width, height);
+            return bmp;
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
