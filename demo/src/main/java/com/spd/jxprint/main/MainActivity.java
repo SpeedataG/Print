@@ -103,8 +103,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements View
         statusName.setText(BaseApp.deviceName);
         statusAddress.setText(BaseApp.deviceAddress);
         btnConnect.setText(getResources().getString(R.string.disconnect_printer));
-        int densityInt = mSharedXmlUtil.read("paper_type", 1);
-        int typeInt = mSharedXmlUtil.read("density", 1);
+        int densityInt = mSharedXmlUtil.read("density", 1);
+        int typeInt = mSharedXmlUtil.read("paper_type", 1);
         mPresenter.initPrint(typeInt, densityInt);
         mIvConnect.setImageResource(R.mipmap.home_connect);
         ToastUtil.customToastView(mContext, getString(R.string.toast_success), Toast.LENGTH_SHORT

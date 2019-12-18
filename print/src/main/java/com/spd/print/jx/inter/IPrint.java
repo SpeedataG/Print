@@ -240,4 +240,11 @@ public interface IPrint {
      */
     void setAllParams(byte[]... params);
 
+    /**
+     * 获取打印机状态
+     *
+     * @return 0-正常、1-缺纸、3-通讯异常
+     */
+    int getPrinterStatus();
+
 }

@@ -23,6 +23,7 @@ import com.spd.jxprint.utils.XTUtils;
 import com.spd.lib.mvp.BasePresenter;
 import com.spd.print.jx.constant.ParamsConstant;
 import com.spd.print.jx.utils.PictureUtils;
+import com.speedata.libutils.DataConversionUtils;
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -62,6 +63,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
     @Override
     public void connectPrinter() {
         BaseApp.getPrinterImpl().connectPrinter(getView());
+        readStatus();
     }
 
     @Override
@@ -75,10 +77,12 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
 
     public void setPaperFeed() {
         BaseApp.getPrinterImpl().setPaperFeed(2);
+        readStatus();
     }
 
     public void setPaperBack() {
         BaseApp.getPrinterImpl().setPaperBack(2);
+        readStatus();
     }
 
     /**
@@ -92,6 +96,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
         BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
+        readStatus();
     }
 
     /**
@@ -100,18 +105,19 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param text
      */
     public void printLabelTest(String text) {
+//        BaseApp.getPrinterImpl().initPrinter();
+//        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
+//        BaseApp.getPrinterImpl().sendBytesData(backBytes);
         BaseApp.getPrinterImpl().initPrinter();
-        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
-        BaseApp.getPrinterImpl().sendBytesData(backBytes);
-        BaseApp.getPrinterImpl().initPrinter();
-        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().printText(text);
         print();
-        BaseApp.getPrinterImpl().printText(text);
-        BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
-        BaseApp.getPrinterImpl().setPrinter(2, 0);
+//        BaseApp.getPrinterImpl().printText(text);
+//        BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
+//        BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
         byte[] bytes = new byte[]{0x1D, 0x53};
         BaseApp.getPrinterImpl().sendBytesData(bytes);
+        readStatus();
     }
 
     private void print() {
@@ -134,10 +140,25 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         cp.setFontProperty(fp);
         //将文字画到画布上指定坐标处
         cp.drawText(10, 30, "物料名称");
-        cp.drawText(10, 60, "wuliaomingcheng");
+//        cp.drawText(10, 60, "wuliaomingcheng");
+        try {
+            cp.drawText(10,60,150,40,"物料名称wuliaomingcheng物料名称wuliaomingcheng");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         cp.drawText(10, 120, "规格型号");
-        cp.drawText(10, 150, "guigexinghao");
-        cp.drawText(220, 150, "wuliaobianhao");
+//        cp.drawText(10, 150, "guigexinghao");
+        try {
+            cp.drawText(10,150,150,40,"guigexinghao规格型号");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        cp.drawText(220, 150, "wuliaobianhao");
+        try {
+            cp.drawText(220,150,150,40,"wuliaobianhao");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d("zzz", "print: " + cp.getLength());
         //打印画布
         BaseApp.getPrinterImpl().printBigImage(cp.getCanvasImage(), 3, 0, false);
@@ -168,11 +189,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      *              1---36.4mm/s
      *              0---33mm/s
      */
-    public void setSpeed(String speed) {
-        if (!speed.isEmpty()) {
-            int sp = Integer.parseInt(speed);
-            BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x15, (byte) sp, 0x1F, 0x1F});
-        }
+    public void setSpeed(int speed) {
+        BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x15, (byte) speed, 0x1F, 0x1F});
+        readStatus();
     }
 
     /**
@@ -184,6 +203,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         if (!sensitivity.isEmpty()) {
             int sen = Integer.parseInt(sensitivity);
             BaseApp.getPrinterImpl().sendBytesData(new byte[]{0x1F, 0x11, 0x1F, 0x46, (byte) sen, 0x1F, 0x1F});
+            readStatus();
         }
     }
 
@@ -196,6 +216,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
         byte[] result = new byte[6];
         BaseApp.getPrinterImpl().read(result);
         Log.d("zzc", "read====" + Arrays.toString(result));
+        Log.d("zzc", "read====" + DataConversionUtils.byteArrayToString(result));
+        int status = BaseApp.getPrinterImpl().getPrinterStatus();
+        Log.d("zzc", "status====" + status);
         return Arrays.toString(result);
     }
 
@@ -206,6 +229,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      */
     public void setDensity(int density) {
         BaseApp.getPrinterImpl().setDensity(density);
+        readStatus();
     }
 
     /**
@@ -215,6 +239,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      */
     public void setPaperType(int type) {
         BaseApp.getPrinterImpl().setPaperType(type);
+        readStatus();
     }
 
 
