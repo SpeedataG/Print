@@ -92,9 +92,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      */
     public void printNormalTest(String text) {
         BaseApp.getPrinterImpl().initPrinter();
-        BaseApp.getPrinterImpl().printText(text);
         BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
         BaseApp.getPrinterImpl().setPrinter(2, 0);
+        BaseApp.getPrinterImpl().printText(text);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
         readStatus();
     }
@@ -105,15 +105,9 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * @param text
      */
     public void printLabelTest(String text) {
-//        BaseApp.getPrinterImpl().initPrinter();
-//        byte[] backBytes = new byte[]{0x1B, 0x4B, (byte) (10 * 8), 0x1B, 0x4A, (byte) 8};
-//        BaseApp.getPrinterImpl().sendBytesData(backBytes);
         BaseApp.getPrinterImpl().initPrinter();
-//        BaseApp.getPrinterImpl().printText(text);
+        BaseApp.getPrinterImpl().printText(text);
         print();
-//        BaseApp.getPrinterImpl().printText(text);
-//        BaseApp.getPrinterImpl().setFont(0, 0, 0, 0, 0);
-//        BaseApp.getPrinterImpl().setPrinter(2, 0);
         BaseApp.getPrinterImpl().setPrinter(PrinterConstants.Command.PRINT_AND_WAKE_PAPER_BY_LINE, 1);
         byte[] bytes = new byte[]{0x1D, 0x53};
         BaseApp.getPrinterImpl().sendBytesData(bytes);
