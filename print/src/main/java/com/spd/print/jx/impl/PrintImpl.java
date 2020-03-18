@@ -183,6 +183,11 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
+    public int printBarCode(byte barcodeType, int param1, int param2, int param3, String content) {
+        return printBarCode(new Barcode(barcodeType, param1, param2, param3, content));
+    }
+
+    @Override
     public void printImage(Bitmap bitmap, int alignType, int left, boolean isCompressed) {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
@@ -214,6 +219,17 @@ public class PrintImpl implements IPrint {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }
         mPrinter.printTable(table);
+    }
+
+    @Override
+    public void printTable(String column, String regularExpression, int[] columnWidth, ArrayList<String> rows) {
+        Table table = new Table(column, regularExpression, columnWidth);
+        if (rows != null && rows.size() > 0) {
+            for (String row : rows) {
+                table.addRow(row);
+            }
+        }
+        printTable(table);
     }
 
     @Override
@@ -267,7 +283,7 @@ public class PrintImpl implements IPrint {
     }
 
     @Override
-    public int getPrinterStatus(){
+    public int getPrinterStatus() {
         if (mPrinter == null) {
             throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
         }

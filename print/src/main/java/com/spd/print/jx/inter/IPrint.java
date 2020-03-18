@@ -12,6 +12,7 @@ import com.spd.print.jx.constant.PaperConstant;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * @author :Reginer in  2019/8/16 10:23.
@@ -178,6 +179,18 @@ public interface IPrint {
     int printBarCode(Barcode barcode);
 
     /**
+     * 打印条码
+     *
+     * @param barcodeType 条码类型
+     * @param param1      一维条码：横向宽度2<=n<=6
+     * @param param2      一维条码：条码高度1<=n<=255
+     * @param param3      一维条码：条码注释位置，0 不打印，1 上方，2 下方，3 上下方均有
+     * @param content     条码数据
+     * @return 二维条码具体参考api文档
+     */
+    int printBarCode(byte barcodeType, int param1, int param2, int param3, String content);
+
+    /**
      * 打印图片
      *
      * @param bitmap       单色位图
@@ -205,6 +218,16 @@ public interface IPrint {
     void printTable(Table table);
 
     /**
+     * 打印表格
+     *
+     * @param column            表头，列名，以regularExpression字符分隔
+     * @param regularExpression 表内分隔符
+     * @param columnWidth       每列列宽，字符个数
+     * @param rows              list集合每一条数据代表一行（格式与表头一致）
+     */
+    void printTable(String column, String regularExpression, int[] columnWidth, ArrayList<String> rows);
+
+    /**
      * 升级sdk
      *
      * @param inputStream   升级文件
@@ -223,7 +246,7 @@ public interface IPrint {
     /**
      * 设置出纸距离
      *
-     * @param len 电压值 (mm)
+     * @param len 距离 (mm)
      */
     void setOutPaperLen(int len);
 
