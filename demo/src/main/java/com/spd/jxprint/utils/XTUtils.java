@@ -8,6 +8,8 @@ import com.printer.sdk.Table;
 import com.spd.jxprint.R;
 import com.spd.print.jx.impl.PrintImpl;
 
+import java.util.ArrayList;
+
 public class XTUtils {
 
     /**
@@ -80,6 +82,17 @@ public class XTUtils {
         table.addRow("" + resources.getString(R.string.hook) + ";5.00;2;10.00");
         table.addRow("" + resources.getString(R.string.umbrella) + ";5.00;3;15.00");
         return table;
+    }
+
+    public static void printTable(Resources resources, PrintImpl mPrinter) {
+        String column = resources.getString(R.string.note_title);
+        String regularExpression = ";";
+        int[] columnWidth = new int[]{14, 6, 6, 6};
+        ArrayList<String> rows = new ArrayList<>();
+        rows.add("保鲜袋;10.00;1;10.00");
+        rows.add("铁丝挂钩;5.00;2;10.00");
+        rows.add("雨伞;5.00;3;15.00");
+        mPrinter.printTable(column, regularExpression, columnWidth, rows);
     }
 
     /**
