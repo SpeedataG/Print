@@ -60,7 +60,12 @@ public class UpdatePrinter {
             e.printStackTrace();
             return 5;
         }
-        mPrinter.closeConnection();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //        mPrinter.closeConnection();
         return -2;
     }
 
@@ -81,6 +86,12 @@ public class UpdatePrinter {
             mPrinter.sendBytesData(new byte[]{(byte) 2});
         } else {
             //128
+            mPrinter.sendBytesData(new byte[]{(byte) 4});
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             mPrinter.sendBytesData(new byte[]{(byte) 1});
         }
         mPrinter.sendBytesData(new byte[]{(byte) blockNumber});
