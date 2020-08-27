@@ -16,8 +16,7 @@ import com.spd.jxprint.barcodeprint.PrintBarcodeActivity;
 import com.spd.jxprint.barcodeprint.QrCodeFragment;
 
 /**
- * Created by 张明_ on 2019/1/3.
- * Email 741183142@qq.com
+ * @author :zzc in  2020/8/27 14:53 update.
  */
 public class BarcodeAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
     private int[] versions = {R.string.barcode_fragment, R.string.qr_code_fragment};

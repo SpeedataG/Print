@@ -25,8 +25,6 @@ import com.spd.print.jx.constant.ParamsConstant;
 import com.spd.print.jx.utils.PictureUtils;
 import com.speedata.libutils.DataConversionUtils;
 
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,8 +38,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author :Reginer in  2019/8/21 12:10.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:51 update.
  * 功能描述:
  */
 public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, PrintSettingModel> implements PrintSettingContract.Presenter {
@@ -241,7 +238,7 @@ public class PrintSettingPresenter extends BasePresenter<PrintSettingActivity, P
      * 疲劳测试
      */
     public void fatigueTest(final Resources resources) {
-        executorService = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
+        executorService = new ScheduledThreadPoolExecutor(1);
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {

@@ -30,8 +30,7 @@ import com.speedata.libutils.SharedXmlUtil;
 import java.util.Objects;
 
 /**
- * @author :Reginer in  2019/8/21 12:11.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:53 update.
  * 功能描述:打印设置
  */
 public class PrintSettingActivity extends BaseMvpActivity<PrintSettingPresenter> implements View.OnClickListener, PrintSettingContract.View, IConnectCallback {

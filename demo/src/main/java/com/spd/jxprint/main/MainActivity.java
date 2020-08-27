@@ -24,8 +24,7 @@ import com.spd.print.jx.utils.ToastUtil;
 import com.speedata.libutils.SharedXmlUtil;
 
 /**
- * @author :Reginer in  2019/8/21 11:00.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:48 update.
  * 功能描述:首页
  */
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements View.OnClickListener, IConnectCallback {

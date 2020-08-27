@@ -8,8 +8,7 @@ import com.spd.jxprint.main.model.MainModel;
 import com.spd.print.jx.constant.ParamsConstant;
 
 /**
- * @author :Reginer in  2019/8/21 11:11.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:48 update.
  * 功能描述:
  */
 public class MainPresenter extends BasePresenter<MainActivity, MainModel> implements MainContract.Presenter {

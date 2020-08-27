@@ -1,8 +1,7 @@
 package com.spd.jxprint.setting.contract;
 
 /**
- * @author :Reginer in  2019/8/21 12:10.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:50 update.
  * 功能描述:
  */
 public interface PrintSettingContract {

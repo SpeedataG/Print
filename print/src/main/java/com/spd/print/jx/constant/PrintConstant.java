@@ -8,8 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author :Reginer in  2019/8/16 10:11.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:53 update.
  * 功能描述:打印机常量类
  */
 public class PrintConstant {

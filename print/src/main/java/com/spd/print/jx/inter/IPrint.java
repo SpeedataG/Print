@@ -15,8 +15,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
- * @author :Reginer in  2019/8/16 10:23.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:53 update.
  * 功能描述:打印机接口
  */
 public interface IPrint {

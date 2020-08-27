@@ -3,8 +3,7 @@ package com.spd.print.jx.inter;
 import com.spd.print.jx.constant.PrintConstant.PrintConnectError;
 
 /**
- * @author :Reginer in  2019/8/16 10:31.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:53 update.
  * 功能描述:连接打印机回调
  */
 public interface IConnectCallback {

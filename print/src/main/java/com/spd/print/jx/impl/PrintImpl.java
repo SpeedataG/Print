@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.serialport.DeviceControlSpd;
 import android.support.annotation.NonNull;
 
@@ -22,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author :Reginer in  2019/8/16 10:24.
- * 联系方式:QQ:282921012
+ * @author :zzc in  2020/8/27 14:53 update.
  * 功能描述:打印机实现类
  */
 public class PrintImpl implements IPrint {
