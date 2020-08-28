@@ -290,6 +290,31 @@ public class PrintImpl implements IPrint {
         return mPrinter.getPrinterStatus();
     }
 
+    @Override
+    public int getPrintDensity() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        int d = mPrinter.getPrintDensity();
+        return d - 48;
+    }
+
+    @Override
+    public int getPaperType() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return mPrinter.getPaperType() - 48;
+    }
+
+    @Override
+    public int getPaperSensitivity() {
+        if (mPrinter == null) {
+            throw new RuntimeException("先调用connectPrinter方法初始化打印机操作类");
+        }
+        return mPrinter.getPaperSensitivity();
+    }
+
     /**
      * 获取打印机操作类
      *

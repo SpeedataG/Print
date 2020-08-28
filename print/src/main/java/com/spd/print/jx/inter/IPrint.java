@@ -269,4 +269,25 @@ public interface IPrint {
      */
     int getPrinterStatus();
 
+    /**
+     * 获取打印浓度
+     *
+     * @return 0-4
+     */
+    int getPrintDensity();
+
+    /**
+     * 获取纸类型
+     *
+     * @return 0-普通纸 1-标签纸 2-黑标纸
+     */
+    int getPaperType();
+
+    /**
+     * 获取灵敏度
+     *
+     * @return 1-33
+     */
+    int getPaperSensitivity();
+
 }
