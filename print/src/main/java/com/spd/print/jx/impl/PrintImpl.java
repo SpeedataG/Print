@@ -2,9 +2,9 @@ package com.spd.print.jx.impl;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.serialport.DeviceControlSpd;
 import android.support.annotation.NonNull;
 
@@ -30,17 +30,53 @@ public class PrintImpl implements IPrint {
     private IConnectCallback mCallback;
     private PrinterInstance mPrinter;
 
+    public static String model;
+
+    //    获取设备型号
+    public static String getModel() {
+        model = android.os.SystemProperties.get("ro.build.developer");
+        if (model == null || "".equals(model)) {
+            model = Build.MODEL;
+        }
+        //model = "UDT50"; //自定义型号自测
+        //model = "HG-B050C"; //自定义型号自测
+        //model = "SD35-6762"; //自定义型号自测
+        //model = "SD50RT-6762"; //自定义型号自测
+        //model = "H6-6762"; //自定义型号自测
+        //model = "FG60-6833"; //自定义型号自测
+        //model = "SD60PRT-6762"; //自定义型号自测
+        return model;
+    }
+
     @Override
     public PrinterInstance connectPrinter(@NonNull IConnectCallback callback) {
         mCallback = callback;
-        try {
-            DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
-            deviceControl.PowerOnDevice();
-            deviceControl.newSetDir(46, 0);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (getModel().equals("SD60PRT-6762")) {
+
+            try {
+                DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN_FG, 90);
+                deviceControl.PowerOnDevice();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mPrinter = PrinterInstance.getPrinterInstance(new File("/dev/ttyS0"), 115200, 0, printerHandler);
+
+
+        } else {
+            try {
+                DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
+                deviceControl.PowerOnDevice();
+                deviceControl.newSetDir(46, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mPrinter = PrinterInstance.getPrinterInstance(new File("/dev/ttyMT0"), 115200, 0, printerHandler);
+
         }
-        mPrinter = PrinterInstance.getPrinterInstance(new File("/dev/ttyMT0"), 115200, 0, printerHandler);
+
+
         mPrinter.openConnection();
         return mPrinter;
     }
@@ -60,12 +96,24 @@ public class PrintImpl implements IPrint {
         }
         mPrinter.closeConnection();
         mPrinter = null;
-        try {
-            DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
-            deviceControl.PowerOffDevice();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (getModel().equals("SD60PRT-6762")) {
+
+            try {
+                DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN_FG, 90);
+                deviceControl.PowerOffDevice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                DeviceControlSpd deviceControl = new DeviceControlSpd(DeviceControlSpd.PowerType.NEW_MAIN, 8);
+                deviceControl.PowerOffDevice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @Override
